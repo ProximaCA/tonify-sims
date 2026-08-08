@@ -72,7 +72,7 @@ blended take 20%; or 10M × 4% × 12 × $5 × 15%. Corollary: the milestone requ
 recurring patronage and blended lines (drops/premium) — or a recalculation of the figure.
 
 ## 6. Review (red team, summary from CRITIC.md)
-Retracted: "a status quo of 0.42 donations/year" (verbatim from the simulation output,
+Retracted: "a status quo of 0.42 donations/year" (verbatim,
 translated) — a category error on SoundCloud's 29%.
 Replaced with ranges: plays/listener 8–21 (the LFM-1b window ≠ a year), ticket size $3.1–6.9
 (PWYW experiment: mean €3.10, refusal rises 24.4% vs 17.3%), superfans 0.6–1.7%
