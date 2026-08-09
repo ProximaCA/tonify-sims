@@ -1,3 +1,5 @@
+*🇬🇧 English | [🇷🇺 Русский](README.ru.md)*
+
 # tonify-sims: three simulations of a direct music economy
 
 Payout mechanisms, social-graph spread, and treasury survival for a direct
@@ -10,7 +12,10 @@ red-teamed, byte-reproducible.
 
 ![MVA heatmap across the full {payout rule x contract} matrix](figures/fig7_matrix_heatmap.png)
 
-*MVA heatmap across the full {payout rule x contract} matrix.*
+*The hero figure: minimum viable audience (MVA) across the full {payout rule ×
+contract} matrix — analytic matrix, user-centric row from a Monte-Carlo wallet
+model (200,000 listeners, seed 42). Darker = worse for the artist; each cell
+shows $/listener-year and the audience needed for $100/month.*
 
 Your favourite artist needs 188,590 listeners to earn $100 a month under a
 signed pro-rata streaming contract — or 3,204 directly-paying superfans at four
@@ -25,112 +30,254 @@ formula. The formula moves artist viability ×1.34. The contract moves it ×14.8
 Precisely: in the full {rule × contract} matrix of minimum viable audience,
 switching the division rule (pro-rata → user-centric) shifts an artist's MVA by
 ×1.34, while switching the contract (signed → independent) shifts it ×14.8
-(fig7; PAPER, Addendum v0.5). Every claim below carries either a source or a
-falsifier; a red team with the right to retract numbers reviewed each
-simulation, and what it retracted is documented in this README.
+(fig7; [PAPER](paper/PAPER.md), Addendum v0.5). Every claim below carries either
+a source or a falsifier; a red team with the right to retract numbers reviewed
+each simulation, and what it retracted is documented in this README. Every
+parameter's provenance is one table: [SOURCES.md](SOURCES.md).
 
-## Key findings
+## Glossary
 
-Every row states its validity domain. Full numbers, sources and retractions:
-[paper/](paper/), [sim2/README.md](sim2/README.md), [sim3/README.md](sim3/README.md).
+The terms the figures and findings lean on, once:
 
-| # | Finding | Figure | Source / falsifier |
-|---|---------|--------|--------------------|
-| 1 | **The contract outweighs the rule.** Across the full {rule × contract} MVA matrix, switching the division rule (pro-rata → user-centric) moves minimum viable audience ×1.34, switching the contract (signed → independent) moves it ×14.8 — the best World-A formula does not survive a 6.8% label pass-through: user-centric signed needs 140,463 listeners against 12,771 for pro-rata independent. The $100/month ladder: 188,590 (pro-rata signed) → 12,771 (pro-rata independent) → 3,204 (direct, at k=4 donations/superfan/yr); a signed-360 contract scales the artist take ×0.70 (direct MVA 3,204 → 4,577). | [fig7](figures/fig7_matrix_heatmap.png), [fig5](figures/fig5_worlds_ladder.png), [fig1](figures/fig1_mva.png) | [PAPER](paper/PAPER.md) Addendum v0.5; rule effect matches SoundCloud/Deezer empirics ([PAPER](paper/PAPER.md) §3) |
-| 2 | **Breakeven is a range, not a point.** Direct donations beat the independent streaming pool when a devoted fan pays more often than 0.38–1.25–6.31 times/year (min/median/max over 18 axis combinations; the earlier point estimate was retracted — see Retracted & bounded). Recurring patronage closes the range structurally: Twitch/Patreon paying-fan cadence is 12/yr against the worst corner of 6.31, and recurring k=12 on the TON rail drops direct MVA to 900. | [fig1](figures/fig1_mva.png) | [CRITIC](paper/CRITIC.md) §1, итог; [RESULTS](paper/RESULTS.md) v0.3 §1–§2; [PAPER](paper/PAPER.md) §4 |
-| 3 | **Fraud dilutes pools, not direct rails.** Injecting F% bot streams drains F/(1+F) of the pool from every artist — at 30% injection the pool loses 23% — while honest-artist losses in the direct economy are ~0: a bot cannot donate other people's money. This is an analytic dilution curve with zero detection assumed, not a simulation; the direct economy has its own loss classes (chargebacks), but they do not spread onto the innocent. | [fig3](figures/fig3_fraud.png) | [RESULTS](paper/RESULTS.md) «Фрод»; [PAPER](paper/PAPER.md) §4; caveat [CRITIC](paper/CRITIC.md) §4 |
-| 4 | **The $13 payout threshold is a decade for signed artists.** At Telegram's $13 minimum withdrawal, 94.3% of signed-pool artists wait longer than a year for their first payout, 89.9% longer than ten years; on the direct rail the median donation is $6.9 against the same $13 threshold. Of $1 on the TON rail, 94.9¢ reaches the artist (5.0¢ platform, 0.1¢ rail) versus 64.1¢ on Stars mobile. | [fig4](figures/fig4_rails.png) | [RESULTS](paper/RESULTS.md) «Логистика порога» + §3; [PAPER](paper/PAPER.md) §4 |
-| 5 | **Seeding hubs beats random seeding — on a model, not Telegram data.** On a synthetic Telegram-like graph (BA + 3,460 overlapping chat-cliques), top-hub seeding beats random at every budget B ∈ [2; 500] at p = p* = 0.15 (B=5: 4,509 vs 0 reach-per-seed; B=500: 55.4 vs 46.5), and the verdict survives a pure-BA-hub control (B=1 is structurally degenerate for complex contagion and excluded). Chats change the reliability of complex contagion, not its possibility: P(macro-cascade) = 1.00 / 0.15 / 1.00 (simple on bare BA / complex on bare BA / complex with chats); at B ≤ 20 part of the hub win is seed density in general — the clean hub effect (+14–19%, up to +27.7% for the top-BA control) isolates at B ≥ 50. | [fig8](figures/fig8_reach_per_seed.png), [fig9](figures/fig9_phase_diagram.png) | [sim2/README](sim2/README.md), вердикт фальсификатора GTM ([SPEC](sim2/SPEC.md) §6); эксперимент C (T3) |
-| 6 | **Emission economies collapse in-model; the "payouts ≤ inflow" law cannot bankrupt its treasury.** The law-bound treasury has zero invariant violations across all runs (a structural property), while the emission regime loses ≥80% of peak DAU in 200/200 Monte-Carlo runs — invariant across all red-team stress forms; the sharper statistics hold only under the baseline price form: median death month t* = 12 [IQR 11–13], and the token-denominated treasury "dies" ~6 months before the product (a denomination defect — the same treasury marked in $ at collection grows monotonically, 0/200 deaths). The emission regime's payout/inflow ratio crosses 1.0 in month 3 and peaks at 36.9 (it pays out 37× what it collects) against a structural 0.50 for the law-bound regime — which is still no immortality: net churn c − i ≥ 8.55%/month kills the law-bound product too, by external causes. | [fig11](figures/fig11_treasury_dau.png)–[fig13](figures/fig13_two_curves.png) | [sim3/README](sim3/README.md), иерархия §7 v1.2; фальсификатор [SPEC](sim3/SPEC.md) §8; калибровка: Hamster Kombat ×25/6 mo |
+| Term | Meaning |
+|------|---------|
+| **MVA** | Minimum viable audience — how many listeners an artist needs for a given income (here: $100/month) under a given payout mechanism. Lower is better for the artist. |
+| **MRR** | Monthly recurring revenue — the platform's revenue per month. |
+| **MAU / DAU** | Monthly / daily active users. |
+| **ARPPU** | Average revenue per paying user. |
+| **rate k ("кеф")** | Payments per superfan per year. k=4 means a devoted fan pays four times a year; a monthly subscription is k=12. |
+| **take rate** | The share of a payment the platform keeps. |
+| **pro-rata** | Pool division by global stream share (Spotify's default): all subscription money in one pot, divided by total plays. |
+| **user-centric** | Pool division per listener's wallet (SoundCloud FPR): each subscriber's money goes only to artists that subscriber played. |
+| **rightsholder** | The owner of the recording rights — the artist only if independent; the label otherwise. Spotify's ">$1000/yr" counts rightsholders, not artists. |
+| **signed / independent** | Contract status: signed = a label sits between the pool and the artist (~6.8% pass-through); independent = the artist is the rightsholder. |
+| **PWYW** | Pay-what-you-want pricing. |
+| **log scale** | Axis where each step multiplies by 10 (10³ → 10⁴ → 10⁵). Used when values span orders of magnitude; equal visual steps mean equal *ratios*, not equal differences. |
+| **lognormal** | A right-skewed distribution: most values small, a long tail of large ones. |
+| **Gini** | Inequality coefficient: 0 = everyone equal, 1 = one takes all. This market validates at 0.97 by artist streams. |
+| **IQR** | Interquartile range — the middle 50% of outcomes (25th–75th percentile). |
+| **SEM** | Standard error of the mean — the ± band on a simulated average. |
+| **P_macro** | Probability that a seeded cascade reaches ≥5% of the graph (a macro-cascade). |
+| **R_eff** | Effective reproduction number of a cascade: adoptions caused per adoption. Above 1.0 the cascade grows; the product analogue is the viral K-factor. |
+| **complex contagion (k=2)** | Adoption requires ≥2 distinct adopted neighbours (social proof) — against simple contagion (k=1), where one exposure can convert. |
+| **BA graph** | Barabási–Albert scale-free network — the hub-heavy skeleton of the synthetic Telegram-like graph. |
 
-## Figures
+## sim1 — what a listener is worth: pricing the payout mechanisms
 
-### sim1
-
-![fig1_mva](figures/fig1_mva.png)
-
-- **fig1_mva.png** — Minimum viable audience for $100/month per payout
-  mechanism: signed pool 188,590 listeners, independent pool 12,771, direct
-  3,204 at k=4 donations/superfan/yr — each further doubling of frequency
-  halves the required audience.
+A synthetic market of 200,000 artists, calibrated to three independently
+measured anchors (87% of artists under 1,000 streams/year — Luminate; 2.6% of
+rightsholders above $1,000/year — Spotify Loud & Clear; top-0.28% holding ≈50%
+of streams — CMA/Last.fm; obtained: 87.0% / 2.6% / 44.5%, Gini 0.97). Full
+model: [paper/PAPER.md](paper/PAPER.md); numbers:
+[paper/RESULTS.md](paper/RESULTS.md); retractions:
+[paper/CRITIC.md](paper/CRITIC.md); every parameter's source:
+[SOURCES.md](SOURCES.md).
 
 ![fig2_income_dist](figures/fig2_income_dist.png)
 
-- **fig2_income_dist.png** — Annual income distribution over 200,000 synthetic
-  artists (Gini 0.97 world, binomial superfan sampling): a 30-listener artist
-  has an honest ~60% chance of zero direct income.
+*fig2 — annual income distribution over the 200,000 synthetic artists
+(simulation, N=200,000 artists, binomial superfan sampling; log x-axis: each
+step right is ×10 income). The signed-pool curve sits leftmost — a 30-listener
+artist has an honest ~60% chance of zero direct income.*
 
-![fig3_fraud](figures/fig3_fraud.png)
-
-- **fig3_fraud.png** — Fraud dilution, analytic F/(1+F) curve: 30% bot-stream
-  injection drains 23% of the pool from every artist; honest-artist losses on
-  the direct rail are ~0.
-
-![fig4_rails](figures/fig4_rails.png)
-
-- **fig4_rails.png** — Where $1 goes: TON rail 94.9¢ to the artist / 5.0¢
-  platform / 0.1¢ rail, against Stars desktop 91.7¢ and Stars mobile 64.1¢
-  (32.5¢ to stores and spread).
+**Finding 1 — the contract outweighs the rule.** Across the full
+{rule × contract} MVA matrix, switching the division rule (pro-rata →
+user-centric) moves minimum viable audience ×1.34, switching the contract
+(signed → independent) moves it ×14.8 — the best World-A formula does not
+survive a 6.8% label pass-through: user-centric signed needs 140,463 listeners
+against 12,771 for pro-rata independent. The $100/month ladder: 188,590
+(pro-rata signed) → 12,771 (pro-rata independent) → 3,204 (direct, at k=4
+donations/superfan/yr); a signed-360 contract scales the artist take ×0.70
+(direct MVA 3,204 → 4,577). The rule effect matches SoundCloud/Deezer
+empirics ([PAPER](paper/PAPER.md) Addendum v0.5 and §3).
 
 ![fig5_worlds_ladder](figures/fig5_worlds_ladder.png)
 
-- **fig5_worlds_ladder.png** — The World A → World B ladder: changing the
-  division rule moves MVA ~×1.3; changing the mechanism moves it 1–2 orders of
-  magnitude (188,590 → 900 at recurring k=12).
+*fig5 — the full World A → World B ladder (analytic; user-centric rows from
+the Monte-Carlo wallet model, 200,000 listeners, seed 42). X-axis is log MVA:
+each gridline is ×10 fewer listeners needed. Changing the division rule moves
+MVA ~×1.3; changing the mechanism moves it 1–2 orders of magnitude
+(188,590 → 900 at recurring k=12).*
+
+**Finding 2 — breakeven is a range, not a point.** Direct donations beat the
+independent streaming pool when a devoted fan pays more often than
+0.38–1.25–6.31 times/year (min/median/max over 18 axis combinations; the
+earlier point estimate was retracted — see *Retracted & bounded*). Recurring
+patronage closes the range structurally: Twitch/Patreon paying-fan cadence is
+12/yr against the worst corner of 6.31, and recurring k=12 on the TON rail
+drops direct MVA to 900 ([CRITIC](paper/CRITIC.md) §1;
+[RESULTS](paper/RESULTS.md) v0.3 §1–§2; [PAPER](paper/PAPER.md) §4).
+
+![fig1_mva](figures/fig1_mva.png)
+
+*fig1 — MVA versus payment rate k (analytic curves; the user-centric
+reference lines carry the Monte-Carlo wallet estimate). MVA = minimum viable
+audience for $100/month; k = payments per superfan per year; y-axis is log.
+The purple direct curve crossing below the green independent-pool line near
+k≈1 is the breakeven of Finding 2; each further doubling of k halves the
+required audience.*
 
 ![fig6_mrr_solver](figures/fig6_mrr_solver.png)
 
-- **fig6_mrr_solver.png** — The $300K MRR solver: a lone 5% donation fee yields
-  $1,955 MRR at 1M MAU (a 150× gap); the milestone closes only with recurring
-  patronage and blended take 15–20% at 5–10M MAU.
+*fig6 — the $300K MRR solver (analytic curves; log-log axes). MRR = the
+platform's monthly recurring revenue; MAU = monthly active users. A lone 5%
+donation fee yields $1,955 MRR at 1M MAU — a 150× gap to the milestone; the
+milestone closes only with recurring patronage and blended take 15–20% at
+5–10M MAU.*
 
-![fig7_matrix_heatmap](figures/fig7_matrix_heatmap.png)
+**Finding 3 — fraud dilutes pools, not direct rails.** Injecting F% bot
+streams drains F/(1+F) of the pool from every artist — at 30% injection the
+pool loses 23% — while honest-artist losses in the direct economy are ~0: a
+bot cannot donate other people's money. This is an analytic dilution curve
+with zero detection assumed, not a simulation; the direct economy has its own
+loss classes (chargebacks), but they do not spread onto the innocent
+([RESULTS](paper/RESULTS.md) "Fraud"; [PAPER](paper/PAPER.md) §4; caveat
+[CRITIC](paper/CRITIC.md) §4).
 
-- **fig7_matrix_heatmap.png** — The full {rule × contract} MVA matrix (hero
-  figure): the rule moves viability ×1.34, the contract ×14.8; user-centric
-  signed (140,463) is worse than pro-rata independent (12,771).
+![fig3_fraud](figures/fig3_fraud.png)
 
-### sim2
+*fig3 — pool dilution under bot-stream injection (analytic curve F/(1+F), no
+simulation, zero detection assumed): the pool's loss grows toward 23% at 30%
+injection; the direct rail's honest-loss curve is flat zero.*
+
+**Finding 4 — the $13 payout threshold is a decade for signed artists.** At
+Telegram's $13 minimum withdrawal, 94.3% of signed-pool artists wait longer
+than a year for their first payout, 89.9% longer than ten years; on the
+direct rail the median donation is $6.9 against the same $13 threshold. Of $1
+on the TON rail, 94.9¢ reaches the artist (5.0¢ platform, 0.1¢ rail) versus
+64.1¢ on Stars mobile ([RESULTS](paper/RESULTS.md) "Payout threshold
+logistics" + §3; [PAPER](paper/PAPER.md) §4).
+
+![fig4_rails](figures/fig4_rails.png)
+
+*fig4 — where $1 of a donation goes (arithmetic fee breakdown, no
+simulation): TON rail 94.9¢ to the artist / 5.0¢ platform / 0.1¢ rail,
+against Stars desktop 91.7¢ and Stars mobile 64.1¢ (32.5¢ to app stores and
+spread).*
+
+## sim2 — how music spreads: complex contagion on a synthetic Telegram-like graph
+
+A 50,000-node Barabási–Albert graph with 3,460 planted overlapping
+chat-cliques (a model, not Telegram data). Adoption is complex contagion: a
+track converts a listener only after k=2 distinct adopted neighbours. Full
+protocol and validation: [sim2/README.md](sim2/README.md),
+[sim2/SPEC.md](sim2/SPEC.md).
+
+**Finding 5 — seeding hubs beats random seeding, on a model.** Top-hub
+seeding beats random at every budget B ∈ [2; 500] at p = p* = 0.15 (B=5:
+4,509 vs 0 reach-per-seed; B=500: 55.4 vs 46.5), and the verdict survives a
+pure-BA-hub control (B=1 is structurally degenerate for complex contagion and
+excluded). Chats change the *reliability* of complex contagion, not its
+possibility: P_macro = 1.00 / 0.15 / 1.00 (simple on bare BA / complex on
+bare BA / complex with chats) ([sim2/README](sim2/README.md); falsifier
+verdict [SPEC](sim2/SPEC.md) §6; experiment C).
 
 ![fig8_reach_per_seed](figures/fig8_reach_per_seed.png)
 
-- **fig8_reach_per_seed.png** — sim2, equal-budget seeding on the synthetic
-  graph: top-hub seeding beats random at every B ∈ [2; 500], peak efficiency at
-  B=5 (4,509 organic adoptions per seeded node); pure-BA control confirms the
-  verdict.
+*fig8 — reach-per-seed by seeding strategy (simulation, 30 runs/point,
+mean ± 1 SEM; log x-axis of seeding budget B). Reach-per-seed =
+(adopters − B)/B, i.e. organic adoptions per seeded node; the yellow y=0 line
+is "seeding without multiplication".*
+
+**Finding 6 — the hub advantage is a small-budget effect.** The hub-vs-random
+gap is not a constant premium: at B=5 it is the difference between a cascade
+and none (4,509 vs 0 reach-per-seed — random seeds simply fail to ignite
+complex contagion), while at B=500 it compresses to +19% (55.4 vs 46.5 — the
+converging tails on fig8). Strategy is decisive exactly when the seeding
+budget is small; at B ≤ 20 part of the hub win is seed density in general,
+and the clean hub effect (+14–19%, up to +27.7% for the top-BA control)
+isolates at B ≥ 50 (experiment A; [sim2/README](sim2/README.md) §4.1 v1.3).
+
+**Finding 7 — the model's critical point is the product's K-factor.** R_eff —
+adoptions caused per adoption — crosses 1.0 between p = 0.15 and p = 0.20
+(0.891 → 1.354 at k=2): below that per-exposure conversion a seeded track
+dies out; above it macro-cascades become near-certain (P_macro 0.500 →
+0.775). The model knob p ("a neighbour's adoption converts me") is, in
+product terms, the viral K-factor of a share — so the phase boundary at
+p* = 0.15 is a measurable product target, not a simulation abstraction: an
+MVP that lifts per-exposure conversion past ~0.15–0.20 carries the product
+across the cascade threshold (experiment B; fig9).
 
 ![fig9_phase_diagram](figures/fig9_phase_diagram.png)
 
-- **fig9_phase_diagram.png** — sim2 phase diagram: complex-contagion critical
-  point p* = 0.15 (grid precision) against analytic references — simple
-  mean-field 0.018 and chat-layer upper bound 0.53.
+*fig9 — the phase diagram (simulation, 40 runs/point) with analytic
+references: complex-contagion critical point p* = 0.15 (grid precision)
+against the simple-contagion mean-field 0.018 and the chat-layer upper bound
+0.53. P_macro = probability of reaching ≥5% of the graph; R_eff crossing 1.0
+between p=0.15 and p=0.20 is the K-factor threshold of Finding 7.*
 
 ![fig10_cascade](figures/fig10_cascade.gif)
 
-- **fig10_cascade.gif** — Cascade animation: one complex-contagion cascade
-  spreading through chat cliques on a 4,000-node subgraph (48.3% reach), seeded
-  from a single chat.
+*fig10 — one complex-contagion cascade spreading through chat cliques
+(simulation, a single cascade on a 4,000-node illustrative subgraph, 48.3%
+reach, seeded from a single chat). The animation above is the preview; full
+file: [figures/fig10_cascade.gif](figures/fig10_cascade.gif) (2.6 MB, 15
+frames, round 0 → 14).*
 
-### sim3
+## sim3 — treasury survival: the "payouts ≤ inflow" law vs emission
+
+Regime A pays artists only from real inflow (the Tonify treasury law); regime
+B pays from token emission (the STEPN/Axie class), calibrated to be
+consistent with Hamster Kombat's ×25 collapse in 6 months. 200 Monte-Carlo
+runs; an artist layer of 10,000 agents. Full hierarchy of results and
+falsifiers: [sim3/README.md](sim3/README.md), [sim3/SPEC.md](sim3/SPEC.md).
+
+**Finding 8 — emission economies collapse in-model; the law cannot bankrupt
+its treasury.** The law-bound treasury has zero invariant violations across
+all runs (a structural property), while the emission regime loses ≥80% of
+peak DAU in 200/200 Monte-Carlo runs — invariant across all red-team stress
+forms; the sharper statistics hold only under the baseline price form: median
+death month t* = 12 [IQR 11–13], and the token-denominated treasury "dies"
+~6 months before the product (a denomination defect — the same treasury
+marked in $ at collection grows monotonically, 0/200 deaths). The emission
+regime's payout/inflow ratio crosses 1.0 in month 3 and peaks at 36.9 (it
+pays out 37× what it collects) against a structural 0.50 for the law-bound
+regime — which is still no immortality: net churn c − i ≥ 8.55%/month kills
+the law-bound product too, by external causes
+([sim3/README](sim3/README.md) §7 v1.2; falsifier [SPEC](sim3/SPEC.md) §8;
+calibration: Hamster Kombat ×25/6 mo).
 
 ![fig11_treasury_dau](figures/fig11_treasury_dau.png)
 
-- **fig11_treasury_dau.png** — sim3, DAU and treasuries: the law-bound treasury
-  plateaus at $41,700 with zero deaths while the emission treasury collapses
-  ×943 from its $75.8M peak; falsifier panel — net churn ≥ 8.55%/month kills
-  the law-bound product too.
+*fig11 — DAU and treasuries (simulation: regime A deterministic, regime B
+median of 200 runs; log y-axes; IQR = middle-50% band): the law-bound
+treasury plateaus at $41,700 with zero deaths while the emission treasury
+collapses ×943 from its $75.8M peak; right panel — the falsifier: net churn
+≥ 8.55%/month kills the law-bound product too (analytic curve, simulation
+dots).*
 
 ![fig12_death_dist](figures/fig12_death_dist.png)
 
-- **fig12_death_dist.png** — Distribution of the emission regime's death month
-  over 200 runs (median t* = 12, IQR 11–13, baseline price form); the "36+"
-  column is 18 zombie runs cycling at 4–7% of peak.
+*fig12 — distribution of the emission regime's death month (simulation, 200
+runs; median t* = 12, IQR 11–13, baseline price form); the "36+" column is
+the 18 zombie runs cycling at 4–7% of peak.*
 
 ![fig13_two_curves](figures/fig13_two_curves.png)
 
-- **fig13_two_curves.png** — The two-curves slide: direct-economy treasury
-  versus emission treasury on one axis, with the emission regime's median death
-  month marked.
+*fig13 — the two-curves slide (simulation: A deterministic, B median of 200
+runs; DAU as a share of each regime's peak): the direct-economy treasury
+versus the emission treasury on one axis, with the emission regime's median
+death month marked.*
+
+**Finding 9 — platform indifference: the artist's contract barely moves the
+platform's treasury.** Switching the artist layer from independent to
+signed-360 cuts aggregate artist income by ~1/3 (regime A: $51,898 →
+$36,171/month at t=36) — but moves the platform treasury by −0.19% ($41,700 →
+$41,623). The platform is financially near-indifferent to the contract its
+artists are on: platform revenue scales with flow, artist survival with the
+artist's share of it — the party with the least skin in the contract game
+holds the pen. The incentive asymmetry is structural, not moral (sim3 artist
+layer, §6, both contract columns).
+
+**Finding 10 — artist churn is the norm in both regimes.** 9,010 of 10,000
+artists exit within 36 months even in regime A (990 survive; regime B
+median: 950 survive — and regime B's artist incomes are paper emission, not
+external money). The treasury law keeps the *platform* alive; it does not
+keep the *median artist* alive — individual survival is set by audience size
+against the exit threshold, which is sim1's MVA problem, not sim3's treasury
+problem. The catalogue survives through its weight coefficient (w₃₆ = 0.989):
+the platform lives on a long tail of small artists who individually churn.
+An honest number to lead with, not to bury (sim3 artist layer, §6).
 
 ## Reproducibility
 
@@ -149,23 +296,28 @@ python3 run_all.py    # all three simulations + all 13 figures -> ./figures, ~1-
 - **Individually:** `python3 sim1/tonify_cash_sim.py` (then `sim1/v04_full.py`,
   `sim1/v05_matrix.py`), `python3 sim2/tonify_graph_sim.py` (~36 s),
   `python3 sim3/sim3_anti_graveyard.py` (~1 s).
+- **Provenance:** every model parameter → value used → source → vault note in
+  [SOURCES.md](SOURCES.md).
 
 ## Repository layout
 
 ```
 tonify-sim/
-├── run_all.py      # one command: sim1 + sim2 + sim3, figures fig1-fig13
-├── paper/          # sim1 documents: PAPER.md (model; RU source of truth),
-│                   #   PAPER_EN.md (English translation, numbers identical),
-│                   #   RESULTS.md (numbers), CRITIC.md (red team, retractions)
-├── sim1/           # cash register vs pool: tonify_cash_sim.py, v04_full.py,
-│                   #   v05_matrix.py (the {rule x contract} matrix)
-├── sim2/           # music spread on a synthetic Telegram-like graph:
-│                   #   tonify_graph_sim.py, SPEC.md v1.3, README.md
-├── sim3/           # anti-graveyard treasury law vs emission:
-│                   #   sim3_anti_graveyard.py, SPEC.md v1.2, README.md
-├── figures/        # fig1-fig13, regenerated by run_all.py
-└── LICENSE         # MIT
+├── run_all.py        # one command: sim1 + sim2 + sim3, figures fig1-fig13
+├── README.md         # this file (EN, primary) · README.ru.md — Russian, full parity
+├── SOURCES.md        # every parameter -> value -> source -> vault note (EN · SOURCES.ru.md)
+├── paper/            # sim1 documents, EN primary + Russian originals:
+│                     #   PAPER.md / PAPER.ru.md (model; the RU original is the source of truth),
+│                     #   RESULTS.md / RESULTS.ru.md (numbers),
+│                     #   CRITIC.md / CRITIC.ru.md (red team, retractions)
+├── sim1/             # cash register vs pool: tonify_cash_sim.py, v04_full.py,
+│                     #   v05_matrix.py (the {rule x contract} matrix)
+├── sim2/             # music spread on a synthetic Telegram-like graph:
+│                     #   tonify_graph_sim.py, SPEC.md v1.3, README.md
+├── sim3/             # anti-graveyard treasury law vs emission:
+│                     #   sim3_anti_graveyard.py, SPEC.md v1.2, README.md
+├── figures/          # fig1-fig13, regenerated by run_all.py
+└── LICENSE           # MIT
 ```
 
 The sim2/sim3 SPECs and the per-sim READMEs are process documentation in
@@ -186,6 +338,11 @@ This section is what that right produced. Genre and full text: sim1 —
   fan-powered payouts, not of donations. A category error; the number was removed
   from the results (CRITIC §1). At that retracted frequency the direct economy
   honestly loses to the independent pool (MVA 30,782 vs 12,771).
+- *Retracted (v0.5.1):* the Addendum's user-centric-signed MVA of 140,095 — a
+  draft-run artifact not reproducible by the code and internally inconsistent
+  with its sibling 188,590; replaced by 140,463, with the label pass-through
+  now *derived* from the two anchors (0.0003/0.00443 = 6.772%) instead of
+  entered as a rounded 0.068 ([PAPER](paper/PAPER.md) CHANGELOG v0.5.1).
 - *Point → range:* breakeven became 0.38–1.25–6.31 donations/yr across 18
   combinations of three axes, each replaced after attack: plays/listener 21.2 →
   8–21 (LFM-1b measures panel lifetime, not a year; the error direction is
