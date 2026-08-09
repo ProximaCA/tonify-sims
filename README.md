@@ -210,9 +210,9 @@ between p=0.15 and p=0.20 is the K-factor threshold of Finding 7.*
 
 *fig10 — one complex-contagion cascade spreading through chat cliques
 (simulation, a single cascade on a 4,000-node illustrative subgraph, 48.3%
-reach, seeded from a single chat). The animation above is the preview; full
-file: [figures/fig10_cascade.gif](figures/fig10_cascade.gif) (2.6 MB, 15
-frames, round 0 → 14).*
+reach, seeded from a single chat). Inline above is the full animation;
+direct file: [figures/fig10_cascade.gif](figures/fig10_cascade.gif)
+(2.6 MB, 15 frames, round 0 → 14).*
 
 ## sim3 — treasury survival: the "payouts ≤ inflow" law vs emission
 
@@ -302,7 +302,7 @@ python3 run_all.py    # all three simulations + all 13 figures -> ./figures, ~1-
 ## Repository layout
 
 ```
-tonify-sim/
+tonify-sims/
 ├── run_all.py        # one command: sim1 + sim2 + sim3, figures fig1-fig13
 ├── README.md         # this file (EN, primary) · README.ru.md — Russian, full parity
 ├── SOURCES.md        # every parameter -> value -> source -> vault note (EN · SOURCES.ru.md)
