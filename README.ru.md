@@ -10,7 +10,7 @@
 ![Python 3](https://img.shields.io/badge/python-3-blue)
 ![seed=42](https://img.shields.io/badge/seed-42-orange)
 
-![Тепловая карта MVA по полной матрице {правило выплат x контракт}](figures/fig7_matrix_heatmap.png)
+![Тепловая карта MVA по полной матрице {правило выплат x контракт}](figures/ru/fig7_matrix_heatmap.png)
 
 *Главная фигура: минимальная жизнеспособная аудитория (MVA) по полной матрице
 {правило выплат × контракт} — аналитическая матрица, user-centric-строка из
@@ -74,7 +74,7 @@ Telegram/TON (Tonify): sim1 оценивает механизмы выплат �
 [CRITIC](paper/CRITIC.ru.md); источник каждого параметра:
 [SOURCES](SOURCES.ru.md).
 
-![fig2_income_dist](figures/fig2_income_dist.png)
+![fig2_income_dist](figures/ru/fig2_income_dist.png)
 
 *fig2 — распределение годового дохода по 200 000 синтетических артистов
 (симуляция, N=200 000 артистов, биномиальный сэмплинг суперфанов; лог-ось x:
@@ -92,7 +92,7 @@ Telegram/TON (Tonify): sim1 оценивает механизмы выплат �
 (MVA кассы 3 204 → 4 577). Эффект правила согласуется с эмпирикой
 SoundCloud/Deezer ([PAPER](paper/PAPER.ru.md), Addendum v0.5 и §3).
 
-![fig5_worlds_ladder](figures/fig5_worlds_ladder.png)
+![fig5_worlds_ladder](figures/ru/fig5_worlds_ladder.png)
 
 *fig5 — полная лестница World A → World B (аналитика; user-centric-строки из
 Монте-Карло модели кошельков, 200 000 слушателей, seed 42). Ось x — лог MVA:
@@ -109,7 +109,7 @@ SoundCloud/Deezer ([PAPER](paper/PAPER.ru.md), Addendum v0.5 и §3).
 ([CRITIC](paper/CRITIC.ru.md) §1; [RESULTS](paper/RESULTS.ru.md) v0.3 §1–§2;
 [PAPER](paper/PAPER.ru.md) §4).
 
-![fig1_mva](figures/fig1_mva.png)
+![fig1_mva](figures/ru/fig1_mva.png)
 
 *fig1 — MVA против частоты платежа k (аналитические кривые; референсные
 user-centric-линии несут Монте-Карло оценку кошельков). MVA = минимальная
@@ -118,7 +118,7 @@ y — лог. Фиолетовая кривая кассы, ныряющая п�
 k≈1, — это breakeven Находки 2; каждое дальнейшее удвоение k режет требуемую
 аудиторию вдвое.*
 
-![fig6_mrr_solver](figures/fig6_mrr_solver.png)
+![fig6_mrr_solver](figures/ru/fig6_mrr_solver.png)
 
 *fig6 — solver $300K MRR (аналитические кривые; лог-лог оси). MRR = месячная
 регулярная выручка платформы; MAU = месячная активная аудитория. Одинокая 5%
@@ -134,7 +134,7 @@ milestone сходится только с рекуррентным патрон
 размазываются на невиновных ([RESULTS](paper/RESULTS.ru.md), «Фрод»;
 [PAPER](paper/PAPER.ru.md) §4; оговорка — [CRITIC](paper/CRITIC.ru.md) §4).
 
-![fig3_fraud](figures/fig3_fraud.png)
+![fig3_fraud](figures/ru/fig3_fraud.png)
 
 *fig3 — разбавление котла при впрыске ботовых стримов (аналитическая кривая
 F/(1+F), без симуляции, детекция нулевая): потеря котла растёт к 23% при 30%
@@ -148,7 +148,7 @@ F/(1+F), без симуляции, детекция нулевая): потер
 mobile ([RESULTS](paper/RESULTS.ru.md), «Логистика порога» + §3;
 [PAPER](paper/PAPER.ru.md) §4).
 
-![fig4_rails](figures/fig4_rails.png)
+![fig4_rails](figures/ru/fig4_rails.png)
 
 *fig4 — куда уходит $1 доната (арифметическая раскладка комиссий, без
 симуляции): TON-рельса — 94,9¢ артисту / 5,0¢ платформе / 0,1¢ рельсе, против
@@ -171,7 +171,7 @@ Stars desktop 91,7¢ и Stars mobile 64,1¢ (32,5¢ — сторы и спред
 чатами) ([sim2/README](sim2/README.md); вердикт фальсификатора —
 [SPEC](sim2/SPEC.md) §6; эксперимент C).
 
-![fig8_reach_per_seed](figures/fig8_reach_per_seed.png)
+![fig8_reach_per_seed](figures/ru/fig8_reach_per_seed.png)
 
 *fig8 — reach-per-seed по стратегиям посева (симуляция, 30 прогонов/точку,
 среднее ± 1 SEM; лог-ось x бюджета посева B). Reach-per-seed =
@@ -198,7 +198,7 @@ p* = 0,15 — измеримая продуктовая мишень, а не а
 поднявший конверсию на касание выше ~0,15–0,20, переносит продукт через
 каскадный порог (эксперимент B; fig9).
 
-![fig9_phase_diagram](figures/fig9_phase_diagram.png)
+![fig9_phase_diagram](figures/ru/fig9_phase_diagram.png)
 
 *fig9 — фазовая диаграмма (симуляция, 40 прогонов/точку) с аналитическими
 референсами: критическая точка complex contagion p* = 0,15 (точность сетки)
@@ -206,12 +206,12 @@ p* = 0,15 — измеримая продуктовая мишень, а не а
 P_macro = вероятность достичь ≥5% графа; R_eff, пересекающий 1,0 между p=0,15
 и p=0,20, — K-факторный порог Находки 7.*
 
-![fig10_cascade](figures/fig10_cascade.gif)
+![fig10_cascade](figures/ru/fig10_cascade.gif)
 
 *fig10 — один каскад complex contagion, расходящийся по чат-кликам
 (симуляция, одиночный каскад на иллюстративном подграфе из 4 000 узлов, охват
 48,3%, посев из одного чата). Выше — полная анимация; прямая ссылка на файл:
-[fig10_cascade.gif](figures/fig10_cascade.gif) (2,6 МБ, 15 кадров,
+[fig10_cascade.gif](figures/ru/fig10_cascade.gif) (2,6 МБ, 15 кадров,
 раунд 0 → 14).*
 
 ## sim3 — выживание казны: закон «выплаты ≤ приток» против эмиссии
@@ -238,7 +238,7 @@ P_macro = вероятность достичь ≥5% графа; R_eff, пер�
 причинам ([sim3/README](sim3/README.md) §7 v1.2; фальсификатор —
 [SPEC](sim3/SPEC.md) §8; калибровка: Hamster Kombat ×25/6 мес).
 
-![fig11_treasury_dau](figures/fig11_treasury_dau.png)
+![fig11_treasury_dau](figures/ru/fig11_treasury_dau.png)
 
 *fig11 — DAU и казны (симуляция: режим A детерминирован, режим B — медиана
 200 прогонов; лог-оси y; IQR = полоса средних 50%): казна под законом выходит
@@ -246,13 +246,13 @@ P_macro = вероятность достичь ≥5% графа; R_eff, пер�
 от пика $75,8M; правая панель — фальсификатор: чистый отток ≥ 8,55%/мес
 убивает и продукт под законом (аналитическая кривая, точки симуляции).*
 
-![fig12_death_dist](figures/fig12_death_dist.png)
+![fig12_death_dist](figures/ru/fig12_death_dist.png)
 
 *fig12 — распределение месяца смерти эмиссионного режима (симуляция, 200
 прогонов; медиана t* = 12, IQR 11–13, базовая форма цены); колонка «36+» —
 это 18 зомби-прогонов, циклящих на 4–7% пика.*
 
-![fig13_two_curves](figures/fig13_two_curves.png)
+![fig13_two_curves](figures/ru/fig13_two_curves.png)
 
 *fig13 — слайд двух кривых (симуляция: A детерминирован, B — медиана 200
 прогонов; DAU как доля пика каждого режима): казна прямой экономики против
@@ -282,7 +282,7 @@ B: 950 — причём артистские доходы режима B — б�
 ## Воспроизводимость
 
 ```
-python3 run_all.py    # все три симуляции + все 13 фигур -> ./figures, ~1-2 мин, exit 0
+python3 run_all.py    # три симуляции + 13 фигур × EN/RU -> ./figures + ./figures/ru, ~1-2 мин, exit 0
 ```
 
 - **Детерминизм:** seed=42 везде; повторный запуск даёт байт-в-байт идентичный
@@ -316,7 +316,8 @@ tonify-sims/
 │                     #   tonify_graph_sim.py, SPEC.md v1.3, README.md
 ├── sim3/             # закон казны «анти-кладбище» против эмиссии:
 │                     #   sim3_anti_graveyard.py, SPEC.md v1.2, README.md
-├── figures/          # fig1-fig13, перегенерируются run_all.py
+├── figures/          # fig1-fig13 (EN) · figures/ru/ — те же 13 по-русски,
+│                     #   оба набора перегенерирует run_all.py
 └── LICENSE           # MIT
 ```
 

@@ -405,36 +405,71 @@ def falsifier_verdict(res_a):
 
 
 # ---------- Фигуры (§7) ----------
-def make_fig8(res_a, p_star):
+FIG_L = {
+ "en": dict(tag_ba="control §4.1; simulation", tag="simulation", sem="mean ± 1 SEM",
+    y0="analytic: seeding without multiplication (y = 0)",
+    b1="B=1: all strategies at 0 —\na complex track cannot be seeded by one post (§6);\nexcluded from the falsifier criterion",
+    f8_xl="Seeding budget B, nodes (log)", f8_yl="Reach-per-seed = (reach − B)/B",
+    f8_t="Equal-budget seeding: complex k=2, p = p* = {p:.2f}"),
+ "ru": dict(tag_ba="контроль §4.1; симуляция", tag="симуляция", sem="среднее ± 1 SEM",
+    y0="аналитика: посев без размножения (y = 0)",
+    b1="B=1: у всех стратегий 0 —\ncomplex-трек не сеется одним постом (§6);\nиз критерия фальсификатора исключён",
+    f8_xl="Бюджет посева B, узлов (log)", f8_yl="Reach-per-seed = (охват − B)/B",
+    f8_t="Посев при равном бюджете: complex k=2, p = p* = {p:.2f}"),
+}
+
+def make_fig8(res_a, p_star, lang="en", outdir=None):
     """Эксперимент A: reach-per-seed vs бюджет, среднее ± 1 SEM, 30 прогонов."""
+    L = FIG_L[lang]; outdir = outdir or FIGDIR; os.makedirs(outdir, exist_ok=True)
     fig, ax = plt.subplots(figsize=(9, 5.5))
     colors = {"top-hubs": P, "random": C, "random-cliques": K, "top-BA": "#00E08F"}
     for strat in ("top-hubs", "random", "random-cliques", "top-BA"):
         rows = res_a[strat]
         mean = np.array([r["mean"] for r in rows])
         sem = np.array([r["sem"] for r in rows])
-        tag = "control §4.1; simulation" if strat == "top-BA" else "simulation"
+        tag = L["tag_ba"] if strat == "top-BA" else L["tag"]
         ax.plot(BUDGETS, mean, color=colors[strat], lw=3, marker="o", ms=5,
-                label=f"{strat} ({tag}, mean ± 1 SEM)",
+                label=f"{strat} ({tag}, {L['sem']})",
                 zorder=2.5 if strat == "top-hubs" else 2)   # top-hubs поверх top-BA (совпадают на B≥10)
         ax.fill_between(BUDGETS, mean - sem, mean + sem, color=colors[strat], alpha=0.18)
-    ax.axhline(0, color=Y, lw=1.5, ls="--", label="analytic: seeding without multiplication (y = 0)")
-    ax.text(0.53, 0.56, "B=1: all strategies at 0 —\na complex track cannot be seeded by one post (§6);\nexcluded from the falsifier criterion",
-            transform=ax.transAxes, fontsize=8.5, color=INK)
+    ax.axhline(0, color=Y, lw=1.5, ls="--", label=L["y0"])
+    ax.text(0.53, 0.56, L["b1"], transform=ax.transAxes, fontsize=8.5, color=INK)
     ax.set_xscale("log")
     ax.set_xticks(BUDGETS); ax.set_xticklabels([str(b) for b in BUDGETS])
-    ax.set_xlabel("Seeding budget B, nodes (log)")
-    ax.set_ylabel("Reach-per-seed = (reach − B)/B")
-    ax.set_title(f"Equal-budget seeding: complex k=2, p = p* = {p_star:.2f}")
+    ax.set_xlabel(L["f8_xl"])
+    ax.set_ylabel(L["f8_yl"])
+    ax.set_title(L["f8_t"].format(p=p_star))
     ax.grid(alpha=0.15); ax.legend(frameon=False)
-    fig.tight_layout(); fig.savefig(os.path.join(FIGDIR, "fig8_reach_per_seed.png"), dpi=150)
+    fig.tight_layout(); fig.savefig(os.path.join(outdir, "fig8_reach_per_seed.png"), dpi=150)
     plt.close(fig)
 
 
-def make_fig9(res_b, p_c_mf, p_c_chat, pc1, pc2):
+FIG9_L = {
+ "en": dict(med="median + IQR (simulation)", mean="mean (simulation)",
+    mf="analytic: mean-field ⟨k⟩/(⟨k²⟩−⟨k⟩) = {v:.3f}",
+    chat="analytic: bridge-layer mean-field 1/√(d̄−1) = {v:.2f}, upper bound",
+    pc="(simulation)", yl="Final reach, % of N",
+    t="Phase diagram: seed — one random chat (10–14 nodes); 40 runs/point",
+    reff="R_eff | G₁≥1 (simulation)", pm="P_macro = P(reach ≥ 5% N) (simulation)",
+    thr="analytic: criticality threshold R_eff = 1",
+    sub="subcritical complex", sup="supercritical complex",
+    xl="Share rate p", yl2="R_eff | G₁≥1 and P_macro (one scale)"),
+ "ru": dict(med="медиана + IQR (симуляция)", mean="mean (симуляция)",
+    mf="аналитика: mean-field ⟨k⟩/(⟨k²⟩−⟨k⟩) = {v:.3f}",
+    chat="аналитика: mean-field мостового слоя 1/√(d̄−1) = {v:.2f}, оценка сверху",
+    pc="(симуляция)", yl="Финальный охват, % N",
+    t="Фазовая диаграмма: посев — один случайный чат (10–14 узлов); 40 прогонов/точку",
+    reff="R_eff | G₁≥1 (симуляция)", pm="P_macro = P(охват ≥ 5% N) (симуляция)",
+    thr="аналитика: порог критичности R_eff = 1",
+    sub="субкритика complex", sup="сверхкритика complex",
+    xl="Share rate p", yl2="R_eff | G₁≥1 и P_macro (одна шкала)"),
+}
+
+def make_fig9(res_b, p_c_mf, p_c_chat, pc1, pc2, lang="en", outdir=None):
     """Эксперимент B (v1.1): две панели, общая ось X = p. Верх — охват: медиана+IQR и mean
     тонкой линией (расхождение = подпись бимодальности); вертикали p_c^MF и p_c^chat.
     Низ — условный R_eff и P_macro точками на одной оси (dual-axis запрещён ТЗ)."""
+    L = FIG9_L[lang]; outdir = outdir or FIGDIR; os.makedirs(outdir, exist_ok=True)
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9, 8.5), sharex=True)
     series = {K_COMPLEX: (P, "complex k=2"), K_SIMPLE: (C, "simple k=1")}
     for k, (col, lbl) in series.items():
@@ -443,36 +478,34 @@ def make_fig9(res_b, p_c_mf, p_c_chat, pc1, pc2):
         q1 = np.array([r["reach_q1"] for r in rows]) * 100
         q3 = np.array([r["reach_q3"] for r in rows]) * 100
         mean = np.array([r["reach_mean"] for r in rows]) * 100
-        ax1.plot(P_GRID, med, color=col, lw=3, label=f"{lbl}: median + IQR (simulation)")
+        ax1.plot(P_GRID, med, color=col, lw=3, label=f"{lbl}: {L['med']}")
         ax1.fill_between(P_GRID, q1, q3, color=col, alpha=0.18)
-        ax1.plot(P_GRID, mean, color=col, lw=1.2, ls="-.", label=f"{lbl}: mean (simulation)")
-    ax1.axvline(p_c_mf, color=Y, lw=1.5, ls="--",
-                label=f"analytic: mean-field ⟨k⟩/(⟨k²⟩−⟨k⟩) = {p_c_mf:.3f}")
-    ax1.axvline(p_c_chat, color=Y, lw=1.5, ls=":", ymin=0.58,
-                label=f"analytic: bridge-layer mean-field 1/√(d̄−1) = {p_c_chat:.2f}, upper bound")
-    for pc, col, lbl in [(pc1, C, f"p_c(k=1) = {pc1:.2f} (simulation)"),
-                         (pc2, P, f"p_c(k=2) = p* = {pc2:.2f} (simulation)")]:
+        ax1.plot(P_GRID, mean, color=col, lw=1.2, ls="-.", label=f"{lbl}: {L['mean']}")
+    ax1.axvline(p_c_mf, color=Y, lw=1.5, ls="--", label=L["mf"].format(v=p_c_mf))
+    ax1.axvline(p_c_chat, color=Y, lw=1.5, ls=":", ymin=0.58, label=L["chat"].format(v=p_c_chat))
+    for pc, col, lbl in [(pc1, C, f"p_c(k=1) = {pc1:.2f} {L['pc']}"),
+                         (pc2, P, f"p_c(k=2) = p* = {pc2:.2f} {L['pc']}")]:
         ax1.plot([pc], [-4], marker="^", ms=9, color=col, clip_on=False, ls="none", label=lbl)
     ax1.set_ylim(-8, 104)
-    ax1.set_ylabel("Final reach, % of N")
-    ax1.set_title("Phase diagram: seed — one random chat (10–14 nodes); 40 runs/point")
+    ax1.set_ylabel(L["yl"])
+    ax1.set_title(L["t"])
     ax1.grid(alpha=0.15); ax1.legend(frameon=False, fontsize=8, loc="lower right")
 
     for k, (col, lbl) in series.items():
         rows = res_b[k]
         ax2.plot(P_GRID, [r["reff_cond"] for r in rows], color=col, lw=3,
-                 label=f"{lbl}: R_eff | G₁≥1 (simulation)")
+                 label=f"{lbl}: {L['reff']}")
         ax2.plot(P_GRID, [r["p_macro"] for r in rows], color=col, lw=0, marker="o", ms=5,
-                 alpha=0.55, label=f"{lbl}: P_macro = P(reach ≥ 5% N) (simulation)")
-    ax2.axhline(1.0, color=Y, lw=1.5, ls="--", label="analytic: criticality threshold R_eff = 1")
+                 alpha=0.55, label=f"{lbl}: {L['pm']}")
+    ax2.axhline(1.0, color=Y, lw=1.5, ls="--", label=L["thr"])
     ax2.axvspan(P_GRID[0], pc2, color=K, alpha=0.08)
     ax2.axvspan(pc2, P_GRID[-1], color=P, alpha=0.08)
-    ax2.text((P_GRID[0] + pc2) / 2, 0.06, "subcritical complex", ha="center", color=INK, fontsize=9)
-    ax2.text((pc2 + P_GRID[-1]) / 2, 0.06, "supercritical complex", ha="center", color=INK, fontsize=9)
-    ax2.set_xlabel("Share rate p")
-    ax2.set_ylabel("R_eff | G₁≥1 and P_macro (one scale)")
+    ax2.text((P_GRID[0] + pc2) / 2, 0.06, L["sub"], ha="center", color=INK, fontsize=9)
+    ax2.text((pc2 + P_GRID[-1]) / 2, 0.06, L["sup"], ha="center", color=INK, fontsize=9)
+    ax2.set_xlabel(L["xl"])
+    ax2.set_ylabel(L["yl2"])
     ax2.grid(alpha=0.15); ax2.legend(frameon=False, fontsize=8, loc="upper left")
-    fig.tight_layout(); fig.savefig(os.path.join(FIGDIR, "fig9_phase_diagram.png"), dpi=150)
+    fig.tight_layout(); fig.savefig(os.path.join(outdir, "fig9_phase_diagram.png"), dpi=150)
     plt.close(fig)
 
 
@@ -508,7 +541,18 @@ def make_gif(p_star):
     node_size = 2.0 + deg_g * 0.55                     # размер узла ~ степень
     seed_mask = np.zeros(N_GIF, dtype=bool); seed_mask[seeds] = True
 
-    def render(touches, adopted, sharers_now, t, cur_reach):
+    GIF_L = {
+     "en": dict(t="Complex cascade k=2, p = p* = {p:.2f} · round {t} · adopted {r:,}",
+        key="seeds #6B2FFF · adopted #FF4D8D · at threshold (1 of 2 touches) #00D4F5 · "
+            "sharing this round #FFD426 · untouched — dim #2A2342",
+        note="simulation: illustrative scale N = 4,000; graph construction identical to the main run (N = 50,000)"),
+     "ru": dict(t="Complex-каскад k=2, p = p* = {p:.2f} · раунд {t} · принявших {r:,}",
+        key="посев #6B2FFF · принявшие #FF4D8D · на пороге (1 из 2 касаний) #00D4F5 · "
+            "транслируют в раунде #FFD426 · не затронуты — тусклый #2A2342",
+        note="симуляция: иллюстративный масштаб N = 4 000; конструкция графа идентична основной (N = 50 000)"),
+    }
+
+    def render(touches, adopted, sharers_now, t, cur_reach, L):
         fig, ax = plt.subplots(figsize=(7, 7))
         ax.add_collection(LineCollection(xy[edges], colors=INK, linewidths=0.25, alpha=0.05))
         colors = np.full(N_GIF, DIM, dtype=object)     # S, 0 касаний
@@ -523,25 +567,23 @@ def make_gif(p_star):
         ax.set_xlim(xy[:, 0].min() * 1.05, xy[:, 0].max() * 1.05)
         ax.set_ylim(xy[:, 1].min() * 1.10, xy[:, 1].max() * 1.05)
         ax.axis("off")
-        ax.set_title(f"Complex cascade k=2, p = p* = {p_star:.2f} · round {t} · adopted {cur_reach:,}",
-                     fontsize=11)
-        fig.text(0.5, 0.935, "seeds #6B2FFF · adopted #FF4D8D · at threshold (1 of 2 touches) #00D4F5 · "
-                 "sharing this round #FFD426 · untouched — dim #2A2342",
-                 ha="center", fontsize=6.0, color=INK)
-        fig.text(0.5, 0.02, "simulation: illustrative scale N = 4,000; graph construction identical to the main run (N = 50,000)",
-                 ha="center", fontsize=8.5, color=INK)
+        ax.set_title(L["t"].format(p=p_star, t=t, r=cur_reach), fontsize=11)
+        fig.text(0.5, 0.935, L["key"], ha="center", fontsize=6.0, color=INK)
+        fig.text(0.5, 0.02, L["note"], ha="center", fontsize=8.5, color=INK)
         fig.tight_layout()
         fig.canvas.draw()
         img = Image.fromarray(np.asarray(fig.canvas.buffer_rgba())).convert("RGB")
         plt.close(fig)
         return img
 
-    frames = [render(np.zeros(N_GIF, np.int32), seed_mask.copy(), None, 0, len(seeds))]
-    for t, (sharers_t, touches_t, adopted_t) in enumerate(hist, start=1):
-        frames.append(render(touches_t, adopted_t, sharers_t, t, int(adopted_t.sum())))
-    frames += [frames[-1]] * 5                          # 5 финальных статичных кадров
-    frames[0].save(os.path.join(FIGDIR, "fig10_cascade.gif"), save_all=True,
-                   append_images=frames[1:], duration=250, loop=0)  # ~4 fps
+    for _lang, _outdir in (("en", FIGDIR), ("ru", os.path.join(FIGDIR, "ru"))):
+        os.makedirs(_outdir, exist_ok=True); L = GIF_L[_lang]
+        frames = [render(np.zeros(N_GIF, np.int32), seed_mask.copy(), None, 0, len(seeds), L)]
+        for t, (sharers_t, touches_t, adopted_t) in enumerate(hist, start=1):
+            frames.append(render(touches_t, adopted_t, sharers_t, t, int(adopted_t.sum()), L))
+        frames += [frames[-1]] * 5                      # 5 финальных статичных кадров
+        frames[0].save(os.path.join(_outdir, "fig10_cascade.gif"), save_all=True,
+                       append_images=frames[1:], duration=250, loop=0)  # ~4 fps
 
 
 def main():
@@ -625,8 +667,10 @@ G_BA (без клик)             : {cells[('G_BA', 1)]['mean'] * 100:>10.1f}  
     print_b_table(res_b)
 
     # --- Фигуры ---
-    make_fig8(res_a, p_star)
-    make_fig9(res_b, p_c_mf, p_c_chat, pc1, p_star)
+    for _lang in ("en", "ru"):
+        _outdir = FIGDIR if _lang == "en" else os.path.join(FIGDIR, "ru")
+        make_fig8(res_a, p_star, lang=_lang, outdir=_outdir)
+        make_fig9(res_b, p_c_mf, p_c_chat, pc1, p_star, lang=_lang, outdir=_outdir)
     make_gif(p_star)
     print("figures saved: fig8_reach_per_seed.png, fig9_phase_diagram.png, fig10_cascade.gif")
 

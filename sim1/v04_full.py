@@ -34,36 +34,57 @@ def mva_direct(kef,take=0.80): return TARGET/(SF*kef*MG*take)
 mva_d_be=mva_direct(1.25); mva_d4=mva_direct(4); mva_rec12=TARGET/(SF*12*MG*TAKE_TON)
 
 # --- fig5: лестница World A -> World B ---
-rows=[("WORLD A  pro-rata · signed (Spotify, post-label pocket)",mva_pr_sgn,K),
-      ("WORLD A  pro-rata · independent (Spotify, $4.43/1K)",mva_pr_ind,G),
-      ("WORLD A  user-centric (SoundCloud FPR, 10k-play wallet)",mva_uc[10_000],C),
-      ("WORLD A  Twitch mechanics (50/50 sub split, k=12)",mva_twitch,"#9146FF"),
-      ("WORLD B  Tonify direct · breakeven (k=1.25)",mva_d_be,P),
-      ("WORLD B  Tonify direct · k=4",mva_d4,P),
-      ("WORLD B  Tonify recurring · k=12, TON rail",mva_rec12,Y)]
-fig,ax=plt.subplots(figsize=(11,6))
-ypos=np.arange(len(rows))[::-1]
-for (lbl,v,c),y in zip(rows,ypos):
-    ax.barh(y,v,color=c,alpha=0.9); ax.text(v*1.15,y,f"{v:,.0f}",va="center",color="#B8C8DC")
-ax.set_yticks(ypos); ax.set_yticklabels([r[0] for r in rows],fontsize=9)
-ax.set_xscale("log"); ax.grid(alpha=0.15,axis="x")
-ax.set_xlabel("Listeners needed for $100/mo (log)")
-ax.set_title("Minimum viable audience: World A → World B")
-fig.tight_layout(); fig.savefig(OUT+"fig5_worlds_ladder.png",dpi=150)
+ROWS={"en":["WORLD A  pro-rata · signed (Spotify, post-label pocket)",
+      "WORLD A  pro-rata · independent (Spotify, $4.43/1K)",
+      "WORLD A  user-centric (SoundCloud FPR, 10k-play wallet)",
+      "WORLD A  Twitch mechanics (50/50 sub split, k=12)",
+      "WORLD B  Tonify direct · breakeven (k=1.25)",
+      "WORLD B  Tonify direct · k=4",
+      "WORLD B  Tonify recurring · k=12, TON rail"],
+ "ru":["WORLD A  pro-rata · signed (Spotify, карман после лейбла)",
+      "WORLD A  pro-rata · independent (Spotify, $4.43/1K)",
+      "WORLD A  user-centric (SoundCloud FPR, кошелёк 10k плэев)",
+      "WORLD A  Twitch-механика (подписка 50/50, кеф 12)",
+      "WORLD B  Tonify direct · breakeven (кеф 1.25)",
+      "WORLD B  Tonify direct · кеф 4",
+      "WORLD B  Tonify recurring · кеф 12, TON-рельса"]}
+L5={"en":dict(xl="Listeners needed for $100/mo (log)",t="Minimum viable audience: World A → World B"),
+    "ru":dict(xl="Слушателей нужно для $100/мес (log)",t="Минимальная жизнеспособная аудитория: World A → World B")}
+vals5=[mva_pr_sgn,mva_pr_ind,mva_uc[10_000],mva_twitch,mva_d_be,mva_d4,mva_rec12]
+cols5=[K,G,C,"#9146FF",P,P,Y]
+for _lang,_out in (("en",OUT),("ru",OUT+"ru/")):
+    os.makedirs(_out,exist_ok=True); L=L5[_lang]
+    fig,ax=plt.subplots(figsize=(11,6))
+    ypos=np.arange(len(vals5))[::-1]
+    for lbl,v,c,y in zip(ROWS[_lang],vals5,cols5,ypos):
+        ax.barh(y,v,color=c,alpha=0.9); ax.text(v*1.15,y,f"{v:,.0f}",va="center",color="#B8C8DC")
+    ax.set_yticks(ypos); ax.set_yticklabels(ROWS[_lang],fontsize=9)
+    ax.set_xscale("log"); ax.grid(alpha=0.15,axis="x")
+    ax.set_xlabel(L["xl"]); ax.set_title(L["t"])
+    fig.tight_layout(); fig.savefig(_out+"fig5_worlds_ladder.png",dpi=150)
 
 # --- fig6: MRR solver ---
 mau=np.logspace(5,7.7,60)
 def mrr(mau,paying,kef,check,take): return mau*paying*kef*check*take/12
-cfgs=[("5% donation fee alone (superfans 1.7%, k=4, $6.9)",0.017,4,6.9,0.05,K),
-      ("+ artist subscriptions: 5% paying, k=12, $5, take 5%",0.05,12,5,0.05,C),
-      ("blended: 5% paying, k=12, $6, take 20% (drops/premium)",0.05,12,6,0.20,P)]
-fig,ax=plt.subplots(figsize=(10,5.8))
-for lbl,pr,k,ch,t,c in cfgs: ax.plot(mau,mrr(mau,pr,k,ch,t),lw=3,color=c,label=lbl)
-ax.axhline(300_000,color=Y,ls="--",lw=2,label="Milestone $300K MRR")
-ax.set_xscale("log"); ax.set_yscale("log"); ax.grid(alpha=0.15); ax.legend(frameon=False,fontsize=9)
-ax.set_xlabel("MAU (log)"); ax.set_ylabel("Tonify MRR, $ (log)")
-ax.set_title("MRR solver: which mechanics reach $300K")
-fig.tight_layout(); fig.savefig(OUT+"fig6_mrr_solver.png",dpi=150)
+CFG_L={"en":["5% donation fee alone (superfans 1.7%, k=4, $6.9)",
+       "+ artist subscriptions: 5% paying, k=12, $5, take 5%",
+       "blended: 5% paying, k=12, $6, take 20% (drops/premium)"],
+ "ru":["Только 5% на донатах (суперфаны 1.7%, кеф 4, $6.9)",
+       "+ подписки на артиста: платящих 5%, кеф 12, $5, take 5%",
+       "blended: платящих 5%, кеф 12, $6, take 20% (дропы/premium)"]}
+L6={"en":dict(ms="Milestone $300K MRR",xl="MAU (log)",yl="Tonify MRR, $ (log)",
+      t="MRR solver: which mechanics reach $300K"),
+    "ru":dict(ms="Milestone $300K MRR",xl="MAU (log)",yl="Tonify MRR, $ (log)",
+      t="MRR-solver: какие механики довозят до $300K")}
+cfgs=[(0.017,4,6.9,0.05,K),(0.05,12,5,0.05,C),(0.05,12,6,0.20,P)]
+for _lang,_out in (("en",OUT),("ru",OUT+"ru/")):
+    os.makedirs(_out,exist_ok=True); L=L6[_lang]
+    fig,ax=plt.subplots(figsize=(10,5.8))
+    for lbl,(pr,k,ch,t,c) in zip(CFG_L[_lang],cfgs): ax.plot(mau,mrr(mau,pr,k,ch,t),lw=3,color=c,label=lbl)
+    ax.axhline(300_000,color=Y,ls="--",lw=2,label=L["ms"])
+    ax.set_xscale("log"); ax.set_yscale("log"); ax.grid(alpha=0.15); ax.legend(frameon=False,fontsize=9)
+    ax.set_xlabel(L["xl"]); ax.set_ylabel(L["yl"]); ax.set_title(L["t"])
+    fig.tight_layout(); fig.savefig(_out+"fig6_mrr_solver.png",dpi=150)
 
 print("user-centric $/слушатель-год:",{k:round(v,3) for k,v in uc_vals.items()})
 print("MVA: pr_signed %.0f | pr_indep %.0f | UC(10k) %.0f | twitch %.0f | direct_be %.0f | direct4 %.0f | rec12 %.0f"%(

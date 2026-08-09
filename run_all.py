@@ -18,5 +18,5 @@ for f,desc in steps:
     r=subprocess.run([sys.executable,f],capture_output=True,text=True)
     print(r.stdout if len(r.stdout)<20000 else r.stdout[-20000:])
     if r.returncode!=0: print(r.stderr[-2000:]); sys.exit(1)
-print("\nDONE. Фигуры fig1-fig13 в ./figures, числа выше.")
+print("\nDONE. Фигуры fig1-fig13 в ./figures (EN) и ./figures/ru (RU), числа выше.")
 print("Документы: README.md (сводка), paper/PAPER.md, paper/RESULTS.md, paper/CRITIC.md (sim1), sim2/README.md, sim3/README.md")
