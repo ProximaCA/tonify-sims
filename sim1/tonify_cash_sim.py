@@ -103,7 +103,7 @@ pro-rata independent: ждут выплату >1 года: {w1i:5.1%}
 plt.rcParams.update({"figure.facecolor":"#0D0A1A","axes.facecolor":"#0D0A1A","axes.edgecolor":"#B8C8DC",
  "axes.labelcolor":"#B8C8DC","text.color":"#B8C8DC","xtick.color":"#B8C8DC","ytick.color":"#B8C8DC","font.size":11})
 P,C,K,Y = "#6B2FFF","#00D4F5","#FF4D8D","#FFD426"
-OUT=os.path.dirname(os.path.abspath(__file__))+"/"
+OUT=os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","figures")+"/"
 
 fig,ax=plt.subplots(figsize=(9,5.5))
 ax.plot(dons,[mva_direct(d) for d in dons],color=P,lw=3,label="Касса Tonify (суперфаны 1.7%)")
@@ -162,7 +162,7 @@ sf_counts=rng.binomial(listeners,SF)
 d4=sf_counts*4*MG*TAKE
 plt.rcParams.update({"figure.facecolor":"#0D0A1A","axes.facecolor":"#0D0A1A","axes.edgecolor":"#B8C8DC",
  "axes.labelcolor":"#B8C8DC","text.color":"#B8C8DC","xtick.color":"#B8C8DC","ytick.color":"#B8C8DC","font.size":11})
-P,C,K,Y="#6B2FFF","#00D4F5","#FF4D8D","#FFD426"; OUT=os.path.dirname(os.path.abspath(__file__))+"/"
+P,C,K,Y="#6B2FFF","#00D4F5","#FF4D8D","#FFD426"; OUT=os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","figures")+"/"
 fig,ax=plt.subplots(figsize=(9,5.5)); bins=np.logspace(-2,6,70)
 for data,c,lbl in [(np.maximum(inc_signed,1e-2),K,"Котёл: подписанный карман"),
                    (np.maximum(inc_indie,1e-2),C,"Котёл: инди-карман"),

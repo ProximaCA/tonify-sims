@@ -4,7 +4,7 @@ import os
 import numpy as np, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 rng=np.random.default_rng(42)
-P,C,K,Y,G="#6B2FFF","#00D4F5","#FF4D8D","#FFD426","#1DB954"; OUT=os.path.dirname(os.path.abspath(__file__))+"/"
+P,C,K,Y,G="#6B2FFF","#00D4F5","#FF4D8D","#FFD426","#1DB954"; OUT=os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","figures")+"/"
 plt.rcParams.update({"figure.facecolor":"#0D0A1A","axes.facecolor":"#0D0A1A","axes.edgecolor":"#B8C8DC",
  "axes.labelcolor":"#B8C8DC","text.color":"#B8C8DC","xtick.color":"#B8C8DC","ytick.color":"#B8C8DC","font.size":11})
 

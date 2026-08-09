@@ -1,6 +1,6 @@
 # Payout Mechanisms Across Two Worlds: Pro-Rata, User-Centric, and the Attention Economy
 ### Калиброванная симуляция кассовых режимов музыкального рынка · v0.4 · MIT License
-*Tonify Research · август 2026 · воспроизводимо: `tonify_cash_sim.py` + `v04_full.py`, seed=42*
+*Tonify Research · август 2026 · воспроизводимо: `sim1/tonify_cash_sim.py` + `sim1/v04_full.py`, seed=42*
 
 ---
 
@@ -100,7 +100,7 @@ blended take 20%; или 10M × 4% × 12 × $5 × 15%. Следствие: miles
 fig1 MVA-кривая · fig2 распределение дохода (биномиально) · fig3 фрод-разбавление ·
 fig4 рельсы $1 · **fig5 лестница World A→B** · **fig6 MRR-solver**
 
-*MIT License. Воспроизведение: python3 tonify_cash_sim.py && python3 v04_full.py*
+*MIT License. Воспроизведение: python3 sim1/tonify_cash_sim.py && python3 sim1/v04_full.py*
 
 ---
 ## Addendum v0.5 — полная матрица {правило × контракт} (поимка фаундера)

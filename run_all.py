@@ -4,13 +4,13 @@ sim1 (касса): мир+валидация (v0.2) -> красная коман
 sim2 (граф): BA+клики, complex contagion, фальсификатор хабов. sim3 (анти-кладбище): казна A vs B.
 Все фигуры fig1-fig13 в ./figures, ключевые числа в stdout. seed=42, MIT.
 """
-import subprocess, sys, os, shutil
+import subprocess, sys, os
 HERE=os.path.dirname(os.path.abspath(__file__))
 os.chdir(HERE)
 os.environ.setdefault("MPLBACKEND","Agg")
-steps=[("tonify_cash_sim.py","sim1: мир, валидация T1-T3, MVA, фрод, логистика, кеш-слой v0.3"),
-       ("v04_full.py","sim1: user-centric MC, лестница миров, MRR-solver"),
-       ("v05_matrix.py","sim1: полная матрица {правило × контракт}, heatmap"),
+steps=[(os.path.join("sim1","tonify_cash_sim.py"),"sim1: мир, валидация T1-T3, MVA, фрод, логистика, кеш-слой v0.3"),
+       (os.path.join("sim1","v04_full.py"),"sim1: user-centric MC, лестница миров, MRR-solver"),
+       (os.path.join("sim1","v05_matrix.py"),"sim1: полная матрица {правило × контракт}, heatmap"),
        (os.path.join("sim2","tonify_graph_sim.py"),"sim2: граф Telegram, complex contagion, фальсификатор хабов (~1 мин)"),
        (os.path.join("sim3","sim3_anti_graveyard.py"),"sim3: анти-кладбище, казна A vs B, 200 прогонов")]
 for f,desc in steps:
@@ -18,8 +18,5 @@ for f,desc in steps:
     r=subprocess.run([sys.executable,f],capture_output=True,text=True)
     print(r.stdout if len(r.stdout)<20000 else r.stdout[-20000:])
     if r.returncode!=0: print(r.stderr[-2000:]); sys.exit(1)
-os.makedirs("figures",exist_ok=True)
-for p in [x for x in os.listdir(".") if x.endswith(".png")]:
-    shutil.copy(p,os.path.join("figures",p))
 print("\nDONE. Фигуры fig1-fig13 в ./figures, числа выше.")
-print("Документы: README.md (сводка), PAPER.md, RESULTS.md, CRITIC.md (sim1), sim2/README.md, sim3/README.md")
+print("Документы: README.md (сводка), paper/PAPER.md, paper/RESULTS.md, paper/CRITIC.md (sim1), sim2/README.md, sim3/README.md")
