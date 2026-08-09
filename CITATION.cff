@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "tonify-sims: three simulations of a direct music economy"
+authors:
+  - name: "ProximaCA"
+date-released: "2026-08-08"
+license: MIT
+repository-code: "https://github.com/ProximaCA/tonify-sims"  # update on publish
+keywords:
+  - music economy
+  - simulation
+  - complex contagion
+  - tokenomics
+  - direct-to-fan

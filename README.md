@@ -1,137 +1,310 @@
-# tonify-sims — три симуляции прямой музыкальной экономики
+# tonify-sims: three simulations of a direct music economy
 
-Tonify — прямая музыкальная экономика в Telegram: слушатель донатит артисту напрямую
-(TON-рельса, комиссия 5%), вместо стримингового «котла», который делит подписку между
-всеми по стримам. Этот репозиторий — три независимые симуляции вокруг одного вопроса:
-**работает ли экономика без котла и без эмиссии** — касса (sim1), дистрибуция по графу
-Telegram (sim2), выживание казны против понци-режимов (sim3).
+Payout mechanisms, social-graph spread, and treasury survival for a direct
+listener-to-artist music economy on Telegram/TON rails — deterministic,
+red-teamed, byte-reproducible.
 
-Метод один на все три: параметры приколочены к источникам или помечены «допущение»;
-валидационные мишени печатаются ПЕРЕД выводами (провал = выводы не публикуются);
-каждый вывод несёт либо источник, либо фальсификатор; красная команда с правом отзыва
-чисел прошла по каждой симуляции (жанр — CRITIC.md). seed=42, полный детерминизм,
-байт-в-байт воспроизводимость.
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+![Python 3](https://img.shields.io/badge/python-3-blue)
+![seed=42](https://img.shields.io/badge/seed-42-orange)
 
-## Запуск
+![MVA heatmap across the full {payout rule x contract} matrix](figures/fig7_matrix_heatmap.png)
+
+*MVA heatmap across the full {payout rule x contract} matrix.*
+
+Your favourite artist needs 188,590 listeners to earn $100 a month under a
+signed pro-rata streaming contract — or 3,204 directly-paying superfans at four
+donations a year. This repository holds three deterministic simulations of a
+direct music economy on Telegram/TON rails (Tonify): sim1 prices payout
+mechanisms across a 200,000-artist synthetic market calibrated to three
+independently measured anchors; sim2 models music spreading through a synthetic
+Telegram-like social graph as complex contagion (a model, not Telegram data);
+sim3 stress-tests the treasury law "payouts never exceed inflow" against
+emission-funded token economies. The industry spent a decade debating the fair
+formula. The formula moves artist viability ×1.34. The contract moves it ×14.7.
+Precisely: in the full {rule × contract} matrix of minimum viable audience,
+switching the division rule (pro-rata → user-centric) shifts an artist's MVA by
+×1.34, while switching the contract (signed → independent) shifts it ×14.7
+(fig7; PAPER, Addendum v0.5). Every claim below carries either a source or a
+falsifier; a red team with the right to retract numbers reviewed each
+simulation, and what it retracted is documented in this README.
+
+## Key findings
+
+Every row states its validity domain. Full numbers, sources and retractions:
+[paper/](paper/), [sim2/README.md](sim2/README.md), [sim3/README.md](sim3/README.md).
+
+| # | Finding | Figure | Source / falsifier |
+|---|---------|--------|--------------------|
+| 1 | **The contract outweighs the rule.** Across the full {rule × contract} MVA matrix, switching the division rule (pro-rata → user-centric) moves minimum viable audience ×1.34, switching the contract (signed → independent) moves it ×14.7 — the best World-A formula does not survive a 6.8% label pass-through: user-centric signed needs 140,095 listeners against 12,771 for pro-rata independent. The $100/month ladder: 188,590 (pro-rata signed) → 12,771 (pro-rata independent) → 3,204 (direct, at k=4 donations/superfan/yr); a signed-360 contract scales direct numbers ×0.70 (3,204 → 4,577). | [fig7](figures/fig7_matrix_heatmap.png), [fig5](figures/fig5_worlds_ladder.png), [fig1](figures/fig1_mva.png) | [PAPER](paper/PAPER.md) Addendum v0.5; rule effect matches SoundCloud/Deezer empirics ([PAPER](paper/PAPER.md) §3) |
+| 2 | **Breakeven is a range, not a point.** Direct donations beat the independent streaming pool when a devoted fan pays more often than 0.38–1.25–6.31 times/year (min/median/max over 18 axis combinations; the earlier point estimate was retracted — see Retracted & bounded). Recurring patronage closes the range structurally: Twitch/Patreon paying-fan cadence is 12/yr against the worst corner of 6.31, and recurring k=12 on the TON rail drops direct MVA to 900. | [fig1](figures/fig1_mva.png) | [CRITIC](paper/CRITIC.md) §1, итог; [RESULTS](paper/RESULTS.md) v0.3 §1–§2; [PAPER](paper/PAPER.md) §4 |
+| 3 | **Fraud dilutes pools, not direct rails.** Injecting F% bot streams drains F/(1+F) of the pool from every artist — at 30% injection the pool loses 23% — while honest-artist losses in the direct economy are ~0: a bot cannot donate other people's money. This is an analytic dilution curve with zero detection assumed, not a simulation; the direct economy has its own loss classes (chargebacks), but they do not spread onto the innocent. | [fig3](figures/fig3_fraud.png) | [RESULTS](paper/RESULTS.md) «Фрод»; [PAPER](paper/PAPER.md) §4; caveat [CRITIC](paper/CRITIC.md) §4 |
+| 4 | **The $13 payout threshold is a decade for signed artists.** At Telegram's $13 minimum withdrawal, 94.3% of signed-pool artists wait longer than a year for their first payout, 89.9% longer than ten years; the direct rail crosses the same threshold in ~2 donations. Of $1 on the TON rail, 94.9¢ reaches the artist (5.0¢ platform, 0.1¢ rail) versus 64.1¢ on Stars mobile. | [fig4](figures/fig4_rails.png) | [RESULTS](paper/RESULTS.md) «Логистика порога» + §3; [PAPER](paper/PAPER.md) §4 |
+| 5 | **Seeding hubs beats random seeding — on a model, not Telegram data.** On a synthetic Telegram-like graph (BA + 3,460 overlapping chat-cliques), top-hub seeding beats random at every budget B ∈ [2; 500] at p = p* = 0.15 (B=5: 4,509 vs 0 reach-per-seed; B=500: 55.4 vs 46.5), and the verdict survives a pure-BA-hub control (B=1 is structurally degenerate for complex contagion and excluded). Chats change the reliability of complex contagion, not its possibility: P(macro-cascade) = 1.00 / 0.15 / 1.00 (simple on bare BA / complex on bare BA / complex with chats); at B ≤ 20 part of the hub win is seed density in general — the clean hub effect (+14–19%, up to +27.7% for the top-BA control) isolates at B ≥ 50. | [fig8](figures/fig8_reach_per_seed.png), [fig9](figures/fig9_phase_diagram.png) | [sim2/README](sim2/README.md), вердикт фальсификатора GTM ([SPEC](sim2/SPEC.md) §6); эксперимент C (T3) |
+| 6 | **Emission economies collapse in-model; the "payouts ≤ inflow" law cannot bankrupt its treasury.** The law-bound treasury has zero invariant violations across all runs (a structural property), while the emission regime loses ≥80% of peak DAU in 200/200 Monte-Carlo runs — invariant across all red-team stress forms; the sharper statistics hold only under the baseline price form: median death month t* = 12 [IQR 11–13], and the token-denominated treasury "dies" ~6 months before the product (a denomination defect — the same treasury marked in $ at collection grows monotonically, 0/200 deaths). The emission regime's payout/inflow ratio crosses 1.0 in month 3 and peaks at 36.9 (it pays out 37× what it collects) against a structural 0.50 for the law-bound regime — which is still no immortality: net churn c − i ≥ 8.55%/month kills the law-bound product too, by external causes. | [fig11](figures/fig11_treasury_dau.png)–[fig13](figures/fig13_two_curves.png) | [sim3/README](sim3/README.md), иерархия §7 v1.2; фальсификатор [SPEC](sim3/SPEC.md) §8; калибровка: Hamster Kombat ×25/6 mo |
+
+## Figures
+
+### sim1
+
+![fig1_mva](figures/fig1_mva.png)
+
+- **fig1_mva.png** — Minimum viable audience for $100/month per payout
+  mechanism: signed pool 188,590 listeners, independent pool 12,771, direct
+  3,204 at k=4 donations/superfan/yr — each further doubling of frequency
+  halves the required audience.
+
+![fig2_income_dist](figures/fig2_income_dist.png)
+
+- **fig2_income_dist.png** — Annual income distribution over 200,000 synthetic
+  artists (Gini 0.97 world, binomial superfan sampling): a 30-listener artist
+  has an honest ~60% chance of zero direct income.
+
+![fig3_fraud](figures/fig3_fraud.png)
+
+- **fig3_fraud.png** — Fraud dilution, analytic F/(1+F) curve: 30% bot-stream
+  injection drains 23% of the pool from every artist; honest-artist losses on
+  the direct rail are ~0.
+
+![fig4_rails](figures/fig4_rails.png)
+
+- **fig4_rails.png** — Where $1 goes: TON rail 94.9¢ to the artist / 5.0¢
+  platform / 0.1¢ rail, against Stars desktop 91.7¢ and Stars mobile 64.1¢
+  (32.5¢ to stores and spread).
+
+![fig5_worlds_ladder](figures/fig5_worlds_ladder.png)
+
+- **fig5_worlds_ladder.png** — The World A → World B ladder: changing the
+  division rule moves MVA ~×1.3; changing the mechanism moves it 1–2 orders of
+  magnitude (188,590 → 900 at recurring k=12).
+
+![fig6_mrr_solver](figures/fig6_mrr_solver.png)
+
+- **fig6_mrr_solver.png** — The $300K MRR solver: a lone 5% donation fee yields
+  $1,955 MRR at 1M MAU (a 150× gap); the milestone closes only with recurring
+  patronage and blended take 15–20% at 5–10M MAU.
+
+![fig7_matrix_heatmap](figures/fig7_matrix_heatmap.png)
+
+- **fig7_matrix_heatmap.png** — The full {rule × contract} MVA matrix (hero
+  figure): the rule moves viability ×1.34, the contract ×14.7; user-centric
+  signed (140,095) is worse than pro-rata independent (12,771).
+
+### sim2
+
+![fig8_reach_per_seed](figures/fig8_reach_per_seed.png)
+
+- **fig8_reach_per_seed.png** — sim2, equal-budget seeding on the synthetic
+  graph: top-hub seeding beats random at every B ∈ [2; 500], peak efficiency at
+  B=5 (4,509 organic adoptions per seeded node); pure-BA control confirms the
+  verdict.
+
+![fig9_phase_diagram](figures/fig9_phase_diagram.png)
+
+- **fig9_phase_diagram.png** — sim2 phase diagram: complex-contagion critical
+  point p* = 0.15 (grid precision) against analytic references — simple
+  mean-field 0.018 and chat-layer upper bound 0.53.
+
+![fig10_cascade](figures/fig10_cascade.gif)
+
+- **fig10_cascade.gif** — Cascade animation: one complex-contagion cascade
+  spreading through chat cliques on a 4,000-node subgraph (48.3% reach), seeded
+  from a single chat.
+
+### sim3
+
+![fig11_treasury_dau](figures/fig11_treasury_dau.png)
+
+- **fig11_treasury_dau.png** — sim3, DAU and treasuries: the law-bound treasury
+  plateaus at $41,700 with zero deaths while the emission treasury collapses
+  ×943 from its $75.8M peak; falsifier panel — net churn ≥ 8.55%/month kills
+  the law-bound product too.
+
+![fig12_death_dist](figures/fig12_death_dist.png)
+
+- **fig12_death_dist.png** — Distribution of the emission regime's death month
+  over 200 runs (median t* = 12, IQR 11–13, baseline price form); the "36+"
+  column is 18 zombie runs cycling at 4–7% of peak.
+
+![fig13_two_curves](figures/fig13_two_curves.png)
+
+- **fig13_two_curves.png** — The two-curves slide: direct-economy treasury
+  versus emission treasury on one axis, with the emission regime's median death
+  month marked.
+
+## Reproducibility
 
 ```
-python3 run_all.py    # все три симуляции + все фигуры в ./figures (~1–2 мин)
+python3 run_all.py    # all three simulations + all 13 figures -> ./figures, ~1-2 min, exit 0
 ```
 
-Зависимости: python3, numpy, scipy (sim2), networkx (sim2), matplotlib, pillow (gif).
-По отдельности: `python3 tonify_cash_sim.py` (sim1, + v04_full.py, v05_matrix.py),
-`python3 sim2/tonify_graph_sim.py`, `python3 sim3/sim3_anti_graveyard.py`.
+- **Deterministic:** seed=42 everywhere; a re-run produces byte-identical stdout
+  and byte-identical figures.
+- **Validation before conclusions:** every simulation prints its validation
+  targets (target → obtained → PASS/FAIL) *before* its results; a FAIL blocks
+  the conclusions.
+- **Dependencies:** python3, numpy, matplotlib; scipy + networkx (sim2); pillow
+  (gif). No API keys, no data downloads — the world is synthetic and
+  self-contained.
+- **Individually:** `python3 sim1/tonify_cash_sim.py` (then `sim1/v04_full.py`,
+  `sim1/v05_matrix.py`), `python3 sim2/tonify_graph_sim.py` (~36 s),
+  `python3 sim3/sim3_anti_graveyard.py` (~1 s).
 
----
+## Repository layout
 
-## SIM 1 — касса против котла
+```
+tonify-sim/
+├── run_all.py      # one command: sim1 + sim2 + sim3, figures fig1-fig13
+├── paper/          # sim1 documents: PAPER.md (model), RESULTS.md (numbers),
+│                   #   CRITIC.md (red team, retractions)
+├── sim1/           # cash register vs pool: tonify_cash_sim.py, v04_full.py,
+│                   #   v05_matrix.py (the {rule x contract} matrix)
+├── sim2/           # music spread on a synthetic Telegram-like graph:
+│                   #   tonify_graph_sim.py, SPEC.md v1.3, README.md
+├── sim3/           # anti-graveyard treasury law vs emission:
+│                   #   sim3_anti_graveyard.py, SPEC.md v1.2, README.md
+├── figures/        # fig1-fig13, regenerated by run_all.py
+└── LICENSE         # MIT
+```
 
-Синтетический мир 200 000 артистов от трёх измеренных якорей (Luminate 87% <1000
-стримов; Spotify Loud & Clear 2,6% >$1000/год; CMA топ-0,28% ≈ 50% стримов),
-провалидирован до снятия кривых: 87,0% ✓ · 2,6% ✓ · 44,5% ✓, Gini 0,97.
+The sim2/sim3 SPECs and the per-sim READMEs are process documentation in
+Russian — spec revisions, red-team CHANGELOGs, validation protocols. This
+README is self-contained: every headline number above appears here with its
+source, and the figures carry the rest.
 
-Ключевое:
-- **Статус-кво = 0,42 доната на суперфана в год** (обратная задача от SoundCloud FPR
-  29% суперфан-доли выручки). **Breakeven кассы против инди-котла — диапазон
-  0,38…1,25…6,31 доната/год** (18 комбинаций осей; красная команда заставила
-  превратить точку в диапазон — CRITIC.md §1). Вся экономика продукта — один
-  циферблат: поднять 0,42 выше breakeven.
-- **Минимальная жизнеспособная аудитория ($100/мес)**: котёл подписанного — 188 590
-  слушателей; инди-котёл — 12 771; касса при кефе 4 доната/год — **3 204**
-  (fig1, fig7). При статус-кво 0,42 касса честно хуже инди-котла (30 782).
-- **Фрод**: впрыск F% ботовых стримов уводит из котла F/(1+F) денег у всех
-  (30% впрыска → −23% пула); в кассе потери честных = 0 — бот не может донатить
-  чужими деньгами (fig3; Beatdapp: до 85% AI-стримов фродовые).
-- **Логистика порога** ($13 минимум вывода, Telegram): в котле подписанного 94,3%
-  артистов ждут первой выплаты дольше года. Касса при том же пороге даёт выплату
-  с ~2 донатов (fig4: $1 → 94,9¢ артисту / 5,0¢ Tonify / 0,1¢ рельса).
-- **Матрица {правило выплат × контракт}** (fig7): каждый механизм — в колонках
-  independent ×1,0 и signed-360 ×0,70; направление выводов не меняется контрактом,
-  масштаб — да (MVA 3 204 → 4 577).
+## Retracted & bounded
 
-Документы: [RESULTS.md](RESULTS.md) (числа + честные ограничения),
-[PAPER.md](PAPER.md) (мир и механизмы), [CRITIC.md](CRITIC.md) (красная команда,
-отозванные числа). Фигуры fig1–fig7.
+Each simulation went through a red team with the right to retract numbers.
+This section is what that right produced. Genre and full text: sim1 —
+[paper/CRITIC.md](paper/CRITIC.md); sim2/sim3 — CHANGELOG blocks in
+[sim2/SPEC.md](sim2/SPEC.md) and [sim3/SPEC.md](sim3/SPEC.md).
 
----
+**sim1 (CRITIC.md, verdict format: accusation → verdict → action).**
+- *Retracted:* the "status quo = 0.42 donations/superfan/yr" headline — built on
+  SoundCloud's 29% superfan revenue share, which is a share of *royalties* under
+  fan-powered payouts, not of donations. A category error; the number was removed
+  from the results (CRITIC §1). At that retracted frequency the direct economy
+  honestly loses to the independent pool (MVA 30,782 vs 12,771).
+- *Point → range:* breakeven became 0.38–1.25–6.31 donations/yr across 18
+  combinations of three axes, each replaced after attack: plays/listener 21.2 →
+  8–21 (LFM-1b measures panel lifetime, not a year; the error direction is
+  *against* the direct economy), donation check $5 → $3.1–6.9 (the only
+  music-specific PWYW experiment: mean €3.10 and a *rising* refusal share,
+  24.4% vs 17.3%), superfan share 1.7% → 0.6–1.7% (the 90-9-1 rule measures as
+  97-2-1) (CRITIC §2, §6, §7).
+- *Fixed:* deterministic fractional superfans → binomial sampling — an artist
+  with 30 listeners now has an honest ~60% chance of zero direct income
+  (CRITIC §3). *Bounded:* Spotify's ">$1000/yr" is rightsholder royalties, so
+  pool-vs-direct comparisons are valid only in the independent regime
+  (artist = rightsholder) (CRITIC §5).
 
-## SIM 2 — распространение музыки по графу Telegram
+**sim2 (SPEC CHANGELOG v1.0 → v1.3).** Two honest construction stops, admitted
+and resolved by spec revision, not by tuning to the result: v1.0's independent
+clique placement blocked complex contagion entirely (p* did not exist — the
+designed stop fired), and v1.1's T3(b) threshold was a metric/threshold category
+error. v1.2's T3 thresholds were fixed *after* diagnostic runs — admitted as
+post-hoc in the CHANGELOG, with the PASS reproduced on independent seed batches
+(P_macro = 0.150/0.075/0.125, all under the 0.25 bar) and a standing process
+rule added: thresholds are fixed before diagnostic runs, or the deviation is
+declared. The v1.3 audit also quantified hub-definition contamination (81.6% of
+top-500 union-hub degree is clique edges) and added a pure-BA control — which
+showed the union definition had *understated* the channel advantage, not created
+it. Audit verdict: accept; no numbers retracted.
 
-Граф: Barabási–Albert (N=50 000, m=3, хвост γ̂=2,91 ✓) + 3 460 плантированных
-клик-чатов (лог-нормаль размеров, медиана 12, покрытие 50% узлов) с перекрытием —
-широкие мосты между чатами существуют по построению (мишень T2c: 100% чатов с мостом).
-Механика: complex contagion (Centola) — принятие при k≥2 разных источниках; клика =
-широковещание (лемма о редукции к sparse-matvec — семантика сохранена, верифицирована
-референс-реализацией). Simple (k=1) — для контраста.
+**sim3 (SPEC CHANGELOG v1.1, v1.2).**
+- *Target retracted as structurally unachievable:* the original T3a demanded
+  200/200 strict deaths; the implementation proved a "phoenix" rebound is a
+  property of the price equations (the buy/sell ratio in the zombie phase does
+  not depend on price), so no calibration point yields 200/200. The target was
+  reformulated with externally justified thresholds (80% loss = business-case
+  death, more conservative than the Hamster −96% and GST −99% anchors);
+  mechanics untouched (v1.1).
+- *Unconditional numbers retracted to qualified:* "182/200 strict deaths, median
+  t* = 12" now carries the mandatory qualifier *under the baseline price form* —
+  red-team sensitivity: 148–190/200 across κ ∈ [0.35; 0.65], and 0/200 strict
+  under a linear price form with moderate response, while the ≥80%-loss flagship
+  stays 200/200 in every variant (v1.2). The claim "T1 *reproduces* Hamster
+  ×25/6 mo" was weakened to "*consistent with*": the collapse-factor scale is
+  semi-circular (the crash-rate clip derives from the same anchor); what is
+  emergent is the peak timing and the endogenous path (v1.2).
+- *Bounded:* everything after the first collapse breach is a phoenix artifact,
+  not a forecast — the post-collapse phase is uncalibrated and diverges from
+  both anchors (real projects sit on the floor; 96/200 model runs re-peak);
+  sim3's conclusions are built on events up to and at the collapse (§11.11).
 
-Ключевое:
-- **Фазовый контраст Centola воспроизведён** (мишень T3, метрика P_macro —
-  вероятность макрокаскада ≥5% сети): simple на голом BA — 1,00; complex на голом
-  BA — **0,15** (редкий розжиг через rich-club-ядро, находка §9.12: «теория
-  рукопожатий» ломается на complex вероятностно, не абсолютно); complex на графе
-  с чатами — **1,00**. Клики меняют не возможность, а надёжность.
-- **Фальсификатор GTM (дословный из ТЗ) разрешился подтверждением**: mean
-  reach-per-seed посева в топ-хабы > случайного посева на всех бюджетах
-  B ∈ [2; 500] (B=5: 4509 против 0; B=500: 55,4 против 46,5). B=1 исключён —
-  вырожденность complex (двух источников из одного узла не бывает): трек не
-  сеется одним постом.
-- **Контроль интерпретации**: топ по степени союзного графа на 81,6% состоит из
-  кликовых рёбер («чат-хопперы»), поэтому отдельно прогнан посев в топ чистой
-  BA-степени («каналы») — бьёт random на всех B, на B≥10 не хуже union-хабов:
-  вывод о хабах не артефакт определения.
-- **Оговорка механики**: на B≤20 выигрыш даёт плотность посева вообще (клики тоже
-  бьют random); чистый хаб-эффект изолируется на B≥50 (+14–19% у union-хабов,
-  до +28% у top-BA).
-- Критика распространения измерена: p\* = 0,15 (с точностью до шага сетки);
-  аналитическая оценка сверху p_c^chat ≈ 0,53 (mean-field мостового слоя) и
-  mean-field порог simple p_c^MF = 0,018 — на fig9 рядом с симуляцией.
+## Limitations, first-class
 
-Документы: [sim2/README.md](sim2/README.md) (валидация, все числа, ограничения),
-[sim2/SPEC.md](sim2/SPEC.md) (спека v1.3 с CHANGELOG трёх ревизий — включая два
-честных стопа конструкции). Фигуры fig8, fig9, fig10 (gif каскада).
+**This is a calibrated calculator, not data. It aims, the MVP measures.**
 
----
+- **The decisive axes are unmeasured.** Donation frequency, check size and
+  superfan share — the three axes of the breakeven range — are exactly the
+  quantities no dataset provides for music; the simulations name the dials, the
+  MVP is designed to measure them. Adjacent-industry cadence benchmarks (Twitch,
+  Patreon, Tencent) substitute for them; the Tencent benchmark is blended with
+  advertising, and gifting carries regulatory risk (−66% segment revenue for
+  TME over 3 years) that the model does not price (PAPER §9).
+- **sim1: the world is synthetic and the donation form is assumed.** The
+  200,000-artist market is a piecewise construction between three measured
+  anchors (validated: 87.0% / 2.6% / 44.5%, Gini 0.97), but the tail shape
+  between anchors is a construction; the donation-check distribution
+  (lognormal, Bandcamp/Twitch shape) is an assumption, not a music measurement;
+  user-centric is a wallet-share approximation, not a full bipartite graph.
+- **sim2 is a model, not Telegram data.** The graph is synthetic (BA + planted
+  overlapping cliques); Telegram publishes no private-group statistics, so chat
+  sizes, 50% coverage and bridge-layer density are assumptions or constructions
+  — the chat-layer critical estimate transfers to reality only up to that
+  density. No forgetting, no unsubscribes, no competing cascades: reach is an
+  upper bound.
+- **sim3's calibration is a composite.** One calibration anchor for the collapse
+  shape (Hamster Kombat ×25/6 mo) plus two unverified stylized facts (STEPN
+  entry economics, Axie); the emission regime reproduces a *class* of collapses,
+  not any single project. The token price is a stylized form, not market
+  microstructure — the strict death statistics (182/200, t* = 12) are a property
+  of the baseline price form; only the ≥80%-loss result is form-invariant.
+- **The simulations are deliberately isolated.** sim1 has no social dynamics,
+  sim2 spreads one track in a vacuum with no churn, sim3 has no network effects
+  between users and no competitors or external shocks; cross-sim coupling
+  (does distribution reach convert to donations?) is out of scope.
 
-## SIM 3 — анти-кладбище: «выплаты ≤ приток» против эмиссии
+## Related work
 
-Агентная токеномика 36 мес: режим A («Закон Tonify» — казна собирает 5% реальных
-донатов, выплаты ≤ приток месяца, инвариант hard assert) против режима B (STEPN/Axie —
-выплаты из эмиссии, казна в собственном токене, доходность через цену). Калибровка
-коллапса B консистентна с Hamster Kombat ×25/6 мес (Caladan, апр. 2026); 200 прогонов
-Монте-Карло.
+- **Attribution and provenance (the upper half of the pipe).** Teikari (2026),
+  *Governing Generative Music: Attribution Limits, Platform Incentives, and the
+  Future of Creator Income* (SSRN 6109087), with companion code
+  [music-attribution-scaffold](https://github.com/petteriTeikari/music-attribution-scaffold),
+  builds the attribution/provenance infrastructure — *who should be credited and
+  under what confidence*. This repository is the lower half: *how the money
+  physically moves once you know who to pay* — pool division versus direct
+  payment mechanics, their fraud surfaces, and treasury survival.
+- **Payout-rule theory.** Bergantiños & Moreno-Ternero (2023), *Revenue sharing
+  at music streaming platforms* (arXiv:2310.11861), give the axiomatic
+  foundations for pro-rata and user-centric division; their core theorem (any
+  stable rule divides a listener's fee only among artists that listener
+  streamed) is the reason World-A ceilings in sim1 are set by an artist's own
+  audience under *any* formula (PAPER §1).
+- **Independent convergence, three authors in three years** (a timestamp, not a
+  claim of coordination): Burk (2023, [*Cheap Creativity and What It Will Do*, 57
+  Georgia Law Review 1669](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4397423))
+  argues cheap machine creativity shifts intellectual property toward regimes
+  that *certify authenticity* rather than incentivize production → Teikari
+  (2026) builds the attribution/provenance layer that does the certifying →
+  this work (2026) models the payment mechanics that run on top once
+  attribution is settled.
 
-У прямой экономики казна не умирает структурно (выплаты ≤ приток, инвариант
-0 нарушений на всех прогонах), у эмиссионной катастрофа встроена: **200/200 прогонов
-теряют ≥80% пиковой аудитории** (устойчиво ко всем стресс-формам red team); при
-базовой форме цены медианная смерть по хамстер-критерию — **месяц 12 [IQR 11–13]**,
-а казна, номинированная в собственном токене, «умирает» ещё раньше (**месяц 6**) —
-дефект деноминации поверх дефекта эмиссии. Закон не даёт бессмертия продукта: при
-чистом темпе оттока c − i ≥ **8,55%/мес** режим A тоже умирает по DAU — честно
-показано на fig11c (аналитика = симуляция ±1 мес).
+## Process
 
-Отдельные находки: коэффициент понциности B пересекает 1,0 в месяц 3 (пик 36,9 —
-платит в 37 раз больше, чем собирает; A структурно ≤ 0,5); «феникс»-отскок — понци
-в этой модели не умирает в ноль, а застревает зомби-циклами на 4–7% пика (18/200
-прогонов; эмпирика в ту же сторону: GST годами на −99%, хамстер-остаток — зомби
-на 4% пика); матрица {×1,0/×0,70} во всех артист-числах, сплит контракта не влияет
-на казну (комиссия на рельсе до сплита; второй порядок −0,19% показан числом).
+Each simulation went through an economist → engineer → red team → viz →
+acceptance cycle, with the red team holding the right to retract numbers. The
+project hit three honest construction stops (sim2 v1.0: p* did not exist by
+construction; sim2 v1.1: the T3(b) metric/threshold category error; sim3: target
+T3a structurally unachievable because of the phoenix rebound) — each resolved by
+spec revision with a CHANGELOG and externally justified thresholds, none by
+tuning to the result (verified by the red team on independent seed batches).
+Retracted numbers are listed in [paper/CRITIC.md](paper/CRITIC.md) (sim1) and
+the SPEC CHANGELOG blocks ([sim2/SPEC.md](sim2/SPEC.md),
+[sim3/SPEC.md](sim3/SPEC.md)).
 
-Документы: [sim3/README.md](sim3/README.md) (иерархия результатов, валидация,
-ограничения — включая некалиброванный пост-коллапс), [sim3/SPEC.md](sim3/SPEC.md)
-(спека v1.2, CHANGELOG: феникс-дефект мишени и его разрешение). Фигуры fig11,
-fig12, fig13 (слайд «две кривые»).
+## License
 
----
-
-## Процесс
-
-Каждая симуляция прошла цикл **economist → engineer → red team → viz → приёмка**
-с правом красной команды отзывать числа. За проект случилось три честных стопа
-(p\* не существует в конструкции v1.0 sim2; мишень/метрика T3 sim2; мишень T3a sim3,
-структурно недостижимая из-за феникса) — все разрешены пересмотром спеки с CHANGELOG
-и внешним обоснованием порогов, ни один — подгонкой под результат (проверено красной
-командой на независимых батчах сидов). Отозванные числа перечислены в CRITIC.md (sim1)
-и CHANGELOG-блоках спек (sim2, sim3).
-
-MIT. seed=42 везде; повторный запуск любого скрипта даёт байт-в-байт тот же stdout
-и те же фигуры.
+MIT — see [LICENSE](LICENSE). To cite this repository, see
+[CITATION.cff](CITATION.cff).
