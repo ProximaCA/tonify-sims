@@ -1,69 +1,77 @@
-# Результаты v0.2
+*🇬🇧 English | [🇷🇺 Русский](RESULTS.ru.md)*
 
-## Валидация мира (мишень → получено)
-87% <1000 стримов → 87,0% ✓ · 2,6% >$1000/год → 2,6% ✓ · топ-0,28% ~50% стримов → 44,5% ✓
-нижние 90% держат 0,9% рынка (Jensen: «нижние категории ~2%» — тот же порядок) · Gini 0,97
+*English translation of [RESULTS.ru.md](RESULTS.ru.md); the Russian original is the source of truth, numbers are identical.*
 
-## Два числа, которых не было в ресерчах
-**1. Статус-кво = 0,42 доната на суперфана в год.** Обратная задача: измеренные SoundCloud
-29% суперфан-доли выручки воспроизводятся в этом мире при 0,42 доната/суперфан/год.
-Сегодняшняя «прямая экономика» — это один донат раз в 2,4 года.
+# Results v0.2
 
-**2. Breakeven кассы ≈ 1 донат в год.** Касса Tonify обгоняет инди-котёл ($4,43/1K),
-когда преданный фанат жертвует чаще ~1 раза в год. Всё, что продукт должен сделать
-экономически, сводится к одному циферблату: поднять 0,42 → выше 1,0. Каждый шаг дальше
-(2 → 4 → 8) режет минимальную аудиторию вдвое.
+## World validation (target → obtained)
+87% <1000 streams → 87.0% ✓ · 2.6% of rightsholders >$1000/yr → 2.6% ✓ · top 0.28% ~50% of streams → 44.5% ✓
+the bottom 90% hold 0.9% of the market (Jensen: "bottom tiers ~2%" — same order of magnitude) · Gini 0.97
 
-## Минимальная жизнеспособная аудитория ($100/мес)
-Котёл, подписанный: 188 590 слушателей · Котёл, инди: 12 771
-Касса при статус-кво 0,42/год: 30 782 (честно: хуже инди-котла!)
-Касса при 2/год: 6 407 · при 4/год: 3 204 · при 8/год: 1 602
+## Two numbers that were not in the research
+**1. Status quo = 0.42 donations per superfan per year.** Inverse problem: the measured SoundCloud
+29% superfan share of revenue is reproduced in this world at 0.42 donations/superfan/yr.
+Today's "direct economy" is one donation every 2.4 years.
 
-## Фрод
-Впрыск F% ботовых стримов уводит из пула F/(1+F) денег у всех; в кассе потери честных = 0:
-бот не может донатить чужими деньгами. При 30% впрыска пул теряет 23% — касса 0%.
+**2. The direct till breaks even at ≈ 1 donation per year.** Tonify's direct till («касса» in the
+Russian original — the direct-payment economy) overtakes the independent pool («котёл» — the streaming
+royalty pool; $4.43/1K) once a devoted fan donates more often than ~once a year. Everything the product
+must do economically comes down to one dial: push 0.42 → above 1.0. Each further step
+(2 → 4 → 8) halves the minimum audience.
 
-## Логистика порога ($13 минимум)
-Подписанный карман: 94,3% артистов ждут первой выплаты дольше года, 89,9% — дольше 10 лет.
-Совпадает с примером манифеста (артист $0,10/мес → 130 месяцев) — теперь как распределение.
+## Minimum viable audience (MVA, $100/mo)
+Pool, signed: 188,590 listeners · Pool, independent: 12,771
+Direct till at the status-quo 0.42/yr: 30,782 (honestly: worse than the independent pool!)
+Direct till at 2/yr: 6,407 · at 4/yr: 3,204 · at 8/yr: 1,602
 
-## Честные ограничения (для рецензента)
-1) Нет полного двудольного графа юзер×артист — user-centric не моделируется отдельно (ТЗ для v0.3).
-2) Донатная форма lognormal($5, σ=0,8) — допущение; форма из Bandcamp/Twitch, не измерена для музыки.
-3) Суперфан-доля фиксирована 1,7% — sensitivity по ней не снята (v0.3).
-4) «Донатов/суперфан/год» — ось незакрытого «Объекта 3»: симуляция называет параметр, MVP его меряет.
+## Fraud
+Injecting F% of bot streams siphons F/(1+F) of everyone's money out of the pool; in the direct economy
+the honest players' loss = 0: a bot cannot donate with other people's money. At a 30% injection the pool
+loses 23% — the direct rail 0%.
+
+## Payout threshold logistics ($13 minimum)
+Signed pocket: 94.3% of artists wait longer than a year for their first payout, 89.9% — longer than 10 years.
+Matches the manifesto's example (an artist at $0.10/mo → 130 months) — now as a distribution.
+
+## Honest limitations (for the reviewer)
+1) No full bipartite user×artist graph — user-centric is not modeled separately (spec for v0.3).
+2) The donation shape lognormal($5, σ=0.8) is an assumption; the shape is from Bandcamp/Twitch, not measured for music.
+3) The superfan share is fixed at 1.7% — no sensitivity sweep over it (v0.3).
+4) "Donations/superfan/yr" is the axis of the still-open "Object 3": the simulation names the parameter, the MVP measures it.
 
 ---
-# v0.3 — после красной команды (см. CRITIC.md)
+# v0.3 — after the red team (see CRITIC.md)
 
-## §1. Breakeven стал честным диапазоном
-0,38 … **1,25** … 6,31 доната/суперфан/год (18 комбинаций: плэи 8–21 × чек $3,1–6,9 × суперфаны 0,6–1,7%).
-Число 0,42 из v0.2 ОТОЗВАНО (категориальная ошибка, CRITIC §1).
+## §1. Breakeven became an honest range
+0.38 … **1.25** … 6.31 donations/superfan/yr (18 combinations: plays 8–21 × ticket $3.1–6.9 × superfans 0.6–1.7%).
+The 0.42 figure from v0.2 is RETRACTED (category error, CRITIC §1).
 
-## §2. Кеф-бенчмарки платящего фаната (ответ на вопрос про Twitch)
-- **Twitch: кеф = 12+/год структурно** — подписка рекуррентна, платящий фан платит ежемесячно
-  автоматом, плюс bits/донаты сверху. Доход стримеров = donations + subscriptions + bits;
-  Gini 0,57 по топ-10k (α=−2,13), ~0,93 в экстраполяции на платформу [vault: vol0123456789-2].
-- **Tencent social: кеф >> 12** — ARPPU гифтеров ¥175/мес на пике против ¥8,5 у подписки
-  (множитель 20,6×; после регуляторки 6,4×) [vault: TME 4Q21/4Q24]. Потолок — государство, не спрос.
-- **Patreon: кеф = 12** (месячный патронаж), ~25 млн платных против ~100 млн бесплатных подписок.
-- **Наш breakeven: медиана 1,25.** Соотношение к Twitch-кефу — **~10:1 запаса**:
-  чтобы касса била котёл, преданному фану достаточно платить в десять раз реже, чем платит
-  подписчик Twitch. Рекуррентная подписка на артиста закрывает breakeven структурно (12 > 6,31
-  даже в худшем углу диапазона).
+## §2. Rate-k benchmarks for the paying fan (answering the Twitch question)
+Here k is the rate of payments per superfan per year («кеф» in the Russian original).
+- **Twitch: k = 12+/yr structurally** — the subscription is recurring, a paying fan pays monthly
+  on autopilot, plus bits/donations on top. Streamer income = donations + subscriptions + bits;
+  Gini 0.57 across the top 10k (α=−2.13), ~0.93 extrapolated to the platform [vault: vol0123456789-2].
+- **Tencent social: k >> 12** — gifter ARPPU of ¥175/mo at the peak vs ¥8.5 for the subscription
+  (a 20.6× multiplier; 6.4× after the regulatory crackdown) [vault: TME 4Q21/4Q24]. The ceiling is the
+  state, not demand.
+- **Patreon: k = 12** (monthly patronage), ~25M paid vs ~100M free subscriptions.
+- **Our breakeven: median 1.25.** Against the Twitch rate that is **~10:1 of headroom**:
+  for the direct till to beat the pool, a devoted fan only has to pay ten times less often than a
+  Twitch subscriber pays. A recurring artist subscription closes the breakeven structurally (12 > 6.31
+  even in the worst corner of the range).
 
-## §3. Кеш-слой: куда уходит доллар (fig4_rails.png), комиссия Tonify 5%
-TON: артисту 94,9¢ · Tonify 5,0¢ · рельса 0,1¢
-Stars desktop: 91,7¢ · 4,8¢ · 3,5¢
-Stars mobile: 64,1¢ · 3,4¢ · 32,5¢ (Apple+спред)
-Вывод: TON-рельса не только дешевле для фаната — она в 1,5 раза доходнее для Tonify
-на мобильном донате, чем Stars (5,0¢ против 3,4¢ с доллара).
+## §3. Cash layer: where the dollar goes (fig4_rails.png), Tonify fee 5%
+TON: 94.9¢ to the artist · 5.0¢ Tonify · 0.1¢ rail
+Stars desktop: 91.7¢ · 4.8¢ · 3.5¢
+Stars mobile: 64.1¢ · 3.4¢ · 32.5¢ (Apple+spread)
+Takeaway: the TON rail is not only cheaper for the fan — it earns Tonify 1.5× more on a mobile
+donation than Stars does (5.0¢ vs 3.4¢ per dollar).
 
-## §4. Milestone-правда: $300K MRR на одной 5% комиссии НЕ сходится
-1M MAU × 1,7% суперфанов × 4 доната × $6,9 × 5% = **$1,955 MRR**. Разрыв — 150×.
-Конфигурации, где $300K сходится (solver):
-- 5M MAU × 5% платящих × кеф 12 (подписки на артиста) × $6 × blended take 20% = $300K ✓
-- 10M MAU × 4% × кеф 12 × $5 × take 15% = $300K ✓
-Следствие для дека: milestone достижим только с (а) рекуррентными подписками на артиста,
-(б) blended take 15–20% (дропы/маркетплейс/premium поверх 5% на донатах), (в) MAU 5–10M,
-— либо milestone пересчитать. Одинокая 5% комиссия на донатах — это $2–12K MRR на 1M MAU.
+## §4. Milestone truth: $300K MRR on the 5% fee alone does NOT add up
+1M MAU × 1.7% superfans × 4 donations × $6.9 × 5% = **$1,955 MRR**. The gap is 150×.
+Configurations where $300K does add up (solver):
+- 5M MAU × 5% paying × k = 12 (artist subscriptions) × $6 × blended take 20% = $300K ✓
+- 10M MAU × 4% × k = 12 × $5 × take 15% = $300K ✓
+Implication for the deck: the milestone is reachable only with (a) recurring artist subscriptions,
+(b) a blended take of 15–20% (drops/marketplace/premium on top of the 5% on donations), (c) 5–10M MAU,
+— or the milestone must be recomputed. A lone 5% fee on donations is $2–12K MRR per 1M MAU.

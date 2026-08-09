@@ -1,160 +1,169 @@
+*🇬🇧 English | [🇷🇺 Русский](PAPER.ru.md)*
+
+*English translation of [PAPER.ru.md](PAPER.ru.md). The Russian original is the source of truth; numbers are identical.*
+
 # Payout Mechanisms Across Two Worlds: Pro-Rata, User-Centric, and the Attention Economy
-### Калиброванная симуляция кассовых режимов музыкального рынка · v0.4 · MIT License
-*Tonify Research · август 2026 · воспроизводимо: `sim1/tonify_cash_sim.py` + `sim1/v04_full.py`, seed=42*
+### A calibrated simulation of the music market's "cash register" (payout) regimes · v0.4 · MIT License
+*Tonify Research · August 2026 · reproducible: `sim1/tonify_cash_sim.py` + `sim1/v04_full.py`, seed=42*
 
 ---
 
 ## Abstract
-Мы строим синтетический рынок из 200 000 артистов, калиброванный на трёх независимо измеренных
-якорях (Luminate, Spotify Loud & Clear, CMA), и сравниваем четыре механизма выплат:
-**pro-rata** (Spotify), **user-centric** (SoundCloud FPR), рекуррентный патронаж (Twitch)
-и прямую **attention economy** (Tonify, World B). Главный результат: смена правила дележа
-внутри World A сдвигает минимальную жизнеспособную аудиторию артиста максимум в ~1,3 раза,
-тогда как переход к прямым механизмам World B сдвигает её на **1–2 порядка** — при условии,
-что частота платежа преданного фаната превышает breakeven-диапазон 0,38–6,31 платежа/год
-(медиана 1,25). Рекуррентная механика (кеф 12) закрывает диапазон структурно.
-Красная команда отозвала одно число v0.2 и заменила три точечных допущения диапазонами.
+We construct a synthetic market of 200,000 artists, calibrated to three independently measured
+anchors (Luminate, Spotify Loud & Clear, CMA), and compare four payout mechanisms:
+**pro-rata** (Spotify), **user-centric** (SoundCloud FPR), recurring patronage (Twitch),
+and the direct **attention economy** (Tonify, World B). Main result: changing the split rule
+within World A shifts an artist's minimum viable audience by at most ~1.3×,
+whereas moving to the direct mechanisms of World B shifts it by **1–2 orders of magnitude** — provided
+that a devoted fan's payment frequency exceeds the breakeven range of 0.38–6.31 payments/year
+(median 1.25). Recurring mechanics (per-superfan rate 12 — throughout, the "rate" is payments
+per superfan per year, "kef" in the Russian original) close that range structurally.
+The red team retracted one v0.2 number and replaced three point assumptions with ranges.
 
 ---
 
-## 1. Введение: два мира
-**World A** — фиксированный пул подписочных денег, делимый формулой: pro-rata (Spotify),
-user-centric (SoundCloud), artist-centric (Deezer/UMG). Теорема ядра (Bergantiños &
-Moreno-Ternero, 2023): любое устойчивое правило делит взнос слушателя только между теми,
-кого он слушал — потолок артиста задан его собственной аудиторией при любой формуле.
-**World B** — деньги приходят сверх подписки, напрямую: донаты, рекуррентный патронаж,
-дропы (Tonify — attention economy на рельсах Telegram/TON; Unify — глобальный
-музыкальный слой, см. §7). Вопрос работы: на сколько порядков различаются миры
-и при каких измеримых условиях World B превосходит World A.
+## 1. Introduction: two worlds
+**World A** — a fixed pool of subscription money divided by a formula: pro-rata (Spotify),
+user-centric (SoundCloud), artist-centric (Deezer/UMG). The core theorem (Bergantiños &
+Moreno-Ternero, 2023): any stable rule divides a listener's contribution only among the artists
+that listener actually played — an artist's ceiling is set by their own audience under any formula.
+**World B** — money arrives on top of the subscription, directly: donations, recurring patronage,
+drops (Tonify — an attention economy on Telegram/TON rails; Unify — a global
+music layer, see §7). The question of this paper: by how many orders of magnitude the worlds differ,
+and under which measurable conditions World B outperforms World A.
 
-## 2. Модель и калибровка
-Мир: N=200 000 артистов; распределение годовых стримов — кусочная конструкция
-(lognormal-тело / лог-мост / Pareto-хвост α=1,4) от якорей:
-T1 87% артистов <1000 стримов/год (Luminate) → получено 87,0% ✓
-T2 2,6% артистов >$1000/год роялти (Spotify) → 2,6% ✓
-T3 топ-0,28% артистов ≈50% стримов (CMA/Last.fm) → 44,5% ✓; Gini 0,97
-Плэи слушателя у артиста: lognormal(медиана 5,16; среднее 21,21) [LFM-1b].
-Все параметры → источники: README.md; красная команда: CRITIC.md.
+## 2. Model and calibration
+The world: N=200,000 artists; the annual-stream distribution is a piecewise construction
+(lognormal body / log-bridge / Pareto tail α=1.4) fitted to the anchors:
+T1 87% of artists <1000 streams/year (Luminate) → obtained 87.0% ✓
+T2 2.6% of artists >$1000/year in royalties (Spotify) → 2.6% ✓
+T3 top 0.28% of artists ≈50% of streams (CMA/Last.fm) → 44.5% ✓; Gini 0.97
+A listener's plays for a given artist: lognormal(median 5.16; mean 21.21) [LFM-1b].
+All parameters → sources: SOURCES.md; red team: CRITIC.md.
 
-## 3. World A: результаты
-Минимальная жизнеспособная аудитория (MVA) для $100/мес:
-- **pro-rata · signed** (карман подписанного, $0,0003/стрим): **188 590** слушателей
-- **pro-rata · independent** ($4,43/1000, US 2026): **12 771**
-- **user-centric** (Monte-Carlo доли кошелька; платящих 40%, пул 70% выручки):
-  **9 512** при кошельке 10 000 плэев/год (5 000 → 4 800; 20 000 → 18 341)
-- **Twitch-механика** (рекуррентная подписка, сплит 50/50, кеф 12): **2 353**
-Вывод A: user-centric улучшает pro-rata independent в ~1,3 раза — согласуется с
-эмпирикой (SoundCloud: +34% денег в нижнюю корзину, −7% артистов из неё; Deezer:
-перераспределение 2,4% пула). Правило меняется — порядок величины нет.
+## 3. World A: results
+Minimum viable audience (MVA) for $100/mo:
+- **pro-rata · signed** (a signed artist's per-stream take, $0.0003/stream): **188,590** listeners
+- **pro-rata · independent** ($4.43/1000, US 2026): **12,771**
+- **user-centric** (Monte Carlo wallet share; 40% paying, pool = 70% of revenue):
+  **9,512** at a wallet of 10,000 plays/year (5,000 → 4,800; 20,000 → 18,341)
+- **Twitch mechanics** (recurring subscription, 50/50 split, rate 12): **2,353**
+Conclusion A: user-centric improves on pro-rata independent by ~1.3× — consistent with
+the empirics (SoundCloud: +34% money into the bottom bucket, −7% of artists out of it; Deezer:
+2.4% of the pool redistributed). The rule changes — the order of magnitude does not.
 
 ## 4. World B: Tonify attention economy
-Параметры: суперфаны 0,6–1,7% аудитории; чек $3,1–6,9; доля артисту 0,80–0,95.
-- **Breakeven против pro-rata independent: 0,38 … 1,25 … 6,31 платежа/суперфан/год.**
-- MVA при кефе 4: **3 204**; при рекуррентном кефе 12 на TON-рельсе: **900**.
-- Бенчмарки кефа платящего фаната: Twitch **12+** (подписка+bits), Patreon **12**,
-  Tencent social — ARPPU-множитель 20,6× (пик) / 6,4× (после регуляторного сжатия).
-  Худший угол breakeven (6,31) ниже структурного кефа всех трёх бенчмарков.
-- Рельсы, из $1: TON → артисту 94,9¢ / Tonify 5,0¢; Stars desktop 91,7/4,8;
-  Stars mobile 64,1/3,4 (32,5¢ — сторы и спред). TON доходнее Tonify в 1,5 раза
-  на мобильном платеже, чем Stars.
-- Фрод: впрыск F% ботовых стримов уводит F/(1+F) пула у всех (аналитическая кривая
-  разбавления, без детекции); в прямой экономике потери невиновных ≈ 0
-  (свои классы потерь — чарджбеки — не размазываются).
-- Логистика порога $13: 89,9% signed-артистов ждут первой выплаты >10 лет.
+Parameters: superfans at 0.6–1.7% of the audience; ticket size $3.1–6.9; artist share 0.80–0.95.
+- **Breakeven against pro-rata independent: 0.38 … 1.25 … 6.31 payments/superfan/year.**
+- MVA at rate 4: **3,204**; at a recurring rate of 12 on the TON rail: **900**.
+- Paying-fan rate benchmarks: Twitch **12+** (subscription+bits), Patreon **12**,
+  Tencent social — ARPPU multiplier of 20.6× (peak) / 6.4× (after the regulatory squeeze).
+  The worst breakeven corner (6.31) sits below the structural rate of all three benchmarks.
+- Rails, out of $1: TON → 94.9¢ to the artist / 5.0¢ to Tonify; Stars desktop 91.7/4.8;
+  Stars mobile 64.1/3.4 (32.5¢ — app stores and spread). On a mobile payment, TON is 1.5×
+  more profitable for Tonify than Stars.
+- Fraud: injecting F% bot streams siphons F/(1+F) of the pool from everyone (analytical
+  dilution curve, no detection); in the direct economy the losses of the innocent ≈ 0
+  (its own loss classes — chargebacks — do not smear across artists).
+- Logistics of the $13 threshold: 89.9% of signed artists wait >10 years for their first payout.
 
-## 5. Milestone-solver (кеш Tonify, комиссия 5%)
-$300K MRR **не достигается** одной комиссией на донатах: 1M MAU × 1,7% × кеф 4 × $6,9
-× 5% = $1 955 MRR (разрыв 150×). Достигается: 5M MAU × 5% платящих × кеф 12 × $6 ×
-blended take 20%; или 10M × 4% × 12 × $5 × 15%. Следствие: milestone требует
-рекуррентного патронажа и blended-линий (дропы/premium) — либо пересчёта цифры.
+## 5. Milestone-solver (Tonify's cash, 5% commission)
+$300K MRR is **not reached** on donation commission alone: 1M MAU × 1.7% × rate 4 × $6.9
+× 5% = $1,955 MRR (a 150× gap). It is reached at: 5M MAU × 5% paying × rate 12 × $6 ×
+blended take 20%; or 10M × 4% × 12 × $5 × 15%. Corollary: the milestone requires
+recurring patronage and blended lines (drops/premium) — or a recalculation of the figure.
 
-## 6. Рецензия (красная команда, сводка из CRITIC.md)
-Отозвано: «статус-кво 0,42 доната/год» (категориальная ошибка на 29% SoundCloud).
-Заменено диапазонами: плэи/слушателя 8–21 (окно LFM-1b ≠ год), чек $3,1–6,9
-(PWYW-эксперимент: среднее €3,10, отказ растёт 24,4% vs 17,3%), суперфаны 0,6–1,7%
-(правило 97-2-1). Починено: биномиальные суперфаны (fig2). Honest negative: при
-сегодняшней частоте платежа direct проигрывает pro-rata independent.
+## 6. Review (red team, summary from CRITIC.md)
+Retracted: "a status quo of 0.42 donations/year" (verbatim,
+translated) — a category error on SoundCloud's 29%.
+Replaced with ranges: plays/listener 8–21 (the LFM-1b window ≠ a year), ticket size $3.1–6.9
+(PWYW experiment: mean €3.10, refusal rises 24.4% vs 17.3%), superfans 0.6–1.7%
+(the 97-2-1 rule). Fixed: binomial superfans (fig2). Honest negative: at today's
+payment frequency, direct loses to pro-rata independent.
 
-## 7. Unify: global music layer — [заполняет фаундер]
-Тезис: —
-Механика поверх Tonify: —
-Что меряем первым: —
+## 7. Unify: global music layer — [to be filled in by the founder]
+Thesis: —
+Mechanics on top of Tonify: —
+What we measure first: —
 
-## 8. Делегируется Claude Code (ТЗ: CLAUDE_CODE_HANDOFF.md)
-- SIM 2 — социальный граф Telegram: BA+клики, complex contagion, фазовая диаграмма K, посев в хабы. [ ]
-- SIM 3 — анти-кладбище: закон «выплаты ≤ приток» против эмиссии, калибровка на Hamster 300M→12M. [ ]
-- Полный двудольный user-centric (вместо Monte-Carlo доли кошелька). [ ]
-- Artist-centric на параметрах Deezer/UMG (буст ×2 за 1000 плэев/500 слушателей). [ ]
-- Фрод с детекцией и ценой детекции; чарджбек-модель прямой экономики. [ ]
-- Линия спреда Stars и premium-подписки в кеш-слое. [ ]
-- — (дополнит фаундер)
-- — (дополнит фаундер)
+## 8. Delegated to Claude Code (spec: CLAUDE_CODE_HANDOFF.md)
+- SIM 2 — Telegram social graph: BA+cliques, complex contagion, phase diagram over K, hub seeding. [ ]
+- SIM 3 — anti-graveyard: the "payouts ≤ inflow" law (verbatim, translated) versus emission, calibrated on Hamster 300M→12M. [ ]
+- Full bipartite user-centric (instead of Monte Carlo wallet share). [ ]
+- Artist-centric on Deezer/UMG parameters (×2 boost for 1000 plays/500 listeners). [ ]
+- Fraud with detection and the cost of detection; a chargeback model for the direct economy. [ ]
+- The Stars spread line and premium subscriptions in the cash layer. [ ]
+- — (to be added by the founder)
+- — (to be added by the founder)
 
-## 9. Ограничения
-Синтетический мир: форма хвоста между якорями — конструкция; UC — аппроксимация кошелька;
-кеф, чек и доля суперфанов — неизмеренные оси («Объект 3»), их меряет MVP; Tencent-бенчмарк —
-бленд с рекламой; регуляторный риск гифтинга (−66% выручки сегмента TME за 3 года) в модель
-не входит. Ни один вывод не заявляется сильнее своего фальсификатора.
+## 9. Limitations
+A synthetic world: the tail shape between the anchors is a construction; UC is a wallet approximation;
+the rate, ticket size, and superfan share are unmeasured axes ("Object 3", translated), to be measured by the MVP;
+the Tencent benchmark is a blend with advertising; the regulatory risk to gifting (−66% of TME segment
+revenue over 3 years) is not in the model. No conclusion is stated more strongly than its falsifier.
 
 ## Figures
-fig1 MVA-кривая · fig2 распределение дохода (биномиально) · fig3 фрод-разбавление ·
-fig4 рельсы $1 · **fig5 лестница World A→B** · **fig6 MRR-solver**
+fig1 MVA curve · fig2 income distribution (binomial) · fig3 fraud dilution ·
+fig4 the $1 rails · **fig5 the World A→B ladder** · **fig6 MRR-solver**
 
-*MIT License. Воспроизведение: python3 sim1/tonify_cash_sim.py && python3 sim1/v04_full.py*
-
----
-## Addendum v0.5 — полная матрица {правило × контракт} (поимка фаундера)
-Правило дележа и контракт — ортогональные оси; предыдущие версии их склеивали.
-Полная матрица per-listener-year → MVA (fig7): pro-rata signed $0.0064/сл·год → 188 590;
-pro-rata independent $0.0940 → 12 771; user-centric signed $0.0085 → 140 463;
-user-centric independent $0.1262 → 9 512; direct·360 (кеф 4) → 4 577; direct independent
-(кеф 4) → 3 204; recurring кеф 12 TON → 900.
-**Головной вывод матрицы: контракт весит больше правила.** Переход pro-rata→user-centric
-даёт ×1,34; переход signed→independent даёт ×14,8. Лучшая формула World A не компенсирует
-лейбловый проход 6,8%: user-centric signed (140 463) хуже, чем pro-rata independent (12 771).
-Реформа правила без реформы контракта — перестановка на порядок ниже нужной.
+*MIT License. Reproduction: python3 sim1/tonify_cash_sim.py && python3 sim1/v04_full.py*
 
 ---
-## CHANGELOG v0.5.1 (август 2026) — синхронизация матрицы с якорем $0,0003/стрим
+## Addendum v0.5 — the full {rule × contract} matrix (caught by the founder)
+The split rule and the contract are orthogonal axes; previous versions conflated them.
+The full per-listener-year → MVA matrix (fig7): pro-rata signed $0.0064/listener-year → 188,590;
+pro-rata independent $0.0940 → 12,771; user-centric signed $0.0085 → 140,463;
+user-centric independent $0.1262 → 9,512; direct·360 (rate 4) → 4,577; direct independent
+(rate 4) → 3,204; recurring rate 12 TON → 900.
+**The matrix's headline conclusion: the contract outweighs the rule.** The pro-rata→user-centric
+move yields ×1.34; the signed→independent move yields ×14.8. World A's best formula does not
+compensate for the 6.8% label pass-through: user-centric signed (140,463) is worse than pro-rata independent (12,771).
+Reforming the rule without reforming the contract is a reshuffle one order of magnitude short of what is needed.
 
-**Вход:** красная команда упаковки нашла, что пуловые числа signed расходятся между
-документами и пикселями фигур. Инженер локализовал причину.
+---
+## CHANGELOG v0.5.1 (August 2026) — syncing the matrix with the $0.0003/stream anchor
 
-**Причина.** В `sim1/v05_matrix.py` лейбловый проход был задан константой 0,068 —
-округлением производной величины 0,0003/0,00443 = 0,06772. Округление, поднятое в статус
-входного параметра, молча переопределяло сам якорь: 0,00443 × 0,068 = 0,00030124 ≠ 0,0003.
-Отсюда 187 814 на фигурах против 188 590 в §3, RESULTS v0.2 и `v04_full.py`.
+**Input:** the packaging red team found that the signed pool numbers diverged between
+the documents and the pixels of the figures. The engineer localized the cause.
 
-**Решение (вердикт economist).** Первичен измеренный якорь — карман подписанного
-$0,0003/стрим. Лейбловый проход 6,8% — не третий параметр, а отношение двух якорей
-($0,0003 / $0,00443 = 6,772%), внешне подтверждаемое оценкой CNM ~6,8%; в коде он теперь
-вычисляется из них, а не вводится числом. Обратная логика (сделать 6,8% входом, а карман
-подписанного — производной) отклонена: она сокращает число независимых измерений с двух
-до одного и ставит клейм 188 590 в зависимость от чужого округления.
+**Cause.** In `sim1/v05_matrix.py` the label pass-through was set as the constant 0.068 —
+a rounding of the derived quantity 0.0003/0.00443 = 0.06772. A rounding promoted to the
+status of an input parameter silently redefined the anchor itself: 0.00443 × 0.068 =
+0.00030124 ≠ 0.0003. Hence 187,814 on the figures against 188,590 in §3, RESULTS v0.2
+and `v04_full.py`.
 
-**Изменения чисел.**
-1. `LABEL_PASS` = 0,0677201 вместо 0,068 (одна строка в `v05_matrix.py`). Пуловые числа
-   всех трёх скриптов сошлись бит-в-бит; 188 590 из RESULTS v0.2 и §3 сохранён без правки.
-2. **user-centric · signed: 140 095 → 140 463.** Число 140 095 ОТОЗВАНО: оно не
-   воспроизводится текущим кодом ни в одной комбинации и подразумевает проход 0,0679,
-   несовместимый с 0,06772 своего же сиблинга 188 590 — то есть «аналитический» набор
-   Addendum был внутренне несогласован. Артефакт чернового прогона.
-3. **Контракт-мультипликатор: ×14,7 → ×14,8** (1/0,0677201 = 14,7667). Мультипликатор
-   правила ×1,34 не изменился — проход в нём сокращается. Головной вывод Addendum
-   («контракт весит больше правила») не затронут: он держался и держится на порядке
-   разрыва, а не на втором знаке.
-4. §3: user-centric при кошельке 20 000 плэев — 18 500 → **18 341** (прогон даёт 18 341;
-   18 500 не воспроизводится; 5 000 → 4 807, печаталось как 4 800 — корректное округление,
-   оставлено).
-5. fig7 печатает per-listener-year с 4 знаками вместо 3: при 3 знаках две пуловые signed-ячейки
-   вырождались в одну значащую цифру ($0,006 / $0,009) и не позволяли читателю сверить
-   MVA с фигуры.
+**Decision (economist's verdict).** The measured anchor is primary — the signed artist's
+per-stream take of $0.0003/stream. The 6.8% label pass-through is not a third parameter
+but the ratio of the two anchors ($0.0003 / $0.00443 = 6.772%), externally corroborated
+by the CNM estimate of ~6.8%; in the code it is now computed from them rather than
+entered as a number. The reverse logic (making 6.8% the input and the signed take the
+derived value) was rejected: it reduces the number of independent measurements from two
+to one and makes the 188,590 claim dependent on someone else's rounding.
 
-**Процессная правка.** В `v05_matrix.py` добавлен assert, сверяющий MVA pro-rata signed
-матрицы с аналитическим 1200/(21,21 × 0,0003) из `v04_full.py`. Рассинхрон существовал
-потому, что три скрипта считали одну величину и ни один не сверялся с другими; теперь
-расхождение якоря роняет прогон.
+**Number changes.**
+1. `LABEL_PASS` = 0.0677201 instead of 0.068 (one line in `v05_matrix.py`). The pool
+   numbers of all three scripts converged bit-for-bit; 188,590 from RESULTS v0.2 and §3
+   is preserved without edits.
+2. **user-centric · signed: 140,095 → 140,463.** The number 140,095 is RETRACTED: it is
+   not reproducible by any combination of the current code and implies a pass-through of
+   0.0679, inconsistent with the 0.06772 of its own sibling 188,590 — that is, the
+   "analytic" set of the Addendum was internally inconsistent. A draft-run artifact.
+3. **Contract multiplier: ×14.7 → ×14.8** (1/0.0677201 = 14.7667). The rule multiplier
+   ×1.34 did not change — the pass-through cancels in it. The Addendum's headline
+   conclusion ("the contract outweighs the rule") is untouched: it rested and rests on
+   the order of the gap, not on the second digit.
+4. §3: user-centric at a 20,000-play wallet — 18,500 → **18,341** (the run yields 18,341;
+   18,500 is not reproducible; 5,000 → 4,807, printed as 4,800 — a correct rounding, kept).
+5. fig7 prints per-listener-year at 4 decimals instead of 3: at 3 decimals the two signed
+   pool cells degenerated to a single significant digit ($0.006 / $0.009) and did not let
+   the reader check the MVA against the figure.
 
-**Оговорка о точности.** Якорь $0,0003/стрим — одна значащая цифра. Все производные от него
-величины (188 590, 140 463, ×14,8) печатаются с точностью прогона, а не измерения; это
-воспроизводимость расчёта, не заявление о точности мира. Ограничение — §9.
+**Process change.** `v05_matrix.py` now carries an assert comparing the matrix's pro-rata
+signed MVA with the analytic 1200/(21.21 × 0.0003) of `v04_full.py`. The desync existed
+because three scripts computed one quantity and none checked against the others; now an
+anchor divergence fails the run.
+
+**Precision caveat.** The $0.0003/stream anchor has one significant digit. All quantities
+derived from it (188,590, 140,463, ×14.8) are printed at run precision, not measurement
+precision; this is reproducibility of the calculation, not a claim about the precision of
+the world. The limitation — §9.
