@@ -45,7 +45,7 @@ The terms the figures and findings lean on, once:
 | **MRR** | Monthly recurring revenue — the platform's revenue per month. |
 | **MAU / DAU** | Monthly / daily active users. |
 | **ARPPU** | Average revenue per paying user. |
-| **rate k ("кеф")** | Payments per superfan per year. k=4 means a devoted fan pays four times a year; a monthly subscription is k=12. |
+| **rate k** | Payments per superfan per year. k=4 means a devoted fan pays four times a year; a monthly subscription is k=12. |
 | **take rate** | The share of a payment the platform keeps. |
 | **pro-rata** | Pool division by global stream share (Spotify's default): all subscription money in one pot, divided by total plays. |
 | **user-centric** | Pool division per listener's wallet (SoundCloud FPR): each subscriber's money goes only to artists that subscriber played. |
