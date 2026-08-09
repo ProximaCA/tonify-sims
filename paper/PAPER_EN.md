@@ -44,7 +44,7 @@ Minimum viable audience (MVA) for $100/mo:
 - **pro-rata · signed** (a signed artist's per-stream take, $0.0003/stream): **188,590** listeners
 - **pro-rata · independent** ($4.43/1000, US 2026): **12,771**
 - **user-centric** (Monte Carlo wallet share; 40% paying, pool = 70% of revenue):
-  **9,512** at a wallet of 10,000 plays/year (5,000 → 4,800; 20,000 → 18,500)
+  **9,512** at a wallet of 10,000 plays/year (5,000 → 4,800; 20,000 → 18,341)
 - **Twitch mechanics** (recurring subscription, 50/50 split, rate 12): **2,353**
 Conclusion A: user-centric improves on pro-rata independent by ~1.3× — consistent with
 the empirics (SoundCloud: +34% money into the bottom bucket, −7% of artists out of it; Deezer:
@@ -109,11 +109,11 @@ fig4 the $1 rails · **fig5 the World A→B ladder** · **fig6 MRR-solver**
 ---
 ## Addendum v0.5 — the full {rule × contract} matrix (caught by the founder)
 The split rule and the contract are orthogonal axes; previous versions conflated them.
-The full per-listener-year → MVA matrix (fig7): pro-rata signed $0.006/listener-year → 188,590;
-pro-rata independent $0.094 → 12,771; user-centric signed $0.0086 → 140,095;
-user-centric independent $0.126 → 9,512; direct·360 (rate 4) → 4,577; direct independent
+The full per-listener-year → MVA matrix (fig7): pro-rata signed $0.0064/listener-year → 188,590;
+pro-rata independent $0.0940 → 12,771; user-centric signed $0.0085 → 140,463;
+user-centric independent $0.1262 → 9,512; direct·360 (rate 4) → 4,577; direct independent
 (rate 4) → 3,204; recurring rate 12 TON → 900.
 **The matrix's headline conclusion: the contract outweighs the rule.** The pro-rata→user-centric
-move yields ×1.34; the signed→independent move yields ×14.7. World A's best formula does not
-compensate for the 6.8% label pass-through: user-centric signed (140,095) is worse than pro-rata independent (12,771).
+move yields ×1.34; the signed→independent move yields ×14.8. World A's best formula does not
+compensate for the 6.8% label pass-through: user-centric signed (140,463) is worse than pro-rata independent (12,771).
 Reforming the rule without reforming the contract is a reshuffle one order of magnitude short of what is needed.

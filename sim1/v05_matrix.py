@@ -8,7 +8,7 @@ P,C,K,Y,G,TW="#6B2FFF","#00D4F5","#FF4D8D","#FFD426","#1DB954","#9146FF"; OUT=os
 plt.rcParams.update({"figure.facecolor":"#0D0A1A","axes.facecolor":"#0D0A1A","axes.edgecolor":"#B8C8DC",
  "axes.labelcolor":"#B8C8DC","text.color":"#B8C8DC","xtick.color":"#B8C8DC","ytick.color":"#B8C8DC","font.size":11})
 TARGET=1200.0; PL=21.21
-LABEL_PASS=0.068           # доля, доходящая до подписанного артиста (0.0003/0.00443; ~CNM 6.8%)
+LABEL_PASS=0.0003/(4.43/1000)  # лейбловый проход: производная двух якорей (=6.772%, ≈CNM 6.8%), не свободный параметр
 DEAL360=0.70               # direct под 360-сделкой: лейбл забирает ~30%
 # --- per-listener-year value by rule ---
 pr_ind=PL*4.43/1000                                  # pro-rata independent
@@ -31,6 +31,7 @@ vals={ # (label, per-listener-yr, color)
  "direct · кеф 4":               (d4,P),
  "direct recurring · кеф 12, TON":(rec12,Y)}
 mva={k:TARGET/v for k,(v,_) in vals.items()}
+assert abs(TARGET/(pr_ind*LABEL_PASS)-TARGET/(PL*0.0003))<0.5, "v05 разошёлся с якорем $0.0003/стрим (v04/v0.2)"
 # --- fig5 REDO: полная лестница-матрица ---
 fig,ax=plt.subplots(figsize=(11,6.5)); ypos=np.arange(len(vals))[::-1]
 for (lbl,(v,c)),y in zip(vals.items(),ypos):
@@ -49,10 +50,10 @@ fig,ax=plt.subplots(figsize=(8.6,5))
 im=ax.imshow(np.log10(MVAm),cmap="magma_r")
 for i in range(3):
     for j in range(2):
-        ax.text(j,i,f"${M[i,j]:.3f}/сл·год\nMVA {MVAm[i,j]:,.0f}",ha="center",va="center",fontsize=10,
+        ax.text(j,i,f"${M[i,j]:.4f}/сл·год\nMVA {MVAm[i,j]:,.0f}",ha="center",va="center",fontsize=10,
                 color="#0D0A1A" if MVAm[i,j]<20000 else "#EDEDF7")
 ax.set_xticks([0,1]); ax.set_xticklabels(contracts); ax.set_yticks([0,1,2]); ax.set_yticklabels(rules)
-ax.set_title("Ортогональные оси: правило дележа × контракт\n(цвет = log MVA; светлее = хуже артисту)")
+ax.set_title("Ортогональные оси: правило дележа × контракт\n(цвет = log MVA; темнее = хуже артисту)")
 fig.colorbar(im,label="log10 MVA")
 fig.tight_layout(); fig.savefig(OUT+"fig7_matrix_heatmap.png",dpi=150)
 # --- fig1 REDO: кривая кефа + 4 референс-линии матрицы ---

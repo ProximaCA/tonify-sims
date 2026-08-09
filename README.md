@@ -21,10 +21,10 @@ independently measured anchors; sim2 models music spreading through a synthetic
 Telegram-like social graph as complex contagion (a model, not Telegram data);
 sim3 stress-tests the treasury law "payouts never exceed inflow" against
 emission-funded token economies. The industry spent a decade debating the fair
-formula. The formula moves artist viability ×1.34. The contract moves it ×14.7.
+formula. The formula moves artist viability ×1.34. The contract moves it ×14.8.
 Precisely: in the full {rule × contract} matrix of minimum viable audience,
 switching the division rule (pro-rata → user-centric) shifts an artist's MVA by
-×1.34, while switching the contract (signed → independent) shifts it ×14.7
+×1.34, while switching the contract (signed → independent) shifts it ×14.8
 (fig7; PAPER, Addendum v0.5). Every claim below carries either a source or a
 falsifier; a red team with the right to retract numbers reviewed each
 simulation, and what it retracted is documented in this README.
@@ -36,7 +36,7 @@ Every row states its validity domain. Full numbers, sources and retractions:
 
 | # | Finding | Figure | Source / falsifier |
 |---|---------|--------|--------------------|
-| 1 | **The contract outweighs the rule.** Across the full {rule × contract} MVA matrix, switching the division rule (pro-rata → user-centric) moves minimum viable audience ×1.34, switching the contract (signed → independent) moves it ×14.7 — the best World-A formula does not survive a 6.8% label pass-through: user-centric signed needs 140,095 listeners against 12,771 for pro-rata independent. The $100/month ladder: 188,590 (pro-rata signed) → 12,771 (pro-rata independent) → 3,204 (direct, at k=4 donations/superfan/yr); a signed-360 contract scales the artist take ×0.70 (direct MVA 3,204 → 4,577). | [fig7](figures/fig7_matrix_heatmap.png), [fig5](figures/fig5_worlds_ladder.png), [fig1](figures/fig1_mva.png) | [PAPER](paper/PAPER.md) Addendum v0.5; rule effect matches SoundCloud/Deezer empirics ([PAPER](paper/PAPER.md) §3) |
+| 1 | **The contract outweighs the rule.** Across the full {rule × contract} MVA matrix, switching the division rule (pro-rata → user-centric) moves minimum viable audience ×1.34, switching the contract (signed → independent) moves it ×14.8 — the best World-A formula does not survive a 6.8% label pass-through: user-centric signed needs 140,463 listeners against 12,771 for pro-rata independent. The $100/month ladder: 188,590 (pro-rata signed) → 12,771 (pro-rata independent) → 3,204 (direct, at k=4 donations/superfan/yr); a signed-360 contract scales the artist take ×0.70 (direct MVA 3,204 → 4,577). | [fig7](figures/fig7_matrix_heatmap.png), [fig5](figures/fig5_worlds_ladder.png), [fig1](figures/fig1_mva.png) | [PAPER](paper/PAPER.md) Addendum v0.5; rule effect matches SoundCloud/Deezer empirics ([PAPER](paper/PAPER.md) §3) |
 | 2 | **Breakeven is a range, not a point.** Direct donations beat the independent streaming pool when a devoted fan pays more often than 0.38–1.25–6.31 times/year (min/median/max over 18 axis combinations; the earlier point estimate was retracted — see Retracted & bounded). Recurring patronage closes the range structurally: Twitch/Patreon paying-fan cadence is 12/yr against the worst corner of 6.31, and recurring k=12 on the TON rail drops direct MVA to 900. | [fig1](figures/fig1_mva.png) | [CRITIC](paper/CRITIC.md) §1, итог; [RESULTS](paper/RESULTS.md) v0.3 §1–§2; [PAPER](paper/PAPER.md) §4 |
 | 3 | **Fraud dilutes pools, not direct rails.** Injecting F% bot streams drains F/(1+F) of the pool from every artist — at 30% injection the pool loses 23% — while honest-artist losses in the direct economy are ~0: a bot cannot donate other people's money. This is an analytic dilution curve with zero detection assumed, not a simulation; the direct economy has its own loss classes (chargebacks), but they do not spread onto the innocent. | [fig3](figures/fig3_fraud.png) | [RESULTS](paper/RESULTS.md) «Фрод»; [PAPER](paper/PAPER.md) §4; caveat [CRITIC](paper/CRITIC.md) §4 |
 | 4 | **The $13 payout threshold is a decade for signed artists.** At Telegram's $13 minimum withdrawal, 94.3% of signed-pool artists wait longer than a year for their first payout, 89.9% longer than ten years; on the direct rail the median donation is $6.9 against the same $13 threshold. Of $1 on the TON rail, 94.9¢ reaches the artist (5.0¢ platform, 0.1¢ rail) versus 64.1¢ on Stars mobile. | [fig4](figures/fig4_rails.png) | [RESULTS](paper/RESULTS.md) «Логистика порога» + §3; [PAPER](paper/PAPER.md) §4 |
@@ -50,7 +50,7 @@ Every row states its validity domain. Full numbers, sources and retractions:
 ![fig1_mva](figures/fig1_mva.png)
 
 - **fig1_mva.png** — Minimum viable audience for $100/month per payout
-  mechanism: signed pool 187,814 listeners, independent pool 12,771, direct
+  mechanism: signed pool 188,590 listeners, independent pool 12,771, direct
   3,204 at k=4 donations/superfan/yr — each further doubling of frequency
   halves the required audience.
 
@@ -76,7 +76,7 @@ Every row states its validity domain. Full numbers, sources and retractions:
 
 - **fig5_worlds_ladder.png** — The World A → World B ladder: changing the
   division rule moves MVA ~×1.3; changing the mechanism moves it 1–2 orders of
-  magnitude (187,814 → 900 at recurring k=12).
+  magnitude (188,590 → 900 at recurring k=12).
 
 ![fig6_mrr_solver](figures/fig6_mrr_solver.png)
 
@@ -87,14 +87,8 @@ Every row states its validity domain. Full numbers, sources and retractions:
 ![fig7_matrix_heatmap](figures/fig7_matrix_heatmap.png)
 
 - **fig7_matrix_heatmap.png** — The full {rule × contract} MVA matrix (hero
-  figure): the rule moves viability ×1.34, the contract ×14.7; user-centric
-  signed (139,885) is worse than pro-rata independent (12,771).
-
-*Note on sim1 figure numbers: the run log carries two number sets for the pool
-worlds — the analytic solver's (188,590 / 140,095, quoted in PAPER Addendum
-v0.5 and the findings table above) and the simulated matrix output printed on
-the figures (187,814 / 139,885). Figure captions here quote the pixels; the
-multipliers (×1.34, ×14.7) and every conclusion are identical on either set.*
+  figure): the rule moves viability ×1.34, the contract ×14.8; user-centric
+  signed (140,463) is worse than pro-rata independent (12,771).
 
 ### sim2
 
