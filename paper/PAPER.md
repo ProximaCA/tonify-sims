@@ -119,6 +119,34 @@ user-centric independent $0.1262 → 9,512; direct·360 (rate 4) → 4,577; dire
 move yields ×1.34; the signed→independent move yields ×14.8. World A's best formula does not
 compensate for the 6.8% label pass-through: user-centric signed (140,463) is worse than pro-rata independent (12,771).
 Reforming the rule without reforming the contract is a reshuffle one order of magnitude short of what is needed.
+*Nature of the two multipliers (v1.1):* the contract axis is a single measured pass-through
+(0.0003/0.00443 = 6.772%) applied to both rows — ×14.8 = 1/0.06772 is arithmetic by construction,
+not emergent; only ×1.34 has a Monte-Carlo origin, and it is valid only at the baseline wallet
+(u = 10,000, PAID_SHARE = 0.40): the rule effect flips sign at the listener-intensity crossover
+u* ≈ 14,146 plays/yr (8,731 at PAID_SHARE 0.25; 21,371 at 0.60) — above u*, user-centric is worse
+than pro-rata for that artist's audience (fig14; sim1/SPEC.md §3.2). What the matrix contributes
+is commensurability: the two axes placed on one MVA grid.
+
+---
+## CHANGELOG v1.1 (August 2026) — external review, seven findings, all accepted
+
+An external reviewer landed seven hits on sim1; the verdicts and actions are recorded in
+sim1/SPEC.md CHANGELOG (accusation → verdict → action). Summary of what changed in this paper's
+claims: (1) ×14.8 explicitly reclassified as arithmetic input inversion, not an emergent result
+(rank-one contract axis; the matrix's value is commensurability); (2) the rule-effect scalar ×1.34
+replaced by the crossover u* — the effect flips sign (at u = 20,000 user-centric needs 18,341
+listeners vs pro-rata's 12,771); new figure fig14 and script v06_uc_crossover.py; (3) hero
+communication leads with the full corner range 3,204…20,161 at k=4 (worst corner loses to the
+independent pool), standing rule added; (4) Twitch benchmark given on the aligned ticket (1,709
+at $6.89 vs 2,353 at Twitch's fixed $5) — the direct edge is the take rate (5% vs 50%), not the
+rail; (5) 3,204 → 900 decomposed: cadence ×3.0 (to 1,068 at take 0.80), TON rail ×1.19 (to 900);
+(6) sim1/SPEC.md created (model equations, measured/derived/assumed parameter classes —
+PAID_SHARE = 0.40 flagged as an unjustified assumption that linearly scales the UC answer;
+validation gates with tolerances and non-zero-exit FAIL; the T3 tolerance [40%; 55%] declared
+post-hoc with inter-source justification, relative miss to 50% is 11%); (7) figure
+byte-identity scoped to a single environment (stdout stays byte-identical across environments).
+Numbers of v0.5.1 unchanged; all new numbers (u*, 1,709, 1,068, 20,161) are derivatives of
+existing axes.
 
 ---
 ## CHANGELOG v0.5.1 (August 2026) — syncing the matrix with the $0.0003/stream anchor

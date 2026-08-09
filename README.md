@@ -18,19 +18,24 @@ model (200,000 listeners, seed 42). Darker = worse for the artist; each cell
 shows $/listener-year and the audience needed for $100/month.*
 
 Your favourite artist needs 188,590 listeners to earn $100 a month under a
-signed pro-rata streaming contract — or 3,204 listeners on the direct rail,
-where the ~54 superfans among them (1.7%) donate four times a year. This repository holds three deterministic simulations of a
-direct music economy on Telegram/TON rails (Tonify): sim1 prices payout
-mechanisms across a 200,000-artist synthetic market calibrated to three
-independently measured anchors; sim2 models music spreading through a synthetic
-Telegram-like social graph as complex contagion (a model, not Telegram data);
-sim3 stress-tests the treasury law "payouts never exceed inflow" against
-emission-funded token economies. The industry spent a decade debating the fair
-formula. The formula moves artist viability ×1.34. The contract moves it ×14.8.
-Precisely: in the full {rule × contract} matrix of minimum viable audience,
-switching the division rule (pro-rata → user-centric) shifts an artist's MVA by
-×1.34, while switching the contract (signed → independent) shifts it ×14.8
-(fig7; [PAPER](paper/PAPER.md), Addendum v0.5). Every claim below carries either
+signed pro-rata streaming contract — or, on the direct rail at k=4 donations a
+year, between 3,204 listeners (best corner of the measured ranges: $6.89 mean
+ticket, 1.7% superfans) and 20,161 (worst corner: $3.10 ticket, 0.6%
+superfans — which loses to the independent pool's 12,771; the full ranges are
+the point, not either edge). This repository holds three deterministic
+simulations of a direct music economy on Telegram/TON rails (Tonify): sim1
+prices payout mechanisms across a 200,000-artist synthetic market calibrated
+to three independently measured anchors; sim2 models music spreading through a
+synthetic Telegram-like social graph as complex contagion (a model, not
+Telegram data); sim3 stress-tests the treasury law "payouts never exceed
+inflow" against emission-funded token economies. The industry spent a decade
+debating the fair formula. The formula's effect is not even a scalar — it
+flips sign at a listener-intensity crossover u* (fig14); at the baseline
+wallet it is ×1.34. The contract moves viability ×14.8, and that multiplier
+is arithmetic, not emergent: the contract axis is a single measured
+pass-through (0.0003/0.00443 = 6.772%) applied to both rows — what the matrix
+contributes is commensurability, the two axes placed on one MVA grid
+(fig7; [PAPER](paper/PAPER.md), Addendum v0.5; [sim1 SPEC](sim1/SPEC.md) §3). Every claim below carries either
 a source or a falsifier; a red team with the right to retract numbers reviewed
 each simulation, and what it retracted is documented in this README. Every
 parameter's provenance is one table: [SOURCES](SOURCES.md).
@@ -80,24 +85,48 @@ model: [PAPER](paper/PAPER.md); numbers:
 step right is ×10 income). The signed-pool curve sits leftmost — a 30-listener
 artist has an honest ~60% chance of zero direct income.*
 
-**Finding 1 — the contract outweighs the rule.** Across the full
-{rule × contract} MVA matrix, switching the division rule (pro-rata →
-user-centric) moves minimum viable audience ×1.34, switching the contract
-(signed → independent) moves it ×14.8 — the best World-A formula does not
-survive a 6.8% label pass-through: user-centric signed needs 140,463 listeners
+**Finding 1 — the contract outweighs the rule, and the two multipliers have
+different natures.** The contract axis of the {rule × contract} matrix is a
+single empirical scalar — the pass-through 0.0003/0.00443 = 6.772% applied to
+both rows — so its ×14.8 is arithmetic by construction, not an emergent
+result; only the rule axis (×1.34 at the baseline wallet) has a Monte-Carlo
+origin. What the matrix contributes is commensurability: the two axes had
+never been placed on one MVA grid. The best World-A formula still does not
+survive the label pass-through: user-centric signed needs 140,463 listeners
 against 12,771 for pro-rata independent. The $100/month ladder: 188,590
-(pro-rata signed) → 12,771 (pro-rata independent) → 3,204 (direct, at k=4
-donations/superfan/yr); a signed-360 contract scales the artist take ×0.70
-(direct MVA 3,204 → 4,577). The rule effect matches SoundCloud/Deezer
-empirics ([PAPER](paper/PAPER.md) Addendum v0.5 and §3).
+(pro-rata signed) → 12,771 (pro-rata independent) → 3,204 (direct, at k=4,
+best corner); a signed-360 contract scales the artist take ×0.70 (direct MVA
+3,204 → 4,577). And the rule effect itself is not a scalar — see fig14: it
+depends on listener intensity u and **flips sign at u\* ≈ 14,146 plays/yr**
+(8,731 at PAID_SHARE 0.25; 21,371 at 0.60): above u\*, user-centric is *worse*
+than pro-rata for that artist's audience — the rule moves money toward
+artists of light listeners and away from artists of heavy ones (at u=20k, UC
+needs 18,341 vs pro-rata's 12,771). External empirics (SoundCloud: +34% into
+the bottom bucket; Deezer: 2.4% of the pool shifted) independently confirm
+the rule effect is small against the contract effect — the qualitative
+conclusion survives, the point estimate does not
+([PAPER](paper/PAPER.md) Addendum v0.5; [sim1 SPEC](sim1/SPEC.md) §3.1–3.2).
 
 ![fig5_worlds_ladder](figures/fig5_worlds_ladder.png)
 
 *fig5 — the full World A → World B ladder (analytic; user-centric rows from
 the Monte-Carlo wallet model, 200,000 listeners, seed 42). X-axis is log MVA:
-each gridline is ×10 fewer listeners needed. Changing the division rule moves
-MVA ~×1.3; changing the mechanism moves it 1–2 orders of magnitude
-(188,590 → 900 at recurring k=12).*
+each gridline is ×10 fewer listeners needed. Artist take per rung: pool rows —
+the per-stream rate itself; Twitch mechanics — 50% split; direct · 360 — 0.80
+× 0.70 = 0.56; direct breakeven/k=4 — 0.80; direct recurring TON — 0.949.
+Changing the division rule moves MVA ~×1.3; changing the mechanism moves it
+1–2 orders of magnitude (188,590 → 900 at recurring k=12 — decomposed:
+k 4→12 gives ×3.0 to 1,068 at the same 0.80 take, the TON rail 0.80→0.949
+gives the last ×1.19 to 900).*
+
+![fig14_uc_crossover](figures/fig14_uc_crossover.png)
+
+*fig14 — user-centric is not a scalar (Monte-Carlo wallet model, 200,000
+listeners/point, seed 42; log-log). MVA under user-centric as a function of
+the listener's other listening u, for three PAID_SHARE values; the yellow
+dashed line is pro-rata independent (12,771). Each curve crosses it at its
+indifference point u\* (14,146 at the baseline PAID_SHARE 0.40): above u\*,
+the rule reform makes this artist's audience worse off.*
 
 **Finding 2 — breakeven is a range, not a point.** Direct donations beat the
 independent streaming pool when a devoted fan pays more often than
@@ -105,8 +134,12 @@ independent streaming pool when a devoted fan pays more often than
 earlier point estimate was retracted — see *Retracted & bounded*). Recurring
 patronage closes the range structurally: Twitch/Patreon paying-fan cadence is
 12/yr against the worst corner of 6.31, and recurring k=12 on the TON rail
-drops direct MVA to 900 ([CRITIC](paper/CRITIC.md) §1;
-[RESULTS](paper/RESULTS.md) v0.3 §1–§2; [PAPER](paper/PAPER.md) §4).
+drops direct MVA to 900. The Twitch-mechanics rung (2,353) uses Twitch's own
+fixed $5 subscription; on the same $6.89 mean ticket as the direct rows it
+would be 1,709 — the direct economy's edge over the Twitch mechanics is the
+take rate (5% vs a 50% split), not the rail
+([CRITIC](paper/CRITIC.md) §1; [RESULTS](paper/RESULTS.md) v0.3 §1–§2;
+[PAPER](paper/PAPER.md) §4; [sim1 SPEC](sim1/SPEC.md) §3.4).
 
 ![fig1_mva](figures/fig1_mva.png)
 
@@ -282,19 +315,22 @@ An honest number to lead with, not to bury (sim3 artist layer, §6).
 ## Reproducibility
 
 ```
-python3 run_all.py    # all three simulations + 13 figures x EN/RU -> ./figures + ./figures/ru, ~1-2 min, exit 0
+python3 run_all.py    # all three simulations + 14 figures x EN/RU -> ./figures + ./figures/ru, ~1-2 min, exit 0
 ```
 
-- **Deterministic:** seed=42 everywhere; a re-run produces byte-identical stdout
-  and byte-identical figures.
+- **Deterministic:** seed=42 everywhere; a re-run produces byte-identical
+  stdout across environments; figures are byte-identical within one
+  environment (matplotlib version and fonts affect PNG hashes).
 - **Validation before conclusions:** every simulation prints its validation
-  targets (target → obtained → PASS/FAIL) *before* its results; a FAIL blocks
-  the conclusions.
+  gates (target → obtained → tolerance → PASS/FAIL) *before* its results; a
+  FAIL blocks the conclusions with a non-zero exit (sim1 gates:
+  [sim1 SPEC](sim1/SPEC.md) §5).
 - **Dependencies:** python3, numpy, matplotlib; scipy + networkx (sim2); pillow
   (gif). No API keys, no data downloads — the world is synthetic and
   self-contained.
 - **Individually:** `python3 sim1/tonify_cash_sim.py` (then `sim1/v04_full.py`,
-  `sim1/v05_matrix.py`), `python3 sim2/tonify_graph_sim.py` (~36 s),
+  `sim1/v05_matrix.py`, `sim1/v06_uc_crossover.py`),
+  `python3 sim2/tonify_graph_sim.py` (~36 s),
   `python3 sim3/sim3_anti_graveyard.py` (~1 s).
 - **Provenance:** every model parameter → value used → source → vault note in
   [SOURCES](SOURCES.md).
@@ -310,13 +346,14 @@ tonify-sims/
 │                     #   PAPER.md / PAPER.ru.md (model; the RU original is the source of truth),
 │                     #   RESULTS.md / RESULTS.ru.md (numbers),
 │                     #   CRITIC.md / CRITIC.ru.md (red team, retractions)
-├── sim1/             # cash register vs pool: tonify_cash_sim.py, v04_full.py,
-│                     #   v05_matrix.py (the {rule x contract} matrix)
+├── sim1/             # cash register vs pool: SPEC.md v1.1 (model equations,
+│                     #   parameter classes, gates), tonify_cash_sim.py,
+│                     #   v04_full.py, v05_matrix.py, v06_uc_crossover.py
 ├── sim2/             # music spread on a synthetic Telegram-like graph:
 │                     #   tonify_graph_sim.py, SPEC.md v1.3, README.md
 ├── sim3/             # anti-graveyard treasury law vs emission:
 │                     #   sim3_anti_graveyard.py, SPEC.md v1.2, README.md
-├── figures/          # fig1-fig13 (EN) · figures/ru/ — the same 13 in Russian,
+├── figures/          # fig1-fig14 (EN) · figures/ru/ — the same 14 in Russian,
 │                     #   both regenerated by run_all.py
 └── LICENSE           # MIT
 ```
@@ -391,6 +428,41 @@ it. Audit verdict: accept; no numbers retracted.
   both anchors (real projects sit on the floor; 96/200 model runs re-peak);
   sim3's conclusions are built on events up to and at the collapse (§11.11).
 
+## External review (v1.1)
+
+An external reviewer took seven shots at sim1; all seven landed, one landed
+harder than written. Same genre as *Retracted & bounded* — what was claimed,
+what the verdict was, what changed ([sim1 SPEC](sim1/SPEC.md) CHANGELOG v1.1):
+
+- **"×14.8 is input inversion, the matrix is rank one."** Correct: the
+  contract axis is one measured pass-through applied to both rows, so ×14.8 =
+  1/0.06772 by construction. Reworded everywhere — arithmetic, not emergent;
+  the matrix's contribution is commensurability.
+- **"The UC scalar hides the dependence on wallet size"** — and worse than
+  written: the effect *flips sign*. At u=20k user-centric needs 18,341
+  listeners against pro-rata's 12,771. The scalar ×1.34 is replaced by the
+  crossover u\* (fig14, v06): 8,731 / 14,146 / 21,371 plays/yr at PAID_SHARE
+  0.25 / 0.40 / 0.60. This turns sim1's headline weakness into its one real
+  finding: rule reform has an indifference point and works in opposite
+  directions on either side of it.
+- **"The hero paragraph leads with the best corner of two retracted ranges."**
+  Correct; the hero now leads with the full corner range 3,204…20,161 and
+  names that the worst corner loses to the independent pool. A standing
+  communication rule was added to *Process*.
+- **"Twitch benchmark uses a different ticket."** Correct: 2,353 is at
+  Twitch's fixed $5; on the aligned $6.89 ticket it is 1,709 — the edge is
+  the take rate (5% vs 50%), not the rail.
+- **"3,204 → 900 silently mixes cadence and rail."** Correct; decomposed:
+  cadence k 4→12 gives ×3.0 (to 1,068 at the same take), the TON rail gives
+  ×1.19 (to 900); per-rung takes are now in the fig5 caption.
+- **"sim1 has no validation gates; T3 misses by 11% unflagged."** Correct;
+  sim1/SPEC.md now exists (the only simulation without one — the root of all
+  seven findings), gates print target → obtained → tolerance → PASS/FAIL and
+  a FAIL exits non-zero; the T3 tolerance [40%; 55%] is declared post-hoc
+  with its inter-source justification (Celma 50% vs CMA 63–65%).
+- **"Byte-identical figures" overclaimed.** Correct; scoped to one
+  environment (stdout stays byte-identical across environments).
+
 ## Limitations, first-class
 
 **This is a calibrated calculator, not data. It aims, the MVP measures.**
@@ -460,8 +532,10 @@ T3a structurally unachievable because of the phoenix rebound) — each resolved 
 spec revision with a CHANGELOG and externally justified thresholds, none by
 tuning to the result (verified by the red team on independent seed batches).
 Retracted numbers are listed in [CRITIC](paper/CRITIC.md) (sim1) and
-the SPEC CHANGELOG blocks ([sim2 SPEC](sim2/SPEC.md),
-[sim3 SPEC](sim3/SPEC.md)).
+the SPEC CHANGELOG blocks ([sim1 SPEC](sim1/SPEC.md), [sim2 SPEC](sim2/SPEC.md),
+[sim3 SPEC](sim3/SPEC.md)). Standing communication rule (external review v1.1):
+once a point estimate is retracted into a range, headline text leads with the
+middle or the full range — never with an edge.
 
 ## License
 
