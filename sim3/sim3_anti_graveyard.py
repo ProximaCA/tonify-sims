@@ -425,7 +425,7 @@ def figures(A, B, tstar, dead, med_t, fals):
     c.scatter([r["c"] * 100 for r in fals], [r["t_sim"] for r in fals], color=P, zorder=5,
               s=42, label="симуляция A (i_A=0), сетка §8")
     c.axvline(C_STAR * 100, color=Y, lw=1.5, ls=":",
-              label=f"c* = {C_STAR*100:.2f}%/мес (порог 36 мес)")
+              label=f"аналитика: c* = {C_STAR*100:.2f}%/мес (порог 36 мес)")
     c.set_yscale("log"); c.grid(alpha=0.15); c.legend(frameon=False, fontsize=8)
     c.set_xlabel("отток c, %/мес (приток = 0)"); c.set_ylabel("t_death, мес (log)")
     c.set_title("(c) фальсификатор: аналитика vs симуляция")
