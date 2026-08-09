@@ -18,8 +18,8 @@ model (200,000 listeners, seed 42). Darker = worse for the artist; each cell
 shows $/listener-year and the audience needed for $100/month.*
 
 Your favourite artist needs 188,590 listeners to earn $100 a month under a
-signed pro-rata streaming contract — or 3,204 directly-paying superfans at four
-donations a year. This repository holds three deterministic simulations of a
+signed pro-rata streaming contract — or 3,204 listeners on the direct rail,
+where the ~54 superfans among them (1.7%) donate four times a year. This repository holds three deterministic simulations of a
 direct music economy on Telegram/TON rails (Tonify): sim1 prices payout
 mechanisms across a 200,000-artist synthetic market calibrated to three
 independently measured anchors; sim2 models music spreading through a synthetic
@@ -33,7 +33,7 @@ switching the division rule (pro-rata → user-centric) shifts an artist's MVA b
 (fig7; [PAPER](paper/PAPER.md), Addendum v0.5). Every claim below carries either
 a source or a falsifier; a red team with the right to retract numbers reviewed
 each simulation, and what it retracted is documented in this README. Every
-parameter's provenance is one table: [SOURCES.md](SOURCES.md).
+parameter's provenance is one table: [SOURCES](SOURCES.md).
 
 ## Glossary
 
@@ -68,10 +68,10 @@ A synthetic market of 200,000 artists, calibrated to three independently
 measured anchors (87% of artists under 1,000 streams/year — Luminate; 2.6% of
 rightsholders above $1,000/year — Spotify Loud & Clear; top-0.28% holding ≈50%
 of streams — CMA/Last.fm; obtained: 87.0% / 2.6% / 44.5%, Gini 0.97). Full
-model: [paper/PAPER.md](paper/PAPER.md); numbers:
-[paper/RESULTS.md](paper/RESULTS.md); retractions:
-[paper/CRITIC.md](paper/CRITIC.md); every parameter's source:
-[SOURCES.md](SOURCES.md).
+model: [PAPER](paper/PAPER.md); numbers:
+[RESULTS](paper/RESULTS.md); retractions:
+[CRITIC](paper/CRITIC.md); every parameter's source:
+[SOURCES](SOURCES.md).
 
 ![fig2_income_dist](figures/fig2_income_dist.png)
 
@@ -143,7 +143,7 @@ injection; the direct rail's honest-loss curve is flat zero.*
 **Finding 4 — the $13 payout threshold is a decade for signed artists.** At
 Telegram's $13 minimum withdrawal, 94.3% of signed-pool artists wait longer
 than a year for their first payout, 89.9% longer than ten years; on the
-direct rail the median donation is $6.9 against the same $13 threshold. Of $1
+direct rail the mean donation is $6.9 against the same $13 threshold. Of $1
 on the TON rail, 94.9¢ reaches the artist (5.0¢ platform, 0.1¢ rail) versus
 64.1¢ on Stars mobile ([RESULTS](paper/RESULTS.md) "Payout threshold
 logistics" + §3; [PAPER](paper/PAPER.md) §4).
@@ -160,8 +160,8 @@ spread).*
 A 50,000-node Barabási–Albert graph with 3,460 planted overlapping
 chat-cliques (a model, not Telegram data). Adoption is complex contagion: a
 track converts a listener only after k=2 distinct adopted neighbours. Full
-protocol and validation: [sim2/README.md](sim2/README.md),
-[sim2/SPEC.md](sim2/SPEC.md).
+protocol and validation: [sim2 README](sim2/README.md),
+[sim2 SPEC](sim2/SPEC.md).
 
 **Finding 5 — seeding hubs beats random seeding, on a model.** Top-hub
 seeding beats random at every budget B ∈ [2; 500] at p = p* = 0.15 (B=5:
@@ -186,7 +186,7 @@ complex contagion), while at B=500 it compresses to +19% (55.4 vs 46.5 — the
 converging tails on fig8). Strategy is decisive exactly when the seeding
 budget is small; at B ≤ 20 part of the hub win is seed density in general,
 and the clean hub effect (+14–19%, up to +27.7% for the top-BA control)
-isolates at B ≥ 50 (experiment A; [sim2/README](sim2/README.md) §4.1 v1.3).
+isolates at B ≥ 100 (experiment A; [sim2/README](sim2/README.md) §4.1 v1.3).
 
 **Finding 7 — the model's critical point is the product's K-factor.** R_eff —
 adoptions caused per adoption — crosses 1.0 between p = 0.15 and p = 0.20
@@ -211,7 +211,7 @@ between p=0.15 and p=0.20 is the K-factor threshold of Finding 7.*
 *fig10 — one complex-contagion cascade spreading through chat cliques
 (simulation, a single cascade on a 4,000-node illustrative subgraph, 48.3%
 reach, seeded from a single chat). Inline above is the full animation;
-direct file: [figures/fig10_cascade.gif](figures/fig10_cascade.gif)
+direct file: [fig10_cascade.gif](figures/fig10_cascade.gif)
 (2.6 MB, 15 frames, round 0 → 14).*
 
 ## sim3 — treasury survival: the "payouts ≤ inflow" law vs emission
@@ -220,7 +220,7 @@ Regime A pays artists only from real inflow (the Tonify treasury law); regime
 B pays from token emission (the STEPN/Axie class), calibrated to be
 consistent with Hamster Kombat's ×25 collapse in 6 months. 200 Monte-Carlo
 runs; an artist layer of 10,000 agents. Full hierarchy of results and
-falsifiers: [sim3/README.md](sim3/README.md), [sim3/SPEC.md](sim3/SPEC.md).
+falsifiers: [sim3 README](sim3/README.md), [sim3 SPEC](sim3/SPEC.md).
 
 **Finding 8 — emission economies collapse in-model; the law cannot bankrupt
 its treasury.** The law-bound treasury has zero invariant violations across
@@ -297,7 +297,7 @@ python3 run_all.py    # all three simulations + all 13 figures -> ./figures, ~1-
   `sim1/v05_matrix.py`), `python3 sim2/tonify_graph_sim.py` (~36 s),
   `python3 sim3/sim3_anti_graveyard.py` (~1 s).
 - **Provenance:** every model parameter → value used → source → vault note in
-  [SOURCES.md](SOURCES.md).
+  [SOURCES](SOURCES.md).
 
 ## Repository layout
 
@@ -329,8 +329,8 @@ source, and the figures carry the rest.
 
 Each simulation went through a red team with the right to retract numbers.
 This section is what that right produced. Genre and full text: sim1 —
-[paper/CRITIC.md](paper/CRITIC.md); sim2/sim3 — CHANGELOG blocks in
-[sim2/SPEC.md](sim2/SPEC.md) and [sim3/SPEC.md](sim3/SPEC.md).
+[CRITIC](paper/CRITIC.md); sim2/sim3 — CHANGELOG blocks in
+[sim2 SPEC](sim2/SPEC.md) and [sim3 SPEC](sim3/SPEC.md).
 
 **sim1 (CRITIC.md, verdict format: accusation → verdict → action).**
 - *Retracted:* the "status quo = 0.42 donations/superfan/yr" headline — built on
@@ -458,9 +458,9 @@ construction; sim2 v1.1: the T3(b) metric/threshold category error; sim3: target
 T3a structurally unachievable because of the phoenix rebound) — each resolved by
 spec revision with a CHANGELOG and externally justified thresholds, none by
 tuning to the result (verified by the red team on independent seed batches).
-Retracted numbers are listed in [paper/CRITIC.md](paper/CRITIC.md) (sim1) and
-the SPEC CHANGELOG blocks ([sim2/SPEC.md](sim2/SPEC.md),
-[sim3/SPEC.md](sim3/SPEC.md)).
+Retracted numbers are listed in [CRITIC](paper/CRITIC.md) (sim1) and
+the SPEC CHANGELOG blocks ([sim2 SPEC](sim2/SPEC.md),
+[sim3 SPEC](sim3/SPEC.md)).
 
 ## License
 

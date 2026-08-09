@@ -413,20 +413,19 @@ def make_fig8(res_a, p_star):
         rows = res_a[strat]
         mean = np.array([r["mean"] for r in rows])
         sem = np.array([r["sem"] for r in rows])
-        tag = "контроль §4.1; симуляция" if strat == "top-BA" else "симуляция"
+        tag = "control §4.1; simulation" if strat == "top-BA" else "simulation"
         ax.plot(BUDGETS, mean, color=colors[strat], lw=3, marker="o", ms=5,
-                label=f"{strat} ({tag}, среднее ± 1 SEM)",
+                label=f"{strat} ({tag}, mean ± 1 SEM)",
                 zorder=2.5 if strat == "top-hubs" else 2)   # top-hubs поверх top-BA (совпадают на B≥10)
         ax.fill_between(BUDGETS, mean - sem, mean + sem, color=colors[strat], alpha=0.18)
-    ax.axhline(0, color=Y, lw=1.5, ls="--", label="аналитика: посев без размножения (y = 0)")
-    ax.annotate("B=1: у всех стратегий 0 —\ncomplex-трек не сеется одним постом (§6);\nиз критерия фальсификатора исключён",
-                xy=(1, 0), xytext=(0.03, 0.42), textcoords="axes fraction",
-                fontsize=8.5, color=INK, arrowprops=dict(arrowstyle="-", color=INK, lw=0.8))
+    ax.axhline(0, color=Y, lw=1.5, ls="--", label="analytic: seeding without multiplication (y = 0)")
+    ax.text(0.53, 0.56, "B=1: all strategies at 0 —\na complex track cannot be seeded by one post (§6);\nexcluded from the falsifier criterion",
+            transform=ax.transAxes, fontsize=8.5, color=INK)
     ax.set_xscale("log")
     ax.set_xticks(BUDGETS); ax.set_xticklabels([str(b) for b in BUDGETS])
-    ax.set_xlabel("Бюджет посева B, узлов (log)")
-    ax.set_ylabel("Reach-per-seed = (охват − B)/B")
-    ax.set_title(f"Посев при равном бюджете: complex k=2, p = p* = {p_star:.2f}")
+    ax.set_xlabel("Seeding budget B, nodes (log)")
+    ax.set_ylabel("Reach-per-seed = (reach − B)/B")
+    ax.set_title(f"Equal-budget seeding: complex k=2, p = p* = {p_star:.2f}")
     ax.grid(alpha=0.15); ax.legend(frameon=False)
     fig.tight_layout(); fig.savefig(os.path.join(FIGDIR, "fig8_reach_per_seed.png"), dpi=150)
     plt.close(fig)
@@ -444,34 +443,35 @@ def make_fig9(res_b, p_c_mf, p_c_chat, pc1, pc2):
         q1 = np.array([r["reach_q1"] for r in rows]) * 100
         q3 = np.array([r["reach_q3"] for r in rows]) * 100
         mean = np.array([r["reach_mean"] for r in rows]) * 100
-        ax1.plot(P_GRID, med, color=col, lw=3, label=f"{lbl}: медиана + IQR (симуляция)")
+        ax1.plot(P_GRID, med, color=col, lw=3, label=f"{lbl}: median + IQR (simulation)")
         ax1.fill_between(P_GRID, q1, q3, color=col, alpha=0.18)
-        ax1.plot(P_GRID, mean, color=col, lw=1.2, ls="-.", label=f"{lbl}: mean (симуляция)")
+        ax1.plot(P_GRID, mean, color=col, lw=1.2, ls="-.", label=f"{lbl}: mean (simulation)")
     ax1.axvline(p_c_mf, color=Y, lw=1.5, ls="--",
-                label=f"аналитика: mean-field ⟨k⟩/(⟨k²⟩−⟨k⟩) = {p_c_mf:.3f}")
-    ax1.axvline(p_c_chat, color=Y, lw=1.5, ls=":",
-                label=f"аналитика: mean-field мостового слоя 1/√(d̄−1) = {p_c_chat:.2f}, оценка сверху")
-    for pc, col, lbl in [(pc1, C, f"p_c(k=1) = {pc1:.2f} (симуляция)"),
-                         (pc2, P, f"p_c(k=2) = p* = {pc2:.2f} (симуляция)")]:
+                label=f"analytic: mean-field ⟨k⟩/(⟨k²⟩−⟨k⟩) = {p_c_mf:.3f}")
+    ax1.axvline(p_c_chat, color=Y, lw=1.5, ls=":", ymin=0.58,
+                label=f"analytic: bridge-layer mean-field 1/√(d̄−1) = {p_c_chat:.2f}, upper bound")
+    for pc, col, lbl in [(pc1, C, f"p_c(k=1) = {pc1:.2f} (simulation)"),
+                         (pc2, P, f"p_c(k=2) = p* = {pc2:.2f} (simulation)")]:
         ax1.plot([pc], [-4], marker="^", ms=9, color=col, clip_on=False, ls="none", label=lbl)
-    ax1.set_ylabel("Финальный охват, % N")
-    ax1.set_title("Фазовая диаграмма: посев — один случайный чат (10–14 узлов); 40 прогонов/точку")
-    ax1.grid(alpha=0.15); ax1.legend(frameon=False, fontsize=8, loc="center right")
+    ax1.set_ylim(-8, 104)
+    ax1.set_ylabel("Final reach, % of N")
+    ax1.set_title("Phase diagram: seed — one random chat (10–14 nodes); 40 runs/point")
+    ax1.grid(alpha=0.15); ax1.legend(frameon=False, fontsize=8, loc="lower right")
 
     for k, (col, lbl) in series.items():
         rows = res_b[k]
         ax2.plot(P_GRID, [r["reff_cond"] for r in rows], color=col, lw=3,
-                 label=f"{lbl}: R_eff | G₁≥1 (симуляция)")
+                 label=f"{lbl}: R_eff | G₁≥1 (simulation)")
         ax2.plot(P_GRID, [r["p_macro"] for r in rows], color=col, lw=0, marker="o", ms=5,
-                 alpha=0.55, label=f"{lbl}: P_macro = P(охват ≥ 5% N) (симуляция)")
-    ax2.axhline(1.0, color=Y, lw=1.5, ls="--", label="аналитика: порог критичности R_eff = 1")
+                 alpha=0.55, label=f"{lbl}: P_macro = P(reach ≥ 5% N) (simulation)")
+    ax2.axhline(1.0, color=Y, lw=1.5, ls="--", label="analytic: criticality threshold R_eff = 1")
     ax2.axvspan(P_GRID[0], pc2, color=K, alpha=0.08)
     ax2.axvspan(pc2, P_GRID[-1], color=P, alpha=0.08)
-    ax2.text((P_GRID[0] + pc2) / 2, 0.06, "субкритика complex", ha="center", color=INK, fontsize=9)
-    ax2.text((pc2 + P_GRID[-1]) / 2, 0.06, "сверхкритика complex", ha="center", color=INK, fontsize=9)
+    ax2.text((P_GRID[0] + pc2) / 2, 0.06, "subcritical complex", ha="center", color=INK, fontsize=9)
+    ax2.text((pc2 + P_GRID[-1]) / 2, 0.06, "supercritical complex", ha="center", color=INK, fontsize=9)
     ax2.set_xlabel("Share rate p")
-    ax2.set_ylabel("R_eff | G₁≥1 и P_macro (одна шкала)")
-    ax2.grid(alpha=0.15); ax2.legend(frameon=False, fontsize=8)
+    ax2.set_ylabel("R_eff | G₁≥1 and P_macro (one scale)")
+    ax2.grid(alpha=0.15); ax2.legend(frameon=False, fontsize=8, loc="upper left")
     fig.tight_layout(); fig.savefig(os.path.join(FIGDIR, "fig9_phase_diagram.png"), dpi=150)
     plt.close(fig)
 
@@ -523,12 +523,12 @@ def make_gif(p_star):
         ax.set_xlim(xy[:, 0].min() * 1.05, xy[:, 0].max() * 1.05)
         ax.set_ylim(xy[:, 1].min() * 1.10, xy[:, 1].max() * 1.05)
         ax.axis("off")
-        ax.set_title(f"Complex-каскад k=2, p = p* = {p_star:.2f} · раунд {t} · принявших {cur_reach:,}",
+        ax.set_title(f"Complex cascade k=2, p = p* = {p_star:.2f} · round {t} · adopted {cur_reach:,}",
                      fontsize=11)
-        fig.text(0.5, 0.935, "посев #6B2FFF · принявшие #FF4D8D · на пороге (1 из 2 касаний) #00D4F5 · "
-                 "транслируют в раунде #FFD426 · не затронуты — тусклый #2A2342",
+        fig.text(0.5, 0.935, "seeds #6B2FFF · adopted #FF4D8D · at threshold (1 of 2 touches) #00D4F5 · "
+                 "sharing this round #FFD426 · untouched — dim #2A2342",
                  ha="center", fontsize=6.0, color=INK)
-        fig.text(0.5, 0.02, "симуляция: иллюстративный масштаб N = 4 000; конструкция графа идентична основной (N = 50 000)",
+        fig.text(0.5, 0.02, "simulation: illustrative scale N = 4,000; graph construction identical to the main run (N = 50,000)",
                  ha="center", fontsize=8.5, color=INK)
         fig.tight_layout()
         fig.canvas.draw()

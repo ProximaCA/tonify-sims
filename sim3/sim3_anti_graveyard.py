@@ -400,35 +400,35 @@ def figures(A, B, tstar, dead, med_t, fals):
     # ---------- fig11: рабочая, 3 панели (§9) ----------
     fig, ax = plt.subplots(1, 3, figsize=(16, 4.9))
     a = ax[0]
-    a.plot(mo, A["U"], color=P, lw=2.8, label="A «выплаты ≤ приток» — симуляция (детерминир.)")
-    a.plot(mo, medU, color=K, lw=2.8, label="B «из эмиссии» — симуляция (медиана, 200 прогонов)")
+    a.plot(mo, A["U"], color=P, lw=2.8, label="A “payouts ≤ inflow” — simulation (determin.)")
+    a.plot(mo, medU, color=K, lw=2.8, label="B “from emission” — simulation (median, 200 runs)")
     a.fill_between(mo, q25, q75, color=K, alpha=0.18, lw=0, label="B: IQR 25–75%")
     a.axhline(DEATH_FRAC * medU.max(), color=Y, lw=1.5, ls="--",
-              label=f"порог смерти: 4% пика B ({DEATH_FRAC*medU.max()/1e6:.2f}M)")
-    a.set_yscale("log"); a.grid(alpha=0.15); a.legend(frameon=False, fontsize=8, loc="lower left")
-    a.set_xlabel("месяц"); a.set_ylabel("DAU (log)")
-    a.set_title("(a) DAU: закон против эмиссии")
+              label=f"death threshold: 4% of B's peak ({DEATH_FRAC*medU.max()/1e6:.2f}M)")
+    a.set_yscale("log"); a.grid(alpha=0.15); a.legend(frameon=False, fontsize=7.5, loc="lower left")
+    a.set_xlabel("month"); a.set_ylabel("DAU (log)")
+    a.set_title("(a) DAU: the law vs emission")
     b = ax[1]
-    b.plot(mo, A["T"]["ind"], color=P, lw=2.8, label="казна A, $ — симуляция (детерминир.)")
-    b.plot(mo, medTB, color=K, lw=2.8, label="казна B = Z·P, $ — симуляция (медиана)")
-    b.text(T_H - 0.5, A["T"]["ind"][T_H] * 1.6, "казна A: растущее плато", color=INK,
+    b.plot(mo, A["T"]["ind"], color=P, lw=2.8, label="treasury A, $ — simulation (determin.)")
+    b.plot(mo, medTB, color=K, lw=2.8, label="treasury B = Z·P, $ — simulation (median)")
+    b.text(T_H - 0.5, A["T"]["ind"][T_H] * 1.6, "treasury A: a growing plateau", color=INK,
            fontsize=9, ha="right", va="bottom")
-    b.text(T_H - 0.5, medTB[T_H] * 2.2, "казна B: горб, обвал,\nзомби-накачка Z·P", color=INK,
-           fontsize=9, ha="right", va="bottom")
+    b.text(0.02, 0.97, "treasury B: hump, collapse,\nzombie pump of Z·P", color=INK,
+           fontsize=9, ha="left", va="top", transform=b.transAxes)
     b.set_yscale("log"); b.grid(alpha=0.15); b.legend(frameon=False, fontsize=8, loc="lower right")
-    b.set_xlabel("месяц"); b.set_ylabel("казна, $ (log)")
-    b.set_title("(b) казна: реальные $ против токена")
+    b.set_xlabel("month"); b.set_ylabel("treasury, $ (log)")
+    b.set_title("(b) treasury: real $ vs the token")
     c = ax[2]
     cc = np.linspace(0.015, 0.45, 300)
     c.plot(cc * 100, np.log(DEATH_FRAC) / np.log(1 - cc), color=C, lw=2.4,
-           label="аналитика: t=ln(0,04)/ln(1−c)")
+           label="analytic: t=ln(0.04)/ln(1−c)")
     c.scatter([r["c"] * 100 for r in fals], [r["t_sim"] for r in fals], color=P, zorder=5,
-              s=42, label="симуляция A (i_A=0), сетка §8")
+              s=42, label="simulation A (i_A=0), grid §8")
     c.axvline(C_STAR * 100, color=Y, lw=1.5, ls=":",
-              label=f"аналитика: c* = {C_STAR*100:.2f}%/мес (порог 36 мес)")
+              label=f"analytic: c* = {C_STAR*100:.2f}%/mo (36-mo horizon)")
     c.set_yscale("log"); c.grid(alpha=0.15); c.legend(frameon=False, fontsize=8)
-    c.set_xlabel("отток c, %/мес (приток = 0)"); c.set_ylabel("t_death, мес (log)")
-    c.set_title("(c) фальсификатор: аналитика vs симуляция")
+    c.set_xlabel("churn c, %/mo (inflow = 0)"); c.set_ylabel("t_death, months (log)")
+    c.set_title("(c) falsifier: analytic vs simulation")
     fig.tight_layout(); fig.savefig(os.path.join(OUT, "fig11_treasury_dau.png"), dpi=150)
     plt.close(fig)
 
@@ -436,18 +436,18 @@ def figures(A, B, tstar, dead, med_t, fals):
     fig, a = plt.subplots(figsize=(9, 5.5))
     n_dead = int(dead.sum()); n_alive = R_RUNS - n_dead
     a.hist(tstar[dead], bins=np.arange(-0.5, 37.5, 1.0), weights=np.full(n_dead, 1 / R_RUNS),
-           color=K, alpha=0.9, label="месяц смерти t* — симуляция (200 прогонов, критерий §4)")
+           color=K, alpha=0.9, label="death month t* — simulation (200 runs, criterion §4)")
     if n_alive:
         a.bar(37, n_alive / R_RUNS, width=1.0, color=C, alpha=0.9,
-              label=f"«36+»: живы на горизонте ({n_alive} прогонов)")
-    a.axvline(med_t, color=Y, lw=2, ls="--", label=f"медиана t* = {med_t:.0f} мес")
-    a.text(0.02, 0.97, f"мертво: {n_dead}/200 при t* ≤ 36\n"
-           "режим A: смертей казны 0/всех конфигураций\n(структурно, T2); по DAU при базовом\nросте — жив на горизонте",
-           transform=a.transAxes, va="top", fontsize=9, color=INK)
+              label=f"“36+”: alive at the horizon ({n_alive} runs)")
+    a.axvline(med_t, color=Y, lw=2, ls="--", label=f"median t* = {med_t:.0f} mo")
+    a.text(0.40, 0.96, f"dead: {n_dead}/200 at t* ≤ 36\n"
+           "regime A: 0 treasury deaths across all\nconfigurations (structural, T2); by DAU\nat baseline growth — alive at the horizon",
+           transform=a.transAxes, va="top", fontsize=8.5, color=INK)
     a.grid(alpha=0.15); a.legend(frameon=False, fontsize=9, loc="center right")
-    a.set_xlabel("месяц смерти t* (критерий §4: DAU < 4% пика два месяца подряд)")
-    a.set_ylabel("доля прогонов")
-    a.set_title("Режим B: распределение даты смерти, 200 прогонов")
+    a.set_xlabel("death month t* (criterion §4: DAU < 4% of peak two months in a row)")
+    a.set_ylabel("share of runs")
+    a.set_title("Regime B: death-date distribution, 200 runs")
     fig.tight_layout(); fig.savefig(os.path.join(OUT, "fig12_death_dist.png"), dpi=150)
     plt.close(fig)
 
@@ -456,16 +456,16 @@ def figures(A, B, tstar, dead, med_t, fals):
     a.plot(mo, A["U"] / A["U"].max(), color=P, lw=4)
     a.plot(mo, medU / medU.max(), color=K, lw=4)
     a.axvline(med_t, color=Y, lw=1.8, ls="--")
-    a.text(med_t + 0.6, 0.86, f"медиана смерти B:\nмесяц {med_t:.0f}", color=INK, fontsize=11)
-    a.text(26.5, A["U"][27] / A["U"].max() + 0.06, "выплаты ≤ приток", color=INK,
+    a.text(med_t + 0.6, 0.40, f"regime B median death:\nmonth {med_t:.0f}", color=INK, fontsize=11)
+    a.text(17.0, 0.92, "payouts ≤ inflow", color=INK,
            fontsize=15, fontweight="bold")
-    a.text(8.2, 0.62, "выплаты из эмиссии", color=INK, fontsize=15, fontweight="bold")
-    a.set_xlabel("месяц"); a.set_ylabel("DAU, доля пика")
+    a.text(8.2, 0.62, "payouts from emission", color=INK, fontsize=15, fontweight="bold")
+    a.set_xlabel("month"); a.set_ylabel("DAU, share of peak")
     a.set_xlim(0, 36); a.set_ylim(0, 1.12)
-    a.text(0.0, -0.15, "A: детерминированная симуляция; B: медиана 200 прогонов; "
-           "калибровка ×25/6 мес — Hamster (Caladan, апр. 2026);\n"
-           "наклон A — допущение (органика 6%/мес > churn 5%/мес, P2–P3): "
-           "закон Tonify гарантирует казну ≥ 0, не рост DAU",
+    a.text(0.0, -0.15, "A: deterministic simulation; B: median of 200 runs; "
+           "calibration ×25/6 mo — Hamster (Caladan, Apr 2026);\n"
+           "the slope of A is an assumption (organic 6%/mo > churn 5%/mo, P2–P3): "
+           "the Tonify law guarantees treasury ≥ 0, not DAU growth",
            transform=a.transAxes, fontsize=8, color=INK)
     fig.tight_layout(); fig.savefig(os.path.join(OUT, "fig13_two_curves.png"), dpi=150)
     plt.close(fig)

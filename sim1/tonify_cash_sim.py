@@ -106,34 +106,35 @@ P,C,K,Y = "#6B2FFF","#00D4F5","#FF4D8D","#FFD426"
 OUT=os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","figures")+"/"
 
 fig,ax=plt.subplots(figsize=(9,5.5))
-ax.plot(dons,[mva_direct(d) for d in dons],color=P,lw=3,label="Касса Tonify (суперфаны 1.7%)")
-ax.axhline(mva_pool_indie,color=C,lw=2,ls="--",label=f"Котёл, инди: {mva_pool_indie:,.0f}")
-ax.axhline(mva_pool_signed,color=K,lw=2,ls="--",label=f"Котёл, подписанный: {mva_pool_signed:,.0f}")
+ax.plot(dons,[mva_direct(d) for d in dons],color=P,lw=3,label="Tonify direct till (superfans 1.7%)")
+ax.axhline(mva_pool_indie,color=C,lw=2,ls="--",label=f"Pool, independent: {mva_pool_indie:,.0f}")
+ax.axhline(mva_pool_signed,color=K,lw=2,ls="--",label=f"Pool, signed: {mva_pool_signed:,.0f}")
 ax.set_yscale("log"); ax.grid(alpha=0.15); ax.legend(frameon=False)
-ax.set_xlabel("Донатов на суперфана в год — ось «Объекта 3», неизмеренного параметра")
-ax.set_ylabel("Слушателей для $100/мес (log)")
-ax.set_title("Минимальная жизнеспособная аудитория: котёл против кассы")
+ax.set_xlabel("Donations per superfan per year — the axis of the unmeasured parameter")
+ax.set_ylabel("Listeners needed for $100/mo (log)")
+ax.set_title("Minimum viable audience: the pool vs the direct till")
 fig.tight_layout(); fig.savefig(OUT+"fig1_mva.png",dpi=150)
 
 fig,ax=plt.subplots(figsize=(9,5.5))
 bins=np.logspace(-2,6,70)
 d4=direct_income(4)
-for data,c,lbl in [(np.maximum(income_pool_signed,1e-2),K,"Котёл: подписанный карман"),
-                   (np.maximum(income_pool_indie,1e-2),C,"Котёл: инди-карман"),
-                   (np.maximum(income_pool_indie+d4,1e-2),P,"Гибрид: котёл + касса (4 доната/год)")]:
+for data,c,lbl in [(np.maximum(income_pool_signed,1e-2),K,"Pool: signed pocket"),
+                   (np.maximum(income_pool_indie,1e-2),C,"Pool: independent pocket"),
+                   (np.maximum(income_pool_indie+d4,1e-2),P,"Hybrid: pool + direct (4 donations/yr)")]:
     ax.hist(data,bins=bins,histtype="step",lw=2.2,color=c,label=lbl)
-ax.axvline(1000,color=Y,lw=1.5,ls=":",label="$1000/год")
-ax.set_xscale("log"); ax.set_yscale("log"); ax.grid(alpha=0.15); ax.legend(frameon=False)
-ax.set_xlabel("Доход артиста, $/год (log)"); ax.set_ylabel("Артистов (log)")
-ax.set_title(f"Распределение годового дохода {N:,} артистов")
+ax.axvline(1000,color=Y,lw=1.5,ls=":",ymax=0.70)
+ax.text(1000,1.2,"$1,000/yr ",color=Y,rotation=90,ha="right",va="bottom",fontsize=9)
+ax.set_xscale("log"); ax.set_yscale("log"); ax.grid(alpha=0.15); ax.legend(frameon=False,loc="upper right")
+ax.set_xlabel("Artist income, $/yr (log)"); ax.set_ylabel("Artists (log)")
+ax.set_title(f"Annual income distribution over {N:,} artists")
 fig.tight_layout(); fig.savefig(OUT+"fig2_income_dist.png",dpi=150)
 
 fig,ax=plt.subplots(figsize=(9,5.5))
-ax.plot(F*100,pool_loss*100,color=K,lw=3,label="Котёл: доля денег, утёкшая ботам")
-ax.plot(F*100,np.zeros_like(F),color=P,lw=3,label="Касса: потери честных артистов")
+ax.plot(F*100,pool_loss*100,color=K,lw=3,label="Pool: share of money leaked to bots")
+ax.plot(F*100,np.zeros_like(F),color=P,lw=3,label="Direct till: honest artists' losses")
 ax.fill_between(F*100,pool_loss*100,0,color=K,alpha=0.12)
-ax.set_xlabel("Впрыск ботовых стримов, % объёма"); ax.set_ylabel("Потери, %")
-ax.set_title("Кто платит за фрод: пул размазывает на всех, касса — нет")
+ax.set_xlabel("Bot-stream injection, % of volume"); ax.set_ylabel("Losses, %")
+ax.set_title("Who pays for fraud: the pool smears it on everyone, the direct rail does not")
 ax.grid(alpha=0.15); ax.legend(frameon=False)
 fig.tight_layout(); fig.savefig(OUT+"fig3_fraud.png",dpi=150)
 print("PNG saved.")
@@ -163,30 +164,32 @@ plt.rcParams.update({"figure.facecolor":"#0D0A1A","axes.facecolor":"#0D0A1A","ax
  "axes.labelcolor":"#B8C8DC","text.color":"#B8C8DC","xtick.color":"#B8C8DC","ytick.color":"#B8C8DC","font.size":11})
 P,C,K,Y="#6B2FFF","#00D4F5","#FF4D8D","#FFD426"; OUT=os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","figures")+"/"
 fig,ax=plt.subplots(figsize=(9,5.5)); bins=np.logspace(-2,6,70)
-for data,c,lbl in [(np.maximum(inc_signed,1e-2),K,"Котёл: подписанный карман"),
-                   (np.maximum(inc_indie,1e-2),C,"Котёл: инди-карман"),
-                   (np.maximum(inc_indie+d4,1e-2),P,"Гибрид: котёл + касса (4/год, биномиально)")]:
+for data,c,lbl in [(np.maximum(inc_signed,1e-2),K,"Pool: signed pocket"),
+                   (np.maximum(inc_indie,1e-2),C,"Pool: independent pocket"),
+                   (np.maximum(inc_indie+d4,1e-2),P,"Hybrid: pool + direct (4/yr, binomial)")]:
     ax.hist(data,bins=bins,histtype="step",lw=2.2,color=c,label=lbl)
-ax.axvline(1000,color=Y,lw=1.5,ls=":",label="$1000/год")
-ax.set_xscale("log"); ax.set_yscale("log"); ax.grid(alpha=0.15); ax.legend(frameon=False)
-ax.set_xlabel("Доход артиста, $/год (log)"); ax.set_ylabel("Артистов (log)")
-ax.set_title("Распределение дохода, 200 000 артистов (v0.3, биномиальные суперфаны)")
+ax.axvline(1000,color=Y,lw=1.5,ls=":",ymax=0.70)
+ax.text(1000,1.2,"$1,000/yr ",color=Y,rotation=90,ha="right",va="bottom",fontsize=9)
+ax.set_xscale("log"); ax.set_yscale("log"); ax.grid(alpha=0.15); ax.legend(frameon=False,loc="upper right")
+ax.set_xlabel("Artist income, $/yr (log)"); ax.set_ylabel("Artists (log)")
+ax.set_title("Income distribution, 200,000 artists (v0.3, binomial superfans)")
 fig.tight_layout(); fig.savefig(OUT+"fig2_income_dist.png",dpi=150)
 
 # --- Кеш-слой: $1 доната по рельсам, комиссия Tonify 5% от суммы на ledger ---
 rails={"TON (fee ~$0.0005)":0.999,"Stars desktop (96.5%)":0.965,"Stars mobile (67.5%)":0.675}
 COMM=0.05
-fig,ax=plt.subplots(figsize=(9,4.6)); ylab=[]; 
+fig,ax=plt.subplots(figsize=(9,4.9)); ylab=[];
 for i,(name,r) in enumerate(rails.items()):
     artist=r*(1-COMM); tonify=r*COMM; rail=1-r
-    ax.barh(i,artist,color=P,label="Артисту" if i==0 else None)
+    ax.barh(i,artist,color=P,label="To the artist" if i==0 else None)
     ax.barh(i,tonify,left=artist,color=Y,label="Tonify 5%" if i==0 else None)
-    ax.barh(i,rail,left=artist+tonify,color=K,label="Рельса/сторы" if i==0 else None)
+    ax.barh(i,rail,left=artist+tonify,color=K,label="Rail / app stores" if i==0 else None)
     ax.text(artist/2,i,f"{artist*100:.1f}¢",ha="center",va="center",color="#0D0A1A",fontweight="bold")
     ylab.append(name)
 ax.set_yticks(range(len(rails))); ax.set_yticklabels(ylab); ax.set_xlim(0,1)
-ax.set_xlabel("Из $1 доната"); ax.set_title("Куда уходит доллар: две рельсы + комиссия Tonify 5%")
-ax.legend(frameon=False,loc="lower right"); ax.grid(alpha=0.1,axis="x")
+ax.set_xlabel("Out of $1 donated"); ax.set_title("Where the dollar goes: two rails + the 5% Tonify fee",pad=28)
+ax.legend(frameon=False,loc="lower center",bbox_to_anchor=(0.5,1.0),ncol=3)
+ax.grid(alpha=0.1,axis="x")
 fig.tight_layout(); fig.savefig(OUT+"fig4_rails.png",dpi=150)
 
 # --- Sensitivity breakeven d* (против инди-котла) ---
