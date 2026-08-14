@@ -1,0 +1,187 @@
+% THEORY.tex — payout mechanisms as operators on attention distributions.
+% Companion to THEORY.md (Russian source of truth); English for journal use.
+% Compile: tectonic THEORY.tex
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm,geometry,booktabs}
+\geometry{margin=1.05in}
+% numbering matches the THEORY.md canon (T1, L2, T4, corollaries (a)-(d))
+\newtheorem*{thmone}{Theorem 1}
+\newtheorem*{thmfour}{Theorem 4}
+\newtheorem*{lemtwo}{Lemma 2}
+\newtheorem*{cora}{Corollary (a)}
+\newtheorem*{corb}{Corollary (b)}
+\newtheorem*{corc}{Corollary (c)}
+\newtheorem*{cord}{Corollary (d)}
+\newtheorem{assumption}{Assumption}
+\theoremstyle{remark}\newtheorem*{remark}{Remark}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Pbar}{\bar{P}}
+\title{Payout Mechanisms as Operators on Attention Distributions:\\
+Identities, Invariances, and Tail Action\vspace{-2pt}}
+\author{Tonify Research}
+\date{August 2026 $\cdot$ v0.3 (two red-team passes) $\cdot$ companion code: \texttt{tonify-sims}}
+\begin{document}\maketitle
+
+\section{Setup and the generative model of sim4}
+Artists $i\in N$, listeners $u\in U$ ($|U|=U$), integer play matrix
+$p=(p_{iu})\in\mathbb{Z}_+^{N\times U}$ over one period. Row/column sums:
+$P_i=\sum_u p_{iu}$, $P_u=\sum_i p_{iu}$, $T=\sum_u P_u$, mean intensity
+$\Pbar=T/U$. Equal wallets $W>0$; pool $R=UW$.
+
+\begin{assumption}[A1, load-bearing]\label{a1}
+Every paying subscriber listens: $P_u\ge 1$. Silent payers are excluded from
+\emph{both} pools; otherwise budget balance below fails by exactly
+$W\cdot U_{\mathrm{sil}}$ and all ratios acquire the factor
+$U_{\mathrm{act}}/U_{\mathrm{tot}}$.
+\end{assumption}
+
+\paragraph{Mechanisms.} Pro-rata $\mathrm{PR}_i = UW\,P_i/T$; user-centric
+$\mathrm{UC}_i = W\sum_u p_{iu}/P_u$; direct
+$D_i=\tau\sum_{f=1}^{S_i}\sum_{t=1}^{k}G_{ft}$ with
+$S_i\,|\,A_i\sim\mathrm{Bin}(A_i,\sigma)$, audience $A_i$, i.i.d.\ gifts
+$G\ge 0$, $\E G=\bar g$, all moments finite; artist share $\tau$. A label
+contract acts multiplicatively after the rule: $\rho\cdot F_i(p)$.
+
+\paragraph{Generative model (sim4).} Artist popularity: piecewise
+$s_i\sim$ (lognormal body $/$ log-bridge $/$ Pareto($\alpha{=}1.4$) tail),
+calibrated to anchors $T_1{:}\,87\%$ of artists below $10^3$ streams/yr,
+$T_2{:}\,2.6\%$ above $225{,}734$, $T_3{:}$ top $0.28\%$ holding
+$40$--$55\%$ of streams (gate band; the seed-42 matrix realizes $40.3\%$,
+sim1's larger world $44.5\%$); target audiences $\ell_i=s_i/\mathrm{PL}$,
+$\mathrm{PL}=21.21$ plays per pair (LFM-1b). Playlist sizes
+$K_u\sim\mathrm{LogNormal}(\ln 12,\,1.0)$ (assumed; an MVP-measured dial).
+Artist selection: exact weighted sampling without replacement,
+$\mathbb{P}(i\in S_u)\propto \ell_i$ (Gumbel top-$K_u$), i.e.\ preferential
+attachment. Pair intensity, three named regimes on one graph:
+\[
+\text{(a) ergodic: integer } p_{iu},\ P_u\equiv 2048;\qquad
+\text{(b) } p_{iu}=\lceil\mathrm{LN}(\ln 5.16,\,1.676)\rceil
+\text{ rescaled to } s_i;\qquad
+\text{(c) } p_{iu}\propto \mathrm{LN}\cdot(A_i/\bar A_g)^{\gamma}.
+\]
+Regime (a) has $P_u\equiv 2048$ exactly (a power of two: every
+$p_{iu}/P_u$ is a dyadic rational, so the control identity is exact in
+floating point) and is the control (Corollary (a));
+$\gamma$ is the intensity--size coupling dial of \S\ref{tail}.
+
+\section{The ratio identity}
+\begin{thmone}[Identity]
+For any artist $i$ with $P_i>0$, under equal wallets,
+\[
+\frac{\mathrm{UC}_i}{\mathrm{PR}_i}
+=\E_{w^i}\!\left[\frac{\Pbar}{P_u}\right],
+\qquad w^i_u=\frac{p_{iu}}{P_i}.
+\]
+\end{thmone}
+\begin{proof}
+$\mathrm{UC}_i/\mathrm{PR}_i
+=\bigl(W\sum_u p_{iu}/P_u\bigr)\big/\bigl(UW P_i/T\bigr)
+=(T/U)\sum_u (p_{iu}/P_i)(1/P_u)=\Pbar\,\E_{w^i}[1/P_u]$.
+\end{proof}
+
+\noindent With $m_i=\E_{w^i}[P_u]$ (arithmetic) and
+$H_i=1/\E_{w^i}[1/P_u]$ (harmonic mean of listener intensity under play
+weights),
+\[
+\frac{\mathrm{UC}_i}{\mathrm{PR}_i}=\frac{\Pbar}{H_i}
+=\underbrace{\frac{\Pbar}{m_i}}_{\text{level}}\cdot
+\underbrace{\frac{m_i}{H_i}}_{\text{dispersion}\ \ge 1},
+\]
+the second factor $\ge 1$ by AM--HM, with equality iff $P_u$ is constant on
+the support of $w^i$.
+
+\begin{cora}[Coincidence; the naive converse is false]
+$P_u\equiv\Pbar$ implies $\mathrm{UC}=\mathrm{PR}$ componentwise. The
+converse fails: with one artist and two listeners, $p=(10,20)$,
+intensities differ yet $\mathrm{UC}_1=\mathrm{PR}_1=2W$. Exact criterion:
+$\mathrm{UC}_i=\mathrm{PR}_i$ for all $i$ iff the vector
+$c_u=1/P_u-U/T$ lies in $\ker p$.
+\end{cora}
+
+\begin{corb}[Zero sum]
+$\sum_i \mathrm{UC}_i=\sum_i\mathrm{PR}_i=UW$: user-centric is a pure
+redistribution of the same pool.
+\end{corb}
+
+\begin{corc}[Crossover]
+$\mathrm{UC}_i>\mathrm{PR}_i$ iff $H_i<\Pbar$. On type populations this
+reduces to the condition of Alaei, Makhdoumi, Malekian and Peke\v c
+(\emph{Mgmt.\ Sci.}\ 2022, Props.\ 2, 8): artist $j$ weakly prefers
+pro-rata iff $\sum_i q_i\pi_{ij}(\lambda_i-\bar\lambda)\ge 0$.
+\end{corc}
+
+\begin{cord}[Dispersion premium]
+Fix $m_i=\Pbar$. Then $\mathrm{UC}_i/\mathrm{PR}_i=m_i/H_i\ge 1$, with
+equality iff audience intensity is degenerate: at the same mean level,
+\emph{within-audience dispersion strictly raises} user-centric income.
+\end{cord}
+
+\section{Pass-through invariance}
+\begin{lemtwo}[Two-part invariance]
+\emph{(2a)} For any pool operator $F$ \emph{applied at the artist level},
+with the multiplicative contract strictly downstream and on the domain
+$F_i(p)>0$: $\rho F_i/F_i=\rho$ — the signed/independent \emph{income} gap
+is invariant to the rule (a nonlinear $F$ applied to a licensor's
+\emph{catalogue} breaks this). \emph{(2b)} The
+\emph{minimum-viable-audience} gap satisfies
+$\mathrm{MVA}_s/\mathrm{MVA}_\iota=1/\rho$ iff
+$F^{-1}(V/\rho)=F^{-1}(V)/\rho$; linearity of $F$-income in audience is
+sufficient but \emph{not} necessary (a strictly increasing log-periodic
+$F$ is nonlinear yet yields $1/\rho$ for all $V$). A Deezer-style
+$\times 2$ boost above a threshold yields $1/(2\rho)$ instead
+(counterexample in companion code) while the income ratio stays $\rho$
+pointwise.
+\end{lemtwo}
+Breaking channels: endogenous $\rho(F)$; additive components; payout
+thresholds (accumulation delays $\times 1/\rho$ in time); behavioral
+endogeneity of $p$; component/market-heterogeneous
+$\rho_{\mathrm{eff}}=\sum_m\rho_m w_{im}(F)$.
+
+\section{Tail action and the atom at zero}\label{tail}
+Let $\mathbb{P}(A>x)=x^{-\alpha}L(x)$. PR is linear: index preserved.
+UC: $\mathrm{UC}_i=WP_i\,\E_{w^i}[1/P_u]$ with bounded multiplier;
+under tail-conditional concentration of the multiplier the index is
+preserved, and heavier tails are impossible for any dependence.
+Direct: binomial thinning plus a light-tailed compound sum preserve
+$\alpha$ (Jessen--Mikosch 2006, Lem.\ 3.7; Fa\"y et al.\ 2006;
+Denisov--Foss--Korshunov 2010; Breiman 1965 enters only through the
+multiplicative contract layer), while
+$\mathbb{P}(D_i=0\,|\,A_i)\ge(1-\sigma)^{A_i}\ge e^{-1}(1-\sigma)$ for
+$A_i\le 1/\sigma$: an \emph{atom at zero} on small audiences. With zero
+mass $q$, $G_{\mathrm{direct}}=q+(1-q)G^{+}$: the mechanism relocates
+inequality from the intensive to the extensive margin; no mechanism
+softens the upper tail.
+
+\section{Dominance blockade}
+\begin{thmfour}[Full blockade]
+Fix $A$ with $(1-\sigma)^A>0$ and pooled income $X_A=cA>0$
+(deterministic given $A$); $Y_A=D_A$ as above. Then:
+(i) $Y_A$ never first-order dominates $X_A$;
+(ii) $Y_A$ never second-order dominates $X_A$, for any parameters;
+(iii) $X_A\succeq_2 Y_A$ iff $\E Y_A\le X_A$, i.e.\ iff
+$k\le d^\ast=\mathrm{PL}\cdot\mathrm{rate}/(\sigma\bar g\tau)$;
+(iv) for $k>d^\ast$ the pair is incomparable in both orders.
+\end{thmfour}
+\begin{proof}
+(i) For $x\in(0,X_A)$: $\mathbb{P}(X_A>x)=1$ while
+$\mathbb{P}(Y_A>x)\le 1-(1-\sigma)^A<1$.
+(ii) SSD against degenerate $X_A$ requires
+$\int_0^t F_Y\le\max(0,t-X_A)$; at $t=X_A$ the left side is
+$\ge(1-\sigma)^A X_A>0$.
+(iii) ($\Leftarrow$) $\int_0^t F_Y=t-\E\min(Y,t)\ge t-\E Y\ge t-X_A$ and
+$\ge 0$. ($\Rightarrow$) $t\to\infty$ gives $\E Y\le X_A$.
+(iv) From (i)--(iii).
+\end{proof}
+\begin{remark}
+The correct comparison is mean versus risk: for $k>d^\ast$ direct pays an
+expectation premium priced by small-audience lottery risk;
+$\mathbb{P}(Y_A<X_A)\le\inf_{t>0}e^{tX_A}\bigl(1-\sigma+\sigma\varphi(t)^k
+\bigr)^A$ with $\varphi(t)=\E e^{-t\tau G}<1$ — exponential decay in $A$.
+In the companion sim1 calibration at $A{=}30$, $k{=}4$: mean advantage
+$\times 4$, yet $\mathbb{P}(Y<X)\approx 0.60$ — and on the full 2M-sample
+run $\mathbb{P}(Y<X)-\mathbb{P}(Y=0)=0$ to machine precision: losing to
+the pool is exactly the zero outcome.
+\end{remark}
+
+\end{document}

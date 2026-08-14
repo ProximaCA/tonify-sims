@@ -1,5 +1,7 @@
 __pycache__/
 *.pyc
+data/*.npz
+emp1/raw/
 .DS_Store
 .remember/
 .repowise/
