@@ -18,7 +18,12 @@ PL      = 21.21
 X_HI    = 225_734
 MU_K, SG_K, K_CLIP = np.log(12), 1.0, (1, 2000)
 MU_P, SG_P = np.log(5.16), 1.676
-GAMMAS  = (-0.3, 0.0, +0.3)
+# emp1 (3bf4416): γ измерено — панель b=+0.101 ⟹ модельное γ≈+0.12 (recovery-инверсия
+# ceil-аттенюации 0.84); локальный наклон головы A≥200 → +0.232 ⟹ γ_голова≈+0.28.
+# Сетка: 0 (контроль независимости), +0.12 (измеренный центр), +0.28 (измеренная голова).
+# Прежняя симметричная ручка (−0.3, 0, +0.3) отозвана: отрицательное сопряжение
+# эмпирически не наблюдается ни в одном срезе (emp1/README §Результат).
+GAMMAS  = (0.0, +0.12, +0.28)
 SEED    = 42
 SF, KDON, TAKE = 0.017, 4, 0.80
 MU_G, SG_G = np.log(5.0), 0.8
@@ -147,7 +152,7 @@ gate("G2.4 L1-тождество max|UC/PR − P̄/H|", ident.max(), 0, 1e-9, "{
 gate("G2.5 |ΣUC−ΣPR|/ΣPR", abs(UCb.sum()-PRb.sum())/PRb.sum(), 0, 1e-12, "{:.3e}")
 
 viol = 0
-for tag, M in [("b", M_b)] + [(f"c γ={g:+.1f}", M_c[g]) for g in GAMMAS if g != 0.0]:
+for tag, M in [("b", M_b)] + [(f"c γ={g:+.2f}", M_c[g]) for g in GAMMAS if g != 0.0]:
     PR, UC, H, Pbar, Pi, _ = mechanisms(M)
     m2 = Pi > 0
     r = UC[m2]/PR[m2]
@@ -174,19 +179,20 @@ for g in GAMMAS:
     share = (UC[m2] > PR[m2]).mean()*100
     big = np.argsort(Pi)[::-1][:top]
     share_big = (UC[big] > PR[big]).mean()*100
-    print(f"  γ={g:+.1f}: UC>PR у {share:.1f}% артистов; среди топ-0.28% — {share_big:.1f}%")
+    lbl = {0.0: "контроль", 0.12: "измеренный центр", 0.28: "измеренная голова"}.get(round(g, 2), "")
+    print(f"  γ={g:+.2f} ({lbl}): UC>PR у {share:.1f}% артистов; среди топ-0.28% — {share_big:.1f}%")
 
 # ---------- выгрузка (SPEC §5) ----------
 def dump(M, name):
     sparse.save_npz(os.path.join(DATA, f"matrix_{name}_seed42.npz"), M)
-dump(M_a, "a"); dump(M_b, "b"); dump(M_c[-0.3], "c_gm03"); dump(M_c[+0.3], "c_gp03")
+dump(M_a, "a"); dump(M_b, "b"); dump(M_c[+0.12], "c_g012"); dump(M_c[+0.28], "c_g028")
 coo = M_b.tocoo()
 order = np.lexsort((coo.col, coo.row))
 with open(os.path.join(DATA, "matrix_sample.csv"), "w", newline="") as f:
     wtr = csv.writer(f); wtr.writerow(["user_id","artist_id","plays"])
     for j in order[:10_000]:
         wtr.writerow([int(coo.row[j]), int(coo.col[j]), int(coo.data[j])])
-print(f"выгрузка: data/matrix_{{a,b,c_gm03,c_gp03}}_seed42.npz + matrix_sample.csv (10k троек)")
+print(f"выгрузка: data/matrix_{{a,b,c_g012,c_g028}}_seed42.npz + matrix_sample.csv (10k троек)")
 
 # ---------- fig15 / fig16 (SPEC §6) ----------
 import matplotlib
@@ -231,11 +237,12 @@ for ax, g in zip(axs, GAMMAS):
     ax.plot(xx, 1/xx, color=YELLOW, lw=1.2, ls="--", label="y = 1/x (Теорема 1)")
     ax.axhline(1, color="#888", lw=.8); ax.axvline(1, color="#888", lw=.8)
     ax.set_xscale("log"); ax.set_yscale("log"); styl(ax)
-    ax.set_title(f"γ = {g:+.1f}"); ax.set_xlabel("H_i / P̄  (гарм. интенсивность аудитории)")
+    lbl = {0.0: "контроль: независимость", 0.12: "emp1: измеренный центр", 0.28: "emp1: измеренная голова"}.get(round(g, 2), "")
+    ax.set_title(f"γ = {g:+.2f} — {lbl}"); ax.set_xlabel("H_i / P̄  (гарм. интенсивность аудитории)")
 axs[0].set_ylabel("UC_i / PR_i"); axs[0].legend(facecolor=BG, labelcolor="#EEE", edgecolor="#666", fontsize=8)
 cb = fig.colorbar(sc, ax=axs, fraction=.02, pad=.01); cb.set_label("log₁₀ Ã_i", color="#EEE"); cb.ax.yaxis.set_tick_params(color="#CCC")
 plt.setp(plt.getp(cb.ax.axes, "yticklabels"), color="#CCC")
-fig.suptitle("fig16 · тождество L1 на матрице: точки лежат на y=1/x; γ двигает артистов ВДОЛЬ кривой · симуляция", color="#FFF")
+fig.suptitle("fig16 · тождество L1 на матрице: точки лежат на y=1/x; γ двигает артистов ВДОЛЬ кривой · симуляция на ИЗМЕРЕННЫХ γ (emp1)", color="#FFF")
 fig.savefig(os.path.join(FIGS, "fig16_L1_crossover.png"), dpi=150, facecolor=BG, bbox_inches="tight"); plt.close(fig)
 print("фигуры: figures/fig15_three_mechanisms.png, fig16_L1_crossover.png")
 print("="*72)

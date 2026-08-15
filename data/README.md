@@ -8,8 +8,8 @@
 |---|---|
 | `matrix_a_seed42.npz` | (a) эргодический контроль: `P_u ≡ 2048`, целые |
 | `matrix_b_seed42.npz` | (b) гетерогенный: LN-полотно, рескейл к мишеням `s_i` (суммо-точный) |
-| `matrix_c_gm03_seed42.npz` | (c) сопряжение γ = −0.3 |
-| `matrix_c_gp03_seed42.npz` | (c) сопряжение γ = +0.3 |
+| `matrix_c_g012_seed42.npz` | (c) сопряжение γ = +0.12 — измеренный центр (emp1) |
+| `matrix_c_g028_seed42.npz` | (c) сопряжение γ = +0.28 — измеренная голова (emp1) |
 | `matrix_sample.csv` | первые 10 000 троек `(user_id, artist_id, plays)` режима (b) |
 
 `.npz` не в гите (~сотни МБ) — генерируются `python3 sim4/bipartite_gen.py`
@@ -21,7 +21,7 @@
 from scipy import sparse
 
 def load_matrix(mode="b", path="data"):
-    """CSR user×artist; mode ∈ {'a','b','c_gm03','c_gp03'}."""
+    """CSR user×artist; mode ∈ {'a','b','c_g012','c_g028'}."""
     return sparse.load_npz(f"{path}/matrix_{mode}_seed42.npz")
 ```
 
