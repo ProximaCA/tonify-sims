@@ -1,0 +1,10 @@
+root: ./
+
+structure:
+  summary: SUMMARY.md
+  readme: README.md
+
+redirects:
+  theory: theory/plain.md
+  measurement: measurement/gamma.md
+  simulations: simulations/sim1.md
