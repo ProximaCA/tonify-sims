@@ -443,8 +443,10 @@ intensity--size coupling.
 \emph{Machine verification} (deterministic, seed 42; PASS/FAIL gates
 printed before any conclusion, FAIL exits with code 1): the Theorem-1
 identity and AM--HM decomposition on 200 random matrices (max error
-$8.9\times 10^{-16}$) and on the full 21.8M-pair sim4 matrix
-($7.1\times 10^{-15}$); zero-sum ($1.8\times 10^{-14}$); world anchors
+$8.9\times 10^{-16}$), on the full 21.8M-pair sim4 matrix
+($7.1\times 10^{-15}$), and --- since August 2026 --- on \emph{real}
+Last.fm logs (31{,}040 artists, 1.02M pairs: $5.8\times 10^{-15}$, with
+AM $\ge$ HM holding artist by artist); zero-sum ($1.8\times 10^{-14}$); world anchors
 T1--T3; the exact-zero control gate ($\max|\mathrm{UC}/\mathrm{PR}-1|=0$);
 the L4 atom at $A{=}30$ (0.598 vs theory 0.598, 2M samples) with
 $\mathbb{P}(Y<X)-\mathbb{P}(Y=0)=0$; the calibrated-world Gini identity
@@ -496,8 +498,11 @@ UC.
 Each lemma rests on a measurable quantity: $k$ (payments per superfan per
 year; benchmarks Twitch 12, Patreon 12, breakeven median 1.25);
 $\sigma(A)$ (superfan conversion vs audience size --- tests A5);
-intensity--size coupling $\mathrm{corr}(p_{iu},P_u)$ across artist sizes
-(closes condition (C); computable on any full log dataset now); the gift
+intensity--size coupling across artist sizes (closes condition (C)) ---
+\textbf{now measured}: on Last.fm logs the reduced pair-intensity slope is
+$+0.101\pm0.004$ overall, $+0.232$ at the head, $+0.023$ among
+beyond-mainstream listeners, decomposing into retention $+0.254$ and an
+\emph{anti}-coupled per-day rate $-0.154$ (companion \texttt{emp1}); the gift
 tail $\alpha_G$ (whales vs attention regime); $\rho(F)$ (pass-through
 endogeneity, channel B1 --- the Deezer artist-centric switch is a natural
 experiment); the threshold $\theta$ and its censoring mode (channel B3).
