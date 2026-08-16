@@ -1,5 +1,7 @@
 ---
 description: Who measured this before us — all 16 sources, and the novelty claim we withdrew.
+layout:
+  width: wide
 ---
 
 # Prior art

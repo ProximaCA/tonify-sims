@@ -57,7 +57,33 @@ def pandoc_tex(path):
     txt = r.stdout
     txt = re.sub(r"\A#\s+[^\n]*\n+", "", txt)          # снять первый H1
     txt = re.sub(r"^(#{1,5}) ", r"#\1 ", txt, flags=re.M)  # сдвинуть уровни
-    return txt.strip()
+    return gitbook_math(txt).strip()
+
+def gitbook_math(txt):
+    """Диалект pandoc-gfm → диалект GitBook.
+
+    Pandoc пишет математику по-гитхабовски ($`x`$ и блок ```math), а окружения
+    теорем оборачивает в <div>. GitBook не понимает ни того, ни другого: формула
+    показывается как код с долларами по краям, а div склеивается с соседней
+    формулой и утекает в неё видимым HTML. Всё это переводится в $$…$$.
+    """
+    # блочная формула: ```math … ``` → $$ … $$ (вместе с курсивом, который
+    # pandoc иногда навешивает на весь блок теоремы — он ломает разметку)
+    def block(m):
+        return "\n$$\n" + m.group(1).strip() + "\n$$\n"
+    txt = re.sub(r"```+\s*math\n(.*?)\n```+\*?", block, txt, flags=re.S)
+    # инлайн-формула: $`x`$ → $$x$$, в одну строку — перенос внутри инлайновой
+    # формулы GitBook не рендерит (pandoc переносит по ширине 72)
+    txt = re.sub(r"\$`(.+?)`\$",
+                 lambda m: "$$" + re.sub(r"\s+", " ", m.group(1)).strip() + "$$",
+                 txt, flags=re.S)
+    # обёртки окружений: смысл несёт сам текст («**Theorem 1**», «*Proof.*»)
+    txt = re.sub(r"^</?div[^>]*>\s*$", "", txt, flags=re.M)
+    # \newtheorem* не нумерует — номер уже внутри названия, а pandoc всё равно
+    # приписывает счётчик: «Theorem 1 1», «Corollary (a) 1»
+    txt = re.sub(r"\*\*((?:Theorem|Lemma|Proposition) \d+|Corollary \([a-z]\)|Remark) \d+\*\*",
+                 r"**\1**", txt)
+    return re.sub(r"\n{3,}", "\n\n", txt)
 
 def plain_route(path):
     r"""Нетехнический маршрут: блоки \why{} и \whatitsays{} с их разделами."""
@@ -87,7 +113,7 @@ def plain_route(path):
         body = "".join(buf)
         r = subprocess.run(["pandoc", "-f", "latex", "-t", "gfm"],
                            input=body, capture_output=True, text=True)
-        body_md = (r.stdout if r.returncode == 0 else body).strip()
+        body_md = gitbook_math(r.stdout if r.returncode == 0 else body).strip()
         label = "Why this matters" if kind == "why" else "What it says"
         out.append((section, label, body_md))
     blocks, cur = [], None
@@ -118,6 +144,30 @@ def plain_route_ru(path):
             out.append(f"\n## {title}\n\n" + "\n\n".join(blocks))
     return "\n".join(out).strip()
 
+def drop_columns(md, names):
+    """Убрать колонки GFM-таблицы по заголовку.
+
+    На сайте колонка со ссылками на заметки волта бесполезна — самого волта в
+    публичном репозитории нет, — а её значения (id по 190 символов моноширинным
+    кодом, без пробелов) физически распирают таблицу: остальные колонки
+    сплющиваются до одного слова в строке.
+    """
+    out, drop = [], None
+    for line in md.split("\n"):
+        if not line.lstrip().startswith("|"):
+            out.append(line)
+            if line.strip() == "":
+                drop = None            # таблица кончилась
+            continue
+        cells = line.split("|")
+        if drop is None:
+            drop = {i for i, c in enumerate(cells) if c.strip() in names}
+            if not drop:
+                out.append(line)
+                continue
+        out.append("|".join(c for i, c in enumerate(cells) if i not in drop))
+    return "\n".join(out)
+
 def render(text, facts):
     """{{key}} → факт; {{INCLUDE:path}} и {{INCLUDE:path|start|end}} → врезка."""
     def inc(m):
@@ -125,6 +175,9 @@ def render(text, facts):
         parts = spec.split("|")
         cut = (parts[1], parts[2] if len(parts) > 2 else None) if len(parts) > 1 else None
         return include(parts[0], cut=cut)
+    text = re.sub(r"\{\{SOURCETABLE:([^}]+)\}\}",
+                  lambda m: drop_columns(include(m.group(1)),
+                                         {"Vault note", "Заметка vault"}), text)
     text = re.sub(r"\{\{INCLUDE:([^}]+)\}\}", inc, text)
     text = re.sub(r"\{\{PANDOC:([^}]+)\}\}", lambda m: pandoc_tex(m.group(1)), text)
     text = re.sub(r"\{\{PLAINROUTE:([^}]+)\}\}", lambda m: plain_route(m.group(1)), text)

@@ -1,5 +1,7 @@
 ---
 description: Каждый вход со своим статусом — измерено, выведено, принято или параметр модели.
+layout:
+  width: wide
 ---
 
 # Источники
@@ -17,4 +19,4 @@ description: Каждый вход со своим статусом — изме
 
 ***
 
-{{INCLUDE:SOURCES.ru.md}}
+{{SOURCETABLE:SOURCES.ru.md}}

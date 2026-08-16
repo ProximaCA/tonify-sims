@@ -1,5 +1,7 @@
 ---
 description: Every input with its status — measured, derived, assumed, or a model parameter.
+layout:
+  width: wide
 ---
 
 # Sources
@@ -17,4 +19,4 @@ The rule that makes this useful: an assumed number may never be reported as if i
 
 ***
 
-{{INCLUDE:SOURCES.md}}
+{{SOURCETABLE:SOURCES.md}}

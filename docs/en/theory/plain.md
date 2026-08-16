@@ -10,7 +10,7 @@ user-centric-to-pro-rata income ratio is a specific average over that
 artist’s own audience, so the winners of a reform can be computed before
 the reform.
 
-**What it says.** The ratio splits into level $`\times`$ dispersion: a “light” audience
+**What it says.** The ratio splits into level $$\times$$ dispersion: a “light” audience
 (below-average listeners) helps through the first factor, and a
 *heterogeneous* audience always helps through the second. So the folk
 claim “user-centric helps the niche” is wrong in an instructive way:
@@ -30,10 +30,10 @@ minimum-viable-audience terms.
 move the “minimum audience to make a living” gap, but only by breaking
 the scaling criterion above. This formalizes the empirical regularity
 that label shares did not move across rule changes (Pedersen 2020).
-Breaking channels: endogenous $`\rho(F)`$; additive components; payout
-thresholds (accumulation delays $`\times 1/\rho`$ in time); behavioral
-endogeneity of $`p`$; component/market-heterogeneous
-$`\rho_{\mathrm{eff}}=\sum_m\rho_m w_{im}(F)`$; payee-level aggregation
+Breaking channels: endogenous $$\rho(F)$$; additive components; payout
+thresholds (accumulation delays $$\times 1/\rho$$ in time); behavioral
+endogeneity of $$p$$; component/market-heterogeneous
+$$\rho_{\mathrm{eff}}=\sum_m\rho_m w_{im}(F)$$; payee-level aggregation
 of a nonlinear rule.
 
 
@@ -63,7 +63,7 @@ orders, for all parameter values: the direct economy can never be
 unconditionally better than the pool, no matter how generous the fans.
 The honest frame is mean versus risk — direct pays an expectation
 premium priced by a lottery on small audiences, and only raising the
-superfan conversion $`\sigma`$ (not payment frequency $`k`$) attacks the
+superfan conversion $$\sigma$$ (not payment frequency $$k$$) attacks the
 lottery itself.
 
 ***

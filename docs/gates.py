@@ -161,6 +161,33 @@ def check_g2(net=False):
         for b in bad[:8]:
             print("        ", b)
 
+# Разметка, которую GitBook не рендерит. Всё это приезжает из pandoc-gfm и
+# на странице выглядит как код с долларами по краям, видимый HTML внутри
+# формулы или задвоенный номер теоремы. Ворота ловят регресс конвертера.
+BAD_MARKUP = [
+    (r"\$`",                                   "инлайн-математика в гитхаб-диалекте ($`x`$)"),
+    (r"```+\s*math",                            "блок ```math вместо $$…$$"),
+    (r"<div",                                   "HTML-обёртка окружения"),
+    (r"\*\*(?:Theorem|Lemma|Corollary)[^*]*\d+ \d+\*\*", "задвоенный номер теоремы"),
+]
+
+def check_g2_markup():
+    bad = []
+    for lang in ("en", "ru"):
+        for rel, body in pages(lang).items():
+            for rx, what in BAD_MARKUP:
+                for m in re.finditer(rx, body, flags=re.M):
+                    bad.append(f"{lang}/{rel}: {what} — «{body[m.start():m.start()+40].splitlines()[0]}»")
+    # $$ обязаны быть парны: нечётное число означает формулу, съевшую текст
+    for lang in ("en", "ru"):
+        for rel, body in pages(lang).items():
+            n = len(re.findall(r"\$\$", body))
+            if n % 2:
+                bad.append(f"{lang}/{rel}: непарные $$ ({n} шт.) — формула съест текст")
+    gate("G2.5 разметка, которую GitBook рендерит", not bad, f"дефектов: {len(bad)}")
+    for b in bad[:8]:
+        print("        ", b)
+
 def check_g3():
     en, ru = pages("en"), pages("ru")
     only_en = sorted(set(en) - set(ru))
@@ -205,6 +232,7 @@ if __name__ == "__main__":
     print("=" * 74)
     check_g1()
     check_g2(net="--net" in sys.argv)
+    check_g2_markup()
     check_g3()
     if "--full" in sys.argv:
         check_full()
