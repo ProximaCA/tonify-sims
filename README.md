@@ -6,6 +6,10 @@ Payout mechanisms, social-graph spread, and treasury survival for a direct
 listener-to-artist music economy on Telegram/TON rails — deterministic,
 red-teamed, byte-reproducible.
 
+**Documentation site: [tonify-1.gitbook.io/tonify-docs](https://tonify-1.gitbook.io/tonify-docs/en)** — the
+research read as pages, in English and Russian. Every number on it is extracted
+from this repository at build time.
+
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 ![Python 3](https://img.shields.io/badge/python-3-blue)
 ![seed=42](https://img.shields.io/badge/seed-42-orange)

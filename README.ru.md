@@ -6,6 +6,10 @@
 прямой музыкальной экономики «слушатель → артист» на рельсах Telegram/TON —
 детерминированно, через красную команду, воспроизводимо байт-в-байт.
 
+**Сайт документации: [tonify-1.gitbook.io/tonify-docs](https://tonify-1.gitbook.io/tonify-docs/ru)** —
+исследование в виде страниц, на русском и английском. Каждое число на сайте
+извлекается из этого репозитория при сборке.
+
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 ![Python 3](https://img.shields.io/badge/python-3-blue)
 ![seed=42](https://img.shields.io/badge/seed-42-orange)
