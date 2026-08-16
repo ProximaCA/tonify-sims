@@ -178,6 +178,16 @@ def check_g2_markup():
             for rx, what in BAD_MARKUP:
                 for m in re.finditer(rx, body, flags=re.M):
                     bad.append(f"{lang}/{rel}: {what} — «{body[m.start():m.start()+40].splitlines()[0]}»")
+    # курсив, разорванный блочной формулой, печатает звёздочку в текст
+    for lang in ("en", "ru"):
+        for rel, body in pages(lang).items():
+            for para in body.split("\n\n"):
+                # проверяем только формулировки теорем: в прозе одиночная
+                # звёздочка — обозначение (p*), а не разорванный курсив
+                if not re.match(r"\*\*(?:Theorem|Lemma|Corollary|Proposition)\b", para.lstrip()):
+                    continue
+                if len(re.findall(r"(?<!\*)\*(?!\*)", para.replace("**", ""))) % 2:
+                    bad.append(f"{lang}/{rel}: курсив теоремы разорван — «{para.strip()[:55]}»")
     # $$ обязаны быть парны: нечётное число означает формулу, съевшую текст
     for lang in ("en", "ru"):
         for rel, body in pages(lang).items():

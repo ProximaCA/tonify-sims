@@ -749,7 +749,7 @@ fixed play matrix; no proof uses the sim4 generator.
 
 *Uses assumptions A1, A2, A4.*
 
-**Theorem 1** (Identity). *For any artist $$i$$ with $$P_i>0$$, under
+**Theorem 1** (Identity). For any artist $$i$$ with $$P_i>0$$, under
 equal wallets,
 
 $$
@@ -777,33 +777,33 @@ $$\mathrm{UC}_i/\mathrm{PR}_i=\mathbb{E}_{w^i}[W_u/P_u]/(\sum_u W_u/T)$$
 — same structure, “intensity” replaced by “plays per dollar”.
 
 **Corollary (a)** (Coincidence; the naive converse is false).
-*$$P_u\equiv\bar{P}$$ implies $$\mathrm{UC}=\mathrm{PR}$$ componentwise.
+$$P_u\equiv\bar{P}$$ implies $$\mathrm{UC}=\mathrm{PR}$$ componentwise.
 The converse fails: with one artist and two listeners, $$p=(10,20)$$,
 intensities differ yet $$\mathrm{UC}_1=\mathrm{PR}_1=2W$$. Exact
 criterion: $$\mathrm{UC}_i=\mathrm{PR}_i$$ for all $$i$$ iff the vector
-$$c_u=1/P_u-U/T$$ lies in $$\ker p$$.*
+$$c_u=1/P_u-U/T$$ lies in $$\ker p$$.
 
 **Corollary (b)** (Zero sum).
-*$$\sum_i \mathrm{UC}_i=\sum_i\mathrm{PR}_i=UW$$: user-centric is a pure
-redistribution of the same pool.*
+$$\sum_i \mathrm{UC}_i=\sum_i\mathrm{PR}_i=UW$$: user-centric is a pure
+redistribution of the same pool.
 
-**Corollary (c)** (Crossover). *$$\mathrm{UC}_i>\mathrm{PR}_i$$ iff
+**Corollary (c)** (Crossover). $$\mathrm{UC}_i>\mathrm{PR}_i$$ iff
 $$H_i<\bar{P}$$. On type populations this reduces to the condition of
 Alaei, Makhdoumi, Malekian and Pekeč (*Mgmt. Sci.* 2022, Props. 2, 8):
 artist $$j$$ weakly prefers pro-rata iff
-$$\sum_i q_i\pi_{ij}(\lambda_i-\bar\lambda)\ge 0$$.*
+$$\sum_i q_i\pi_{ij}(\lambda_i-\bar\lambda)\ge 0$$.
 
-**Corollary (d)** (Dispersion premium). *Fix $$m_i=\bar{P}$$. Then
+**Corollary (d)** (Dispersion premium). Fix $$m_i=\bar{P}$$. Then
 $$\mathrm{UC}_i/\mathrm{PR}_i=m_i/H_i\ge 1$$, with equality iff audience
 intensity is degenerate: at the same mean level, *within-audience
-dispersion strictly raises* user-centric income.*
+dispersion strictly raises* user-centric income.
 
 ##### L2: pass-through invariance.
 
 *Uses assumptions A2, A4, A6, A7 (part 2a); A2, A4, A6 and a monotone
 income with threshold $$V$$ (part 2b).*
 
-**Lemma 2** (Two-part invariance). **(2a)* For any pool operator $$F$$
+**Lemma 2** (Two-part invariance). *(2a)* For any pool operator $$F$$
 *applied at the artist level*, with the multiplicative contract strictly
 downstream and on the domain $$F_i(p)>0$$: $$\rho F_i/F_i=\rho$$ — the
 signed/independent *income* gap is invariant to the rule (a nonlinear
@@ -815,7 +815,7 @@ is sufficient but *not* necessary (a strictly increasing log-periodic
 $$F$$ is nonlinear yet yields $$1/\rho$$ for all $$V$$). A Deezer-style
 $$\times 2$$ boost above a threshold yields $$1/(2\rho)$$ instead
 (counterexample in companion code) while the income ratio stays $$\rho$$
-pointwise.*
+pointwise.
 
 ##### L3: tail action and the atom at zero.
 
@@ -844,12 +844,12 @@ $$c=\mathrm{PL}\cdot\mathrm{rate}$$ (independent-artist comparison).*
 Fix $$A$$ with $$(1-\sigma)^A>0$$ and pooled income $$X_A=cA>0$$
 (deterministic given $$A$$); $$Y_A=D_A$$ as above.
 
-**Theorem 4** (Full blockade). *(i) $$Y_A$$ never first-order
+**Theorem 4** (Full blockade). (i) $$Y_A$$ never first-order
 dominates $$X_A$$; (ii) $$Y_A$$ never second-order dominates $$X_A$$,
 for any parameters; (iii) $$X_A\succeq_2 Y_A$$ iff
 $$\mathbb{E}Y_A\le X_A$$, i.e. iff
 $$k\le d^\ast=\mathrm{PL}\cdot\mathrm{rate}/(\sigma\bar g\tau)$$; (iv)
-for $$k>d^\ast$$ the pair is incomparable in both orders.*
+for $$k>d^\ast$$ the pair is incomparable in both orders.
 
 *Proof.* (i) For $$x\in(0,X_A)$$: $$\mathbb{P}(X_A>x)=1$$ while
 $$\mathbb{P}(Y_A>x)\le 1-(1-\sigma)^A<1$$. (ii) SSD against degenerate

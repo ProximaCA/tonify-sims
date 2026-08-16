@@ -59,6 +59,9 @@ def pandoc_tex(path):
     txt = re.sub(r"^(#{1,5}) ", r"#\1 ", txt, flags=re.M)  # сдвинуть уровни
     return gitbook_math(txt).strip()
 
+THM_PARA = re.compile(r"\*\*(?:Theorem|Lemma|Corollary|Proposition)\b")
+ODD_STAR = re.compile(r"(?<!\*)\*(?!\*)")
+
 def gitbook_math(txt):
     """Диалект pandoc-gfm → диалект GitBook.
 
@@ -83,7 +86,23 @@ def gitbook_math(txt):
     # приписывает счётчик: «Theorem 1 1», «Corollary (a) 1»
     txt = re.sub(r"\*\*((?:Theorem|Lemma|Proposition) \d+|Corollary \([a-z]\)|Remark) \d+\*\*",
                  r"**\1**", txt)
-    return re.sub(r"\n{3,}", "\n\n", txt)
+    # pandoc обрамляет формулировку теоремы курсивом целиком, а вынесенная
+    # наружу блочная формула его разрывает: закрывающая звёздочка остаётся за
+    # формулой и на странице печатается как «*For any artist». Снимаем курсив
+    # только там, где он непарен — валидную разметку не трогаем.
+    # Формулировку теоремы pandoc обрамляет курсивом целиком (theoremstyle
+    # plain). Этот курсив разваливается: открывающая звёздочка слипается с
+    # жирным названием в «**(2a)*», а закрывающую уносит вынесенная наружу
+    # блочная формула — на странице печатается «*For any artist». Снимаем
+    # обрамляющую ПАРУ, авторский \emph внутри остаётся нетронутым.
+    fixed = []
+    for para in txt.split("\n\n"):
+        if THM_PARA.match(para.lstrip()):
+            para = re.sub(r"(\*\*(?:Theorem|Lemma|Corollary|Proposition)[^\n]*?\*\*[^*\n]*?\.\s*)\*",
+                          r"\1", para, count=1)
+            para = re.sub(r"(?<!\*)\*(\s*)\Z", r"\1", para)
+        fixed.append(para)
+    return re.sub(r"\n{3,}", "\n\n", "\n\n".join(fixed))
 
 def plain_route(path):
     r"""Нетехнический маршрут: блоки \why{} и \whatitsays{} с их разделами."""
