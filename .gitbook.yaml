@@ -1,0 +1,14 @@
+# Git Sync стоит на корень репозитория, а сайтом является только docs/en.
+# root переставляет корень пространства туда, поэтому README, CHANGELOG и
+# исходники симуляций в сайт не попадают. Русское пространство синкается
+# отдельно на docs/ru и читает docs/ru/.gitbook.yaml.
+root: ./docs/en/
+
+structure:
+  summary: SUMMARY.md
+  readme: README.md
+
+redirects:
+  theory: theory/plain.md
+  measurement: measurement/gamma.md
+  simulations: simulations/sim1.md
