@@ -15,7 +15,8 @@ steps=[(os.path.join("sim1","tonify_cash_sim.py"),"sim1: мир, валидац�
        (os.path.join("sim2","tonify_graph_sim.py"),"sim2: граф Telegram, complex contagion, фальсификатор хабов (~1 мин)"),
        (os.path.join("sim3","sim3_anti_graveyard.py"),"sim3: анти-кладбище, казна A vs B, 200 прогонов"),
        (os.path.join("sim4","bipartite_gen.py"),"sim4: двудольная матрица user×artist, ворота G1-G3, выгрузка data/, fig15-fig16 (~6 мин)"),
-       (os.path.join("sim4","group_gamma.py"),"sim4-G: гетерогенный γ по группам слушателей, ворота H1-H4, fig18 (~8 мин)")]
+       (os.path.join("sim4","group_gamma.py"),"sim4-G: гетерогенный γ по группам слушателей, ворота H1-H4, fig18 (~8 мин)"),
+       (os.path.join("sim4","downside.py"),"sim4-D: метрики нижнего края — экстенсивная маржа, пороги, ES, ворота G1-G5 (~1 мин)")]
 # emp1 требует внешних данных (emp1/raw/, ~4 ГБ, в гит не входят) — гоняется
 # отдельно: python3 emp1/gamma_measure.py и python3 emp1/moreau_check.py.
 # Источники и контрольные суммы — emp1/README.md §Датасеты.
