@@ -44,11 +44,12 @@ nearly everything. Would a direct fan-to-artist economy spread income
 more evenly? This section answers for the top and the bottom of the
 distribution separately — and the answer disappoints every mechanism.
 
-**What it says.** No mechanism touches how much the top takes; what changes is the *shape
-of the bottom*. Pool rules pay many tiny positive amounts; the direct
-economy converts most of those into exact zeros — at the calibrated
-superfan share, at least a third of small-audience artists earn
-literally nothing. Inequality is relocated, not reduced.
+**What it says.** Under the stated assumptions no mechanism makes the income tail lighter
+— the tail index is unchanged; what changes is the *shape of the
+bottom*. Pool rules pay many tiny positive amounts; the direct economy
+converts most of those into exact zeros — at the calibrated superfan
+share, at least a third of small-audience artists earn literally
+nothing. Inequality is relocated, not reduced.
 
 
 ## L4: dominance blockade

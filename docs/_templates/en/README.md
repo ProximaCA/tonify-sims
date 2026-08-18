@@ -14,7 +14,7 @@ Everything here is reproducible from one public repository. No number on this si
 
 **2. A payout reform cannot touch the label gap.** The income ratio between a signed and an independent artist equals the contract pass-through, whatever the pool rule is. In the simulated world the rule axis moves artist viability ×{{sim1.rule}}; the contract moves it ×{{sim1.contract}}. Six named channels can break this invariance — none of them is the choice of formula.
 
-**3. The direct economy relocates inequality rather than reducing it.** It preserves the upper tail exactly and adds a mass of artists earning literally zero: at the calibrated superfan share, {{atom.direct}}% of artists get nothing from direct payments. Gini barely moves ({{theory.gini_pool}} → {{theory.gini_dir}}); its composition changes completely.
+**3. The direct economy relocates inequality rather than reducing it.** Under its assumptions it does not make the income tail any lighter — the tail index is unchanged — and it adds a mass of artists earning literally zero: at the calibrated superfan share, {{atom.direct}}% of artists get nothing from direct payments. Gini barely moves ({{theory.gini_pool}} → {{theory.gini_dir}}); its composition changes completely.
 
 ## One measured number
 

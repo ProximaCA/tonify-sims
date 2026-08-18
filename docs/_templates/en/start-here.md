@@ -18,6 +18,24 @@ The study has three layers, and you can stop at any of them.
 
 **Open** — five questions we did not close: equilibrium versions of L1/L2 (the matrix itself moves when the rule changes), the sign of the Gini difference in general, the exact condition under which user-centric thins the tail, dominance for recurrent payments with churn, and an axiomatic characterisation of the direct mechanism.
 
+## Four levels of claim
+
+The document mixes four kinds of statement, and they carry very different
+weight. Nothing below the first line is a forecast.
+
+| Level | What is claimed | What it depends on |
+|---|---|---|
+| Theorem | An exact property of the payout operator | A fixed play matrix $$p$$ and the listed assumptions |
+| Simulation | The size of the effect in a synthetic world | The generator, the calibrations, $$\gamma$$, the tail model |
+| Measurement | The behaviour of Last.fm logs | Sample, window, scrobbling, historical period |
+| Policy reading | What might happen at a streaming service | Listener and label behaviour, recommendation, royalties |
+
+This matters most for the crossover table on the front page. The *sign* and the
+*direction* — user-centric takes from the head harder than the independence
+assumption predicts — sit at the theorem and measurement levels. The
+*magnitude* travels the whole bridge b → $$\gamma$$ → simulation outcome, and
+every joint of that bridge is a modelling choice.
+
 ## What this study is not
 
 It is not a product pitch and not a proposal. It is accounting statics: the play matrix is held fixed and the operators are compared on it. Every equilibrium effect — behaviour changing because the rule changed — is outside the frame and listed as open. Numbers from the simulated world are calibration, not forecast; the one empirical number is dated (Last.fm, 2005–2014) and its sign is domain-bounded, as [Prior art](measurement/prior-art.md) shows.
