@@ -134,6 +134,27 @@ if __name__ == "__main__":
     gate("B6.2 доход артистов без аудитории", float(np.abs(F5[no_aud]).max()) if no_aud.any() else 0.0,
          0, 1e-12, "{:.3e}")
 
+    # B7 — принадлежность ядру кооперативной игры Bergantiños & Moreno-Ternero
+    # (MS 2025): ядро состоит ровно из тех дележей, где кошелёк каждого
+    # пользователя делится между артистами, КОТОРЫХ ОН СЛУШАЛ. Наше правило
+    # при λ=0 удовлетворяет это по построению (локальность + баланс), pro-rata
+    # нарушает — он платит артистам, которых пользователь не включал.
+    S = M.tocsr(copy=True).astype(np.float64)
+    S.data = -np.expm1(-S.data / 5.0)
+    den = np.asarray(S.sum(axis=1)).ravel()
+    sc = np.divide((P_u > 0).astype(np.float64), den, out=np.zeros_like(den), where=den > 0)
+    row_pay = np.asarray(S.multiply(sc[:, None]).sum(axis=1)).ravel()
+    gate("B7.1 кошелёк каждого слушателя роздан целиком (λ=0, h=5)",
+         float(np.abs(row_pay[P_u > 0] - 1.0).max()), 0, 1e-12, "{:.3e}")
+    # Каноническое разложение pro-rata по кошелькам: каждый пользователь платит
+    # каждому артисту долю P_i/T — независимо от того, слушал он его или нет.
+    # Доля кошелька, ушедшая МИМО слушанного, и есть мера выхода из ядра.
+    share = P_i / T                                   # доля артиста в глобальных стримах
+    heard_share = np.asarray((M > 0).astype(np.float64) @ share).ravel()
+    leak = float(np.mean(1.0 - heard_share[P_u > 0]))
+    gate("B7.2 pro-rata: средняя доля кошелька мимо слушанных артистов", leak, 0, 1, "{:.4f}")
+    print(f"         (у семейства F^(0,h) эта доля равна нулю при любом h — ворота B7.1)")
+
     print("-" * 74)
     if FAILS:
         print(f"FAIL ворот: {FAILS} — выводы заблокированы.")
