@@ -14,4 +14,4 @@ description: Treasury survival — the "payouts never exceed inflow" law against
 
 ***
 
-{{INCLUDE:README.md|## sim3 — treasury survival|## Reproducibility}}
+{{INCLUDE:README.md|## sim3 — treasury survival|## sim5 — glue}}

@@ -16,9 +16,9 @@ and the direct **attention economy** (Tonify, World B). Main result: changing th
 within World A shifts an artist's minimum viable audience by at most ~1.3×,
 whereas moving to the direct mechanisms of World B shifts it by **1–2 orders of magnitude** — provided
 that a devoted fan's payment frequency exceeds the breakeven range of 0.38–6.31 payments/year
-(median 1.25). Recurring mechanics (per-superfan rate 12 — throughout, the "rate" is payments
-per superfan per year, "kef" in the Russian original) close that range structurally.
-The red team retracted one v0.2 number and replaced three point assumptions with ranges.
+(median 1.25). Recurring mechanics *would* close that range if measured k ≥ 6.31; k is
+UNMEASURED in music (emp2; Twitch k=12 is not a closer). The red team retracted one v0.2
+number and replaced three point assumptions with ranges.
 
 ---
 
@@ -28,8 +28,7 @@ user-centric (SoundCloud), artist-centric (Deezer/UMG). The core theorem (Bergan
 Moreno-Ternero, 2023): any stable rule divides a listener's contribution only among the artists
 that listener actually played — an artist's ceiling is set by their own audience under any formula.
 **World B** — money arrives on top of the subscription, directly: donations, recurring patronage,
-drops (Tonify — an attention economy on Telegram/TON rails; Unify — a global
-music layer, see §7). The question of this paper: by how many orders of magnitude the worlds differ,
+drops (Tonify — an attention economy on Telegram/TON rails). The question of this paper: by how many orders of magnitude the worlds differ,
 and under which measurable conditions World B outperforms World A.
 
 ## 2. Model and calibration
@@ -56,9 +55,8 @@ the empirics (SoundCloud: +34% money into the bottom bucket, −7% of artists ou
 Parameters: superfans at 0.6–1.7% of the audience; ticket size $3.1–6.9; artist share 0.80–0.95.
 - **Breakeven against pro-rata independent: 0.38 … 1.25 … 6.31 payments/superfan/year.**
 - MVA at rate 4: **3,204**; at a recurring rate of 12 on the TON rail: **900**.
-- Paying-fan rate benchmarks: Twitch **12+** (subscription+bits), Patreon **12**,
-  Tencent social — ARPPU multiplier of 20.6× (peak) / 6.4× (after the regulatory squeeze).
-  The worst breakeven corner (6.31) sits below the structural rate of all three benchmarks.
+- Adjacent-industry cadence (Twitch/Patreon k=12, Tencent gifting) does **not** close
+  the range; emp2 is the measurement slot and is UNMEASURED.
 - Rails, out of $1: TON → 94.9¢ to the artist / 5.0¢ to Tonify; Stars desktop 91.7/4.8;
   Stars mobile 64.1/3.4 (32.5¢ — app stores and spread). On a mobile payment, TON is 1.5×
   more profitable for Tonify than Stars.
@@ -81,30 +79,28 @@ Replaced with ranges: plays/listener 8–21 (the LFM-1b window ≠ a year), tick
 (the 97-2-1 rule). Fixed: binomial superfans (fig2). Honest negative: at today's
 payment frequency, direct loses to pro-rata independent.
 
-## 7. Unify: global music layer — [to be filled in by the founder]
-Thesis: —
-Mechanics on top of Tonify: —
-What we measure first: —
-
-## 8. Delegated to Claude Code (spec: CLAUDE_CODE_HANDOFF.md)
-- SIM 2 — Telegram social graph: BA+cliques, complex contagion, phase diagram over K, hub seeding. [ ]
-- SIM 3 — anti-graveyard: the "payouts ≤ inflow" law (verbatim, translated) versus emission, calibrated on Hamster 300M→12M. [ ]
-- Full bipartite user-centric (instead of Monte Carlo wallet share). [ ]
+## 7. What was built (spec: CLAUDE_CODE_HANDOFF.md)
+- SIM 2 — Telegram social graph: BA+cliques, complex contagion, phase diagram over K, hub seeding. [x]
+- SIM 3 — anti-graveyard: the "payouts ≤ inflow" law versus emission, calibrated on Hamster 300M→12M (AInvest / CryptoPotato Sep 2024, not Caladan). [x]
+- SIM 4 — full bipartite user×artist (instead of Monte Carlo wallet share). [x]
+- SIM 5 — glue: cascade → σ → k/check (emp2) → treasury. [x]
+- emp2 — Telegram payment cadence ≥200 rows. Protocol [x]; measurement UNMEASURED.
 - Artist-centric on Deezer/UMG parameters (×2 boost for 1000 plays/500 listeners). [ ]
 - Fraud with detection and the cost of detection; a chargeback model for the direct economy. [ ]
 - The Stars spread line and premium subscriptions in the cash layer. [ ]
-- — (to be added by the founder)
-- — (to be added by the founder)
 
-## 9. Limitations
+The decision this study supports, labeled as policy, not as theorem: [What to do](WHAT_NEXT.md) — an acceptable formula reform, and why royalties-for-plays should still be abandoned (Tonify → Unify).
+
+## 8. Limitations
 A synthetic world: the tail shape between the anchors is a construction; UC is a wallet approximation;
-the rate, ticket size, and superfan share are unmeasured axes ("Object 3", translated), to be measured by the MVP;
+cadence k is UNMEASURED in music (emp2; Twitch is not a closer); ticket size and superfan share remain ranges;
 the Tencent benchmark is a blend with advertising; the regulatory risk to gifting (−66% of TME segment
 revenue over 3 years) is not in the model. No conclusion is stated more strongly than its falsifier.
 
 ## Figures
 fig1 MVA curve · fig2 income distribution (binomial) · fig3 fraud dilution ·
-fig4 the $1 rails · **fig5 the World A→B ladder** · **fig6 MRR-solver**
+fig4 the $1 rails · **fig5 the World A→B ladder** · **fig6 MRR-solver** ·
+fig19 pass-through grid · fig20 glue σ*
 
 *MIT License. Reproduction: python3 sim1/tonify_cash_sim.py && python3 sim1/v04_full.py*
 
@@ -126,6 +122,17 @@ not emergent; only ×1.34 has a Monte-Carlo origin, and it is valid only at the 
 u* ≈ 14,146 plays/yr (8,731 at PAID_SHARE 0.25; 21,371 at 0.60) — above u*, user-centric is worse
 than pro-rata for that artist's audience (fig14; sim1/SPEC.md §3.2). What the matrix contributes
 is commensurability: the two axes placed on one MVA grid.
+
+---
+## CHANGELOG v1.2 (August 2026) — glue, cadence slot, pass-through grid, hygiene
+
+sim5 glues sim2 → σ → k/check (emp2) → sim3 treasury; sim4 already names the play
+matrix. emp2 is a fail-closed Telegram cadence slot: UNMEASURED without ≥200 rows;
+Twitch k=12 is retracted as a closer of 0.38–6.31 (the fig5 Twitch-mechanics rung
+stays as a take-rate comparison). v07 + fig19: pass-through ρ = 6.772 / 10.6 / 20%
+at fixed independent $4.43/1k. RESULTS no longer leads with the retracted 0.42.
+Unify section removed (out of scope). sim2/3/4/5 marked built. Caladan attribution
+removed from captions/SPEC (AInvest / CryptoPotato).
 
 ---
 ## CHANGELOG v1.1 (August 2026) — external review, seven findings, all accepted

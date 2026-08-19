@@ -417,7 +417,7 @@ def figures(A, B, tstar, dead, med_t, fals):
         d_yl="share of runs", d_t="Regime B: death-date distribution, 200 runs",
         e_med="regime B median death:\nmonth {v:.0f}", e_law="payouts ≤ inflow", e_emi="payouts from emission",
         e_yl="DAU, share of peak",
-        e_note="A: deterministic simulation; B: median of 200 runs; calibration ×25/6 mo — Hamster (Caladan, Apr 2026);\n"
+        e_note="A: deterministic simulation; B: median of 200 runs; calibration ×25/6 mo — Hamster (AInvest; CryptoPotato, Sep 2024);\n"
                "the slope of A is an assumption (organic 6%/mo > churn 5%/mo, P2–P3): the Tonify law guarantees treasury ≥ 0, not DAU growth"),
      "ru": dict(
         a_A="A «выплаты ≤ приток» — симуляция (детерминир.)", a_B="B «из эмиссии» — симуляция (медиана, 200 прогонов)",
@@ -437,7 +437,7 @@ def figures(A, B, tstar, dead, med_t, fals):
         d_yl="доля прогонов", d_t="Режим B: распределение даты смерти, 200 прогонов",
         e_med="медиана смерти B:\nмесяц {v:.0f}", e_law="выплаты ≤ приток", e_emi="выплаты из эмиссии",
         e_yl="DAU, доля пика",
-        e_note="A: детерминированная симуляция; B: медиана 200 прогонов; калибровка ×25/6 мес — Hamster (Caladan, апр. 2026);\n"
+        e_note="A: детерминированная симуляция; B: медиана 200 прогонов; калибровка ×25/6 мес — Hamster (AInvest; CryptoPotato, сент. 2024);\n"
                "наклон A — допущение (органика 6%/мес > churn 5%/мес, P2–P3): закон Tonify гарантирует казну ≥ 0, не рост DAU"),
     }
     n_dead = int(dead.sum()); n_alive = R_RUNS - n_dead

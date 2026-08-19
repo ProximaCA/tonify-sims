@@ -28,6 +28,10 @@ The coupling between how big an artist is and how intensely their audience liste
 
 At the measured coupling, user-centric takes from the head four times harder than the independence assumption predicts.
 
+## What this implies
+
+The three findings above are accounting. The decision they support is a [policy reading](policy/what-next.md), labeled as such: an acceptable reform of the pool formula (four steps, all computed) still leaves the play as the cash register. The unit of value is the fan. What used to be a royalty becomes the price of a thing — a drop, a ticket, patronage. Tonify is the wedge; Unify is the rail. None of that is a theorem.
+
 ## Reproduce it in 45 seconds
 
 ```bash

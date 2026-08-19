@@ -10,7 +10,7 @@ description: Сколько стоит слушатель — цена меха�
 
 **Главное число.** Ось правила двигает жизнеспособность артиста ×{{sim1.rule}} при базовом кошельке. Ось контракта — ×{{sim1.contract}}. Индустрия спорит про первое число.
 
-**Запуск.** `python3 sim1/tonify_cash_sim.py`, затем `v04_full.py`, `v05_matrix.py`, `v06_uc_crossover.py`.
+**Запуск.** `python3 sim1/tonify_cash_sim.py`, затем `v04_full.py`, `v05_matrix.py`, `v06_uc_crossover.py`, `v07_passthrough.py`.
 
 ***
 

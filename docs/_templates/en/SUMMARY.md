@@ -14,11 +14,17 @@
 * [sim2 — how music spreads](simulations/sim2.md)
 * [sim3 — treasury survival](simulations/sim3.md)
 * [sim4 — the play matrix](simulations/sim4.md)
+* [sim5 — glue](simulations/sim5.md)
+
+## Policy
+
+* [What to do](policy/what-next.md)
 
 ## Measurement
 
 * [The coupling](measurement/gamma.md)
 * [Prior art](measurement/prior-art.md)
+* [Payment cadence](measurement/cadence.md)
 
 ## Reference
 

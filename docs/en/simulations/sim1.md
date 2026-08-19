@@ -10,7 +10,7 @@ description: What a listener is worth — pricing the payout mechanisms against 
 
 **The headline.** The rule axis moves artist viability ×1.34 at the baseline wallet. The contract axis moves it ×14.8. The industry argues about the first number.
 
-**Run it.** `python3 sim1/tonify_cash_sim.py` — then `v04_full.py`, `v05_matrix.py`, `v06_uc_crossover.py` for the world ladder, the rule×contract matrix, and the crossover.
+**Run it.** `python3 sim1/tonify_cash_sim.py` — then `v04_full.py`, `v05_matrix.py`, `v06_uc_crossover.py`, `v07_passthrough.py` for the world ladder, the rule×contract matrix, the crossover, and the pass-through grid.
 
 ***
 
@@ -78,13 +78,13 @@ the rule reform makes this artist's audience worse off.*
 **Finding 2 — breakeven is a range, not a point.** Direct donations beat the
 independent streaming pool when a devoted fan pays more often than
 0.38–1.25–6.31 times/year (min/median/max over 18 axis combinations; the
-earlier point estimate was retracted — see *Retracted & bounded*). Recurring
-patronage closes the range structurally: Twitch/Patreon paying-fan cadence is
-12/yr against the worst corner of 6.31, and recurring k=12 on the TON rail
-drops direct MVA to 900. The Twitch-mechanics rung (2,353) uses Twitch's own
-fixed $5 subscription; on the same $6.89 mean ticket as the direct rows it
-would be 1,709 — the direct economy's edge over the Twitch mechanics is the
-take rate (5% vs a 50% split), not the rail
+earlier point estimate was retracted — see *Retracted & bounded*). Adjacent-industry
+cadence (Twitch/Patreon k=12) does **not** close that range — k is UNMEASURED
+in music ([emp2](https://github.com/ProximaCA/tonify-sims/blob/main/emp2/README.md)). Recurring k=12 on the TON rail would drop
+direct MVA to 900 *if* that k were measured. The Twitch-mechanics rung (2,353)
+uses Twitch's own fixed $5 subscription; on the same $6.89 mean ticket as the
+direct rows it would be 1,709 — the direct economy's edge over the Twitch
+mechanics is the take rate (5% vs a 50% split), not the rail
 ([CRITIC](https://github.com/ProximaCA/tonify-sims/blob/main/paper/CRITIC.md) §1; [RESULTS](https://github.com/ProximaCA/tonify-sims/blob/main/paper/RESULTS.md) v0.3 §1–§2;
 [PAPER](https://github.com/ProximaCA/tonify-sims/blob/main/paper/PAPER.md) §4; [sim1 SPEC](https://github.com/ProximaCA/tonify-sims/blob/main/sim1/SPEC.md) §3.4).
 

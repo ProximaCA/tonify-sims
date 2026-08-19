@@ -6,7 +6,7 @@ description: Claims we published and then withdrew, each with what replaced it.
 
 This page is the point of the whole project, not an appendix to it. Every claim below was ours, was stated with confidence, and was then killed — by an adversarial red team, by a falsifier we built ourselves, or by a literature check we ran on our own novelty claim. Each is listed with what replaced it.
 
-## Three public retractions
+## Public retractions
 
 ### 1. "The status quo is 0.42 donations per year"
 
@@ -14,7 +14,15 @@ This page is the point of the whole project, not an appendix to it. Every claim 
 
 **Why it died.** A category error: their 29% was superfans' share of *royalties* under a user-centric split, not a share of donations. The red team caught the mismatch.
 
-**What replaced it.** The number was removed from the results entirely. In its place: measured payment-rate benchmarks from adjacent industries, and the breakeven expressed as a range across 18 parameter combinations — 0.38 … 1.25 … 6.31 payments per superfan per year — with every axis of that range being something the platform can measure.
+**What replaced it.** The number was removed from the results entirely. In its place: the breakeven expressed as a range across 18 parameter combinations — 0.38 … 1.25 … 6.31 payments per superfan per year. Adjacent-industry cadence (Twitch k=12) was later itself retracted as a closer of that range — see below.
+
+### 1b. "Twitch k=12 closes the range"
+
+**What we claimed.** Recurring patronage closes 0.38–6.31 structurally, because Twitch and Patreon pay monthly.
+
+**Why it died.** Adjacent-industry billing arithmetic is not a music measurement. The worst corner (6.31) sitting below Twitch's 12 is an analogy, not a fact.
+
+**What replaced it.** [emp2](measurement/cadence.md): a fail-closed Telegram pilot of ≥200 payments. Until that CSV exists the range stays open. The Twitch-mechanics *rung* of fig5 (50/50 split at $5) is a take-rate comparison and was not retracted.
 
 ### 2. "γ = +0.10 ± 0.003"
 

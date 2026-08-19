@@ -10,7 +10,7 @@ description: What a listener is worth — pricing the payout mechanisms against 
 
 **The headline.** The rule axis moves artist viability ×{{sim1.rule}} at the baseline wallet. The contract axis moves it ×{{sim1.contract}}. The industry argues about the first number.
 
-**Run it.** `python3 sim1/tonify_cash_sim.py` — then `v04_full.py`, `v05_matrix.py`, `v06_uc_crossover.py` for the world ladder, the rule×contract matrix, and the crossover.
+**Run it.** `python3 sim1/tonify_cash_sim.py` — then `v04_full.py`, `v05_matrix.py`, `v06_uc_crossover.py`, `v07_passthrough.py` for the world ladder, the rule×contract matrix, the crossover, and the pass-through grid.
 
 ***
 

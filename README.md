@@ -135,13 +135,13 @@ the rule reform makes this artist's audience worse off.*
 **Finding 2 — breakeven is a range, not a point.** Direct donations beat the
 independent streaming pool when a devoted fan pays more often than
 0.38–1.25–6.31 times/year (min/median/max over 18 axis combinations; the
-earlier point estimate was retracted — see *Retracted & bounded*). Recurring
-patronage closes the range structurally: Twitch/Patreon paying-fan cadence is
-12/yr against the worst corner of 6.31, and recurring k=12 on the TON rail
-drops direct MVA to 900. The Twitch-mechanics rung (2,353) uses Twitch's own
-fixed $5 subscription; on the same $6.89 mean ticket as the direct rows it
-would be 1,709 — the direct economy's edge over the Twitch mechanics is the
-take rate (5% vs a 50% split), not the rail
+earlier point estimate was retracted — see *Retracted & bounded*). Adjacent-industry
+cadence (Twitch/Patreon k=12) does **not** close that range — k is UNMEASURED
+in music ([emp2](emp2/README.md)). Recurring k=12 on the TON rail would drop
+direct MVA to 900 *if* that k were measured. The Twitch-mechanics rung (2,353)
+uses Twitch's own fixed $5 subscription; on the same $6.89 mean ticket as the
+direct rows it would be 1,709 — the direct economy's edge over the Twitch
+mechanics is the take rate (5% vs a 50% split), not the rail
 ([CRITIC](paper/CRITIC.md) §1; [RESULTS](paper/RESULTS.md) v0.3 §1–§2;
 [PAPER](paper/PAPER.md) §4; [sim1 SPEC](sim1/SPEC.md) §3.4).
 
@@ -316,10 +316,43 @@ problem. The catalogue survives through its weight coefficient (w₃₆ = 0.989)
 the platform lives on a long tail of small artists who individually churn.
 An honest number to lead with, not to bury (sim3 artist layer, §6).
 
+## sim5 — glue: one cascade, then money
+
+sim4 is the play matrix. sim5 is the missing pipe: a fired sim2 cascade
+becomes L listeners, a share σ become superfans, they pay k times a year
+with check c (emp2 if measured, otherwise the open 0.38–6.31 range — never
+Twitch k=12), and the fee hits the sim3 treasury.
+
+![fig20_glue_sigma](figures/fig20_glue_sigma.png)
+
+*fig20 — σ* to hit $100/mo after one cascade on the N=50k graph (analytic
+over the frozen sim2 reach-per-seed table, seed 42). The yellow band is the
+calibrated superfan share 0.6–1.7%. Below the band a fired cascade is enough;
+above it conversion would have to beat the calibration.*
+
+**Finding 11 — a fired hub cascade is large enough at k=4; a random seed at
+small B is not.** On the published sim2 table, B=5 hubs reach L=22,550.5
+listeners; σ* at k=4, check $6.89, take 0.80 is **0.242%** — inside the
+0.6–1.7% band. The same budget at random seeding reaches L=5 and needs
+σ* ≫ 1. The worst open corner (k=0.38, check $3.10) pushes even hubs to
+σ* ≈ 5.65% and loses to the 1.7% ceiling. Cadence UNMEASURED: this is a map,
+not a music fact ([sim5](sim5/SPEC.md); [emp2](emp2/README.md)).
+
+![fig19_passthrough](figures/fig19_passthrough.png)
+
+*fig19 — signed MVA if the label pass-through is the derived 6.772%, the
+AEPO-ARTIS ~10.6%, or Rose 2024's 20% upper, independent rate held at
+$4.43/1k (analytic). The yellow line is independent MVA 12,771.*
+
+**Finding 12 — 188,590 is one significant digit; the order of the gap is not.**
+At ρ=10.6% signed MVA drops to 120,484 (×9.43); at 20% to 63,857 (×5.00).
+Even Rose's upper bound still outweighs the rule axis ×1.34. The hero cell
+moves; the qualitative claim does not ([sim1/v07_passthrough.py](sim1/v07_passthrough.py)).
+
 ## Reproducibility
 
 ```
-python3 run_all.py    # all three simulations + 14 figures x EN/RU -> ./figures + ./figures/ru, ~1-2 min, exit 0
+python3 run_all.py    # sim1–5 + emp2 slot + figures EN/RU -> ./figures + ./figures/ru
 ```
 
 - **Deterministic:** seed=42 everywhere; a re-run produces byte-identical
@@ -333,9 +366,11 @@ python3 run_all.py    # all three simulations + 14 figures x EN/RU -> ./figures 
   (gif). No API keys, no data downloads — the world is synthetic and
   self-contained.
 - **Individually:** `python3 sim1/tonify_cash_sim.py` (then `sim1/v04_full.py`,
-  `sim1/v05_matrix.py`, `sim1/v06_uc_crossover.py`),
+  `sim1/v05_matrix.py`, `sim1/v06_uc_crossover.py`, `sim1/v07_passthrough.py`),
   `python3 sim2/tonify_graph_sim.py` (~36 s),
-  `python3 sim3/sim3_anti_graveyard.py` (~1 s).
+  `python3 sim3/sim3_anti_graveyard.py` (~1 s),
+  `python3 emp2/cadence_measure.py`,
+  `python3 sim5/glue.py`.
 - **Provenance:** every model parameter → value used → source → vault note in
   [SOURCES](SOURCES.md).
 
@@ -343,22 +378,19 @@ python3 run_all.py    # all three simulations + 14 figures x EN/RU -> ./figures 
 
 ```
 tonify-sims/
-├── run_all.py        # one command: sim1 + sim2 + sim3, figures fig1-fig13
+├── run_all.py        # sim1–5 + emp2 slot, figures
 ├── README.md         # this file (EN, primary) · README.ru.md — Russian, full parity
 ├── SOURCES.md        # every parameter -> value -> source -> vault note (EN · SOURCES.ru.md)
-├── paper/            # sim1 documents, EN primary + Russian originals:
-│                     #   PAPER.md / PAPER.ru.md (model; the RU original is the source of truth),
-│                     #   RESULTS.md / RESULTS.ru.md (numbers),
-│                     #   CRITIC.md / CRITIC.ru.md (red team, retractions)
-├── sim1/             # cash register vs pool: SPEC.md v1.1 (model equations,
-│                     #   parameter classes, gates), tonify_cash_sim.py,
-│                     #   v04_full.py, v05_matrix.py, v06_uc_crossover.py
-├── sim2/             # music spread on a synthetic Telegram-like graph:
-│                     #   tonify_graph_sim.py, SPEC.md v1.3, README.md
-├── sim3/             # anti-graveyard treasury law vs emission:
-│                     #   sim3_anti_graveyard.py, SPEC.md v1.2, README.md
-├── figures/          # fig1-fig14 (EN) · figures/ru/ — the same 14 in Russian,
-│                     #   both regenerated by run_all.py
+├── paper/            # PAPER / RESULTS / CRITIC / THEORY / WHAT_NEXT (policy)
+├── sim1/             # cash register vs pool (+ v07 pass-through grid)
+├── sim2/             # complex contagion on a synthetic Telegram-like graph
+├── sim3/             # anti-graveyard treasury law vs emission
+├── sim4/             # bipartite play matrix
+├── sim5/             # glue: cascade → σ → k/check → treasury
+├── emp1/             # Last.fm coupling γ (external ~4 GB data)
+├── emp2/             # Telegram payment cadence (fail-closed; UNMEASURED)
+├── docs/             # GitBook site (generated)
+├── figures/          # fig1–fig20 (EN) · figures/ru/ — Russian
 └── LICENSE           # MIT
 ```
 
@@ -496,10 +528,11 @@ what the verdict was, what changed ([sim1 SPEC](sim1/SPEC.md) CHANGELOG v1.1):
   not any single project. The token price is a stylized form, not market
   microstructure — the strict death statistics (182/200, t* = 12) are a property
   of the baseline price form; only the ≥80%-loss result is form-invariant.
-- **The simulations are deliberately isolated.** sim1 has no social dynamics,
-  sim2 spreads one track in a vacuum with no churn, sim3 has no network effects
-  between users and no competitors or external shocks; cross-sim coupling
-  (does distribution reach convert to donations?) is out of scope.
+- **sim5 is a calculator on frozen sim2 numbers, not a new graph.** One track,
+  no competing cascades, no forgetting (sim2's ceiling). σ is still a band,
+  k is UNMEASURED (emp2). Scaling a 50k cascade to 1M MAU is linear density,
+  not a 1M-node re-run. Cross-sim coupling is now in scope as arithmetic, not
+  as a joint dynamical system.
 
 ## Related work
 

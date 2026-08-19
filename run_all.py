@@ -12,8 +12,11 @@ steps=[(os.path.join("sim1","tonify_cash_sim.py"),"sim1: мир, валидац�
        (os.path.join("sim1","v04_full.py"),"sim1: user-centric MC, лестница миров, MRR-solver"),
        (os.path.join("sim1","v05_matrix.py"),"sim1: полная матрица {правило × контракт}, heatmap"),
        (os.path.join("sim1","v06_uc_crossover.py"),"sim1: UC-кроссовер u* (external review §2), fig14"),
+       (os.path.join("sim1","v07_passthrough.py"),"sim1: сетка прохода 6.772/10.6/20%, fig19"),
        (os.path.join("sim2","tonify_graph_sim.py"),"sim2: граф Telegram, complex contagion, фальсификатор хабов (~1 мин)"),
        (os.path.join("sim3","sim3_anti_graveyard.py"),"sim3: анти-кладбище, казна A vs B, 200 прогонов"),
+       (os.path.join("emp2","cadence_measure.py"),"emp2: кеф Telegram-пилота (fail-closed, UNMEASURED без CSV)"),
+       (os.path.join("sim5","glue.py"),"sim5: склейка каскад → σ → k/чек → казна, fig20"),
        (os.path.join("sim4","bipartite_gen.py"),"sim4: двудольная матрица user×artist, ворота G1-G3, выгрузка data/, fig15-fig16 (~6 мин)"),
        (os.path.join("sim4","group_gamma.py"),"sim4-G: гетерогенный γ по группам слушателей, ворота H1-H4, fig18 (~8 мин)"),
        (os.path.join("sim4","downside.py"),"sim4-D: метрики нижнего края — экстенсивная маржа, пороги, ES, ворота G1-G5 (~1 мин)"),
@@ -26,5 +29,5 @@ for f,desc in steps:
     r=subprocess.run([sys.executable,f],capture_output=True,text=True)
     print(r.stdout if len(r.stdout)<20000 else r.stdout[-20000:])
     if r.returncode!=0: print(r.stderr[-2000:]); sys.exit(1)
-print("\nDONE. Фигуры fig1-fig16 в ./figures (EN) и ./figures/ru (RU), числа выше.")
-print("Документы: README.md (сводка), paper/PAPER.md, paper/RESULTS.md, paper/CRITIC.md (sim1), sim2/README.md, sim3/README.md")
+print("\nDONE. Фигуры fig1-fig20 в ./figures (EN) и ./figures/ru (RU), числа выше.")
+print("Документы: README.md, paper/, sim5/SPEC.md, emp2/README.md")

@@ -12,6 +12,9 @@
 | `matrix_c_g028_seed42.npz` | (c) сопряжение γ = +0.28 — измеренная голова (emp1) |
 | `matrix_sample.csv` | первые 10 000 троек `(user_id, artist_id, plays)` режима (b) |
 
+`data/pilot_payments.csv` — пилот emp2 (не в гите). Схема:
+`data/pilot_payments.example.csv`. Без ≥200 строк кеф UNMEASURED.
+
 `.npz` не в гите (~сотни МБ) — генерируются `python3 sim4/bipartite_gen.py`
 (~6 мин) или всем прогоном `python3 run_all.py`.
 

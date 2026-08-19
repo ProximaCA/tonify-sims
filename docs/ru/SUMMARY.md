@@ -14,11 +14,17 @@
 * [sim2 — как расходится музыка](simulations/sim2.md)
 * [sim3 — выживание казны](simulations/sim3.md)
 * [sim4 — матрица прослушиваний](simulations/sim4.md)
+* [sim5 — склейка](simulations/sim5.md)
+
+## Решение
+
+* [Что делать](policy/what-next.md)
 
 ## Измерение
 
 * [Сопряжение](measurement/gamma.md)
 * [Приоритет](measurement/prior-art.md)
+* [Кеф платежей](measurement/cadence.md)
 
 ## Справочник
 

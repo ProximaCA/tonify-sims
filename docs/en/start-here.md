@@ -10,6 +10,8 @@ The study has three layers, and you can stop at any of them.
 
 **The code.** Every claim has an executable check. [Simulations](simulations/sim1.md) documents what each simulation asks, what gates it must pass, and how to run it.
 
+**What to do.** [The policy reading](policy/what-next.md) is the decision that sits on top of the four lemmas: an acceptable formula reform, and why the cash register should still move off the play onto the fan. It is not a theorem.
+
 ## Proved, measured, open
 
 **Proved** — statements about any fixed play matrix, independent of how the data arose: the ratio identity and its four corollaries (L1), pass-through invariance with its exact criterion (L2), tail preservation and the atom at zero (L3), the full stochastic-dominance blockade (L4). Each was attacked twice by an adversarial red team that did find errors; the retractions are on [this page](retracted.md).
@@ -38,7 +40,7 @@ every joint of that bridge is a modelling choice.
 
 ## What this study is not
 
-It is not a product pitch and not a proposal. It is accounting statics: the play matrix is held fixed and the operators are compared on it. Every equilibrium effect — behaviour changing because the rule changed — is outside the frame and listed as open. Numbers from the simulated world are calibration, not forecast; the one empirical number is dated (Last.fm, 2005–2014) and its sign is domain-bounded, as [Prior art](measurement/prior-art.md) shows.
+The lemmas and simulations are accounting statics: the play matrix is held fixed and the operators are compared on it. They are not a product pitch. A separate [policy reading](policy/what-next.md) states the decision that follows — labeled as policy, not as proof. Every equilibrium effect — behaviour changing because the rule changed — is outside the frame and listed as open. Numbers from the simulated world are calibration, not forecast; the one empirical number is dated (Last.fm, 2005–2014) and its sign is domain-bounded, as [Prior art](measurement/prior-art.md) shows.
 
 ## Conventions
 
