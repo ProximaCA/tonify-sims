@@ -33,7 +33,7 @@ says `assumption` or `not in vault` instead of inventing one.
 
 | # | Parameter | Value used | Source (as verified in vault) | Used in |
 |---|-----------|-----------|-------------------------------|---------|
-| 1 | Artists under 1,000 streams/yr (target T1) | 87% | Closest verified: Luminate year-end 2023 — 86.2% of **tracks** (not artists) ≤1,000 plays, via MBW 14 Mar 2024 ([link](https://www.musicbusinessworldwide.com/deezer-has-deleted-26m-useless-tracks-since-it-launched-artist-centric-model-with-universal-music-group/)); artist-side analogue: Chartmetric 2025 — 86% of Spotify artists <10 monthly listeners, via Kullick & Petry 2025 ([PDF](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/61644B64A790CB6B4B15A36C3D6DF83C/S2059599925100150a.pdf)). See discrepancy D1. | sim1 world construction, validation T1; fig2 |
+| 1 | Share below 1,000 streams/yr (target T1) | 87% | Closest verified: Luminate year-end 2023 — 86.2% of **tracks** (not artists) ≤1,000 plays, via MBW 14 Mar 2024 ([link](https://www.musicbusinessworldwide.com/deezer-has-deleted-26m-useless-tracks-since-it-launched-artist-centric-model-with-universal-music-group/)); artist-side analogue: Chartmetric 2025 — 86% of Spotify artists <10 monthly listeners, via Kullick & Petry 2025 ([PDF](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/61644B64A790CB6B4B15A36C3D6DF83C/S2059599925100150a.pdf)). See discrepancy D1. | sim1 world construction, validation T1; fig2 |
 | 2 | Rightsholders above $1,000/yr | 2.6% (259,700 of 10M+ uploaders, 2023) | Spotify Loud & Clear (2023 data), via Music Ally, 14 Jan 2025 ([link](https://musically.com/2025/01/14/chartmetric-tracks-11m-spotify-artists-fewer-than-1-6m-have-over-10-listeners/)) | sim1 validation T2; CRITIC §5 bound (rightsholders, not artists) |
 | 3 | Top share of streams (target T3) | top-0.28% ≈ 50%; Gini 0.72 | Òscar Celma, PhD thesis *Music Recommendation and Discovery*, UPF Barcelona (Last.fm crawl, July 2007: top-737 of 260,525 artists = 50% of playcounts) ([PDF](http://www.mtg.upf.edu/static/media/PhD_ocelma.pdf)). **Not a CMA number** — CMA's own: top-0.4% → 63–65% of streams 2014–2020 ([final report](https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1120610/Music_and_streaming_final_report.pdf)). See D2. | sim1 validation T3 (world Gini validates at 0.97 by streams) |
 | 4 | Plays per listener per artist | median 5.16, mean 21.21 | Schedl & Hauger, *Int. J. Multimedia Information Retrieval* 6:71–84, 2017, Table 6 (LFM-1b: 120,322 users, 1.09B events) ([PDF](https://link.springer.com/content/pdf/10.1007%2Fs13735-017-0118-y.pdf)); dataset intro: Schedl, ICMR 2016 ([PDF](https://www.cp.jku.at/people/schedl/Research/Publications/pdf/schedl_icmr_2016.pdf)). Measures panel lifetime, not a year → red team widened to 8–21 (CRITIC §2). | every MVA number (PL=21.21 in all three sim1 scripts); fig1/5/7 |
@@ -64,9 +64,9 @@ than silently harmonized — the same policy as *Retracted & bounded*.
 
 - **D1 — "87% of artists (Luminate)".** The vault's Luminate 2023 number is
   86.2% of **tracks** ≤1,000 plays, not artists. The artist-side figures in
-  the vault are Chartmetric's (86% under 10 monthly listeners). The T1 anchor
-  functions as a stylized target; its label "artists (Luminate)" overstates
-  the source's granularity.
+  the vault are Chartmetric's (86% under 10 monthly listeners). Running labels
+  now say tracks (2026-08-19); T1 remains a stylized *artist-world* share
+  calibrated to that track statistic.
 - **D2 — "CMA/Last.fm" for top-0.28% ≈ 50%.** The 0.28%/50% pair and
   Gini 0.72 are Celma's 2007 Last.fm crawl. CMA's own measurement is
   top-0.4% → 63–65% (2014–2020). The repo's combined label "CMA/Last.fm"

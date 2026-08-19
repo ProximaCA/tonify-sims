@@ -34,7 +34,7 @@ and under which measurable conditions World B outperforms World A.
 ## 2. Model and calibration
 The world: N=200,000 artists; the annual-stream distribution is a piecewise construction
 (lognormal body / log-bridge / Pareto tail α=1.4) fitted to the anchors:
-T1 87% of artists <1000 streams/year (Luminate) → obtained 87.0% ✓
+T1 87% of tracks <1000 streams/year (Luminate 86.2%; stylized onto the artist world) → obtained 87.0% ✓
 T2 2.6% of artists >$1000/year in royalties (Spotify) → 2.6% ✓
 T3 top 0.28% of artists ≈50% of streams (CMA/Last.fm) → 44.5% ✓; Gini 0.97
 A listener's plays for a given artist: lognormal(median 5.16; mean 21.21) [LFM-1b].

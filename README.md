@@ -74,7 +74,7 @@ The terms the figures and findings lean on, once:
 ## sim1 — what a listener is worth: pricing the payout mechanisms
 
 A synthetic market of 200,000 artists, calibrated to three independently
-measured anchors (87% of artists under 1,000 streams/year — Luminate; 2.6% of
+measured anchors (87% of tracks under 1,000 streams/year — Luminate, stylized onto the artist world; 2.6% of
 rightsholders above $1,000/year — Spotify Loud & Clear; top-0.28% holding ≈50%
 of streams — CMA/Last.fm; obtained: 87.0% / 2.6% / 44.5%, Gini 0.97). Full
 model: [PAPER](paper/PAPER.md); numbers:

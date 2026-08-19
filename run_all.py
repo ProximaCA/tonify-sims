@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""TONIFY-SIMS · run_all.py — полный прогон трёх симуляций одной командой.
-sim1 (касса): мир+валидация (v0.2) -> красная команда fixes (v0.3) -> карта миров (v0.4) -> матрица (v0.5).
-sim2 (граф): BA+клики, complex contagion, фальсификатор хабов. sim3 (анти-кладбище): казна A vs B.
-Все фигуры fig1-fig13 в ./figures, ключевые числа в stdout. seed=42, MIT.
+"""TONIFY-SIMS · run_all.py — sim1–sim5 + emp2-слот одной командой.
+sim1 касса (включая v07 сетку прохода) → sim2 граф → sim3 казна → emp2 кеф
+→ sim5 склейка → sim4 двудольная матрица. Фигуры fig1–fig20. seed=42, MIT.
 """
 import subprocess, sys, os
 HERE=os.path.dirname(os.path.abspath(__file__))

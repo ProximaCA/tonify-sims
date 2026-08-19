@@ -12,7 +12,7 @@
 
 | # | Параметр | Значение в модели | Источник (проверен по vault) | Заметка vault | Где используется |
 |---|----------|-------------------|------------------------------|---------------|------------------|
-| 1 | Артисты <1000 стримов/год (мишень T1) | 87% | Ближайшее подтверждённое: Luminate year-end 2023 — 86,2% **треков** (не артистов) ≤1000 плэев, via MBW 14.03.2024 ([ссылка](https://www.musicbusinessworldwide.com/deezer-has-deleted-26m-useless-tracks-since-it-launched-artist-centric-model-with-universal-music-group/)); артистный аналог: Chartmetric 2025 — 86% артистов Spotify <10 слушателей/мес, via Kullick & Petry 2025 ([PDF](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/61644B64A790CB6B4B15A36C3D6DF83C/S2059599925100150a.pdf)). См. расхождение D1. | `deezer-has-deleted-26m-fake-artist-and-noise-tracks-since-it-launched-its-artist`, `a-r-t-i-c-l-e` | конструкция мира sim1, валидация T1; fig2 |
+| 1 | Доля ниже 1000 стримов/год (мишень T1) | 87% | Ближайшее подтверждённое: Luminate year-end 2023 — 86,2% **треков** (не артистов) ≤1000 плэев, via MBW 14.03.2024 ([ссылка](https://www.musicbusinessworldwide.com/deezer-has-deleted-26m-useless-tracks-since-it-launched-artist-centric-model-with-universal-music-group/)); артистный аналог: Chartmetric 2025 — 86% артистов Spotify <10 слушателей/мес, via Kullick & Petry 2025 ([PDF](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/61644B64A790CB6B4B15A36C3D6DF83C/S2059599925100150a.pdf)). См. расхождение D1. | `deezer-has-deleted-26m-fake-artist-and-noise-tracks-since-it-launched-its-artist`, `a-r-t-i-c-l-e` | конструкция мира sim1, валидация T1; fig2 |
 | 2 | Правообладатели >$1000/год | 2,6% (259 700 из 10M+ загрузивших, 2023) | Spotify Loud & Clear (данные 2023), via Music Ally, 14.01.2025 ([ссылка](https://musically.com/2025/01/14/chartmetric-tracks-11m-spotify-artists-fewer-than-1-6m-have-over-10-listeners/)) | `chartmetric-tracks-11m-spotify-artists-fewer-than-16m-have-over-10-listeners-mus` | валидация T2; оговорка CRITIC §5 (правообладатели, не артисты) |
 | 3 | Верхняя доля стримов (мишень T3) | топ-0,28% ≈ 50%; Gini 0,72 | Òscar Celma, PhD-диссертация *Music Recommendation and Discovery*, UPF Barcelona (кроул Last.fm, июль 2007: топ-737 из 260 525 артистов = 50% плэев) ([PDF](http://www.mtg.upf.edu/static/media/PhD_ocelma.pdf)). **Не число CMA** — собственное CMA: топ-0,4% → 63–65% стримов 2014–2020 ([финальный отчёт](https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1120610/Music_and_streaming_final_report.pdf)). См. D2. | `music-recommendation-and-discovery`, `music-and-streaming`, `interim-report-c2-lfm-dataset-calibration-parameter` | валидация T3 (Gini мира валидируется на 0,97 по стримам) |
 | 4 | Плэи слушателя у артиста | медиана 5,16, среднее 21,21 | Schedl & Hauger, *Int. J. Multimedia Information Retrieval* 6:71–84, 2017, Table 6 (LFM-1b: 120 322 юзера, 1,09 млрд событий) ([PDF](https://link.springer.com/content/pdf/10.1007%2Fs13735-017-0118-y.pdf)); интро датасета: Schedl, ICMR 2016 ([PDF](https://www.cp.jku.at/people/schedl/Research/Publications/pdf/schedl_icmr_2016.pdf)). Меряет жизнь панели, не год → красная команда расширила до 8–21 (CRITIC §2). | `int-j-multimed-info-retr-2017-67184`, `the-lfm-1b-dataset-for` | все числа MVA (PL=21,21 во всех трёх скриптах sim1); fig1/5/7 |
@@ -43,9 +43,9 @@
 
 - **D1 — «87% артистов (Luminate)».** Число Luminate 2023 в vault — 86,2%
   **треков** ≤1000 плэев, не артистов. Артистные цифры в vault —
-  Chartmetric (86% под 10 слушателей/мес). Якорь T1 работает как
-  стилизованная мишень; подпись «артисты (Luminate)» преувеличивает
-  гранулярность источника.
+  Chartmetric (86% под 10 слушателей/мес). Подписи в бегущем тексте
+  теперь говорят «треки» (2026-08-19); T1 остаётся стилизованной *долей
+  мира артистов*, калиброванной на эту статистику треков.
 - **D2 — «CMA/Last.fm» для топ-0,28% ≈ 50%.** Пара 0,28%/50% и Gini 0,72 —
   кроул Last.fm Celma 2007. Собственное измерение CMA: топ-0,4% → 63–65%
   (2014–2020). Совмещённую подпись «CMA/Last.fm» следует читать «Last.fm

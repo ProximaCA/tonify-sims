@@ -39,7 +39,7 @@ git clone {{REPO}} && cd tonify-sims
 python3 paper/theory_check.py
 ```
 
-Every proved claim is re-derived numerically; gates print before conclusions and a failure exits non-zero. The full chain (all four simulations, eighteen figures) is `python3 run_all.py`.
+Every proved claim is re-derived numerically; gates print before conclusions and a failure exits non-zero. The full chain (five simulations, twenty figures) is `python3 run_all.py`.
 
 ***
 
