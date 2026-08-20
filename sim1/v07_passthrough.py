@@ -46,7 +46,7 @@ print(f"{'pro-rata independent (unchanged)':<32} {'—':>8} {RATE_IND:16.6f} {mv
 print("\nReading: even at Rose's 20% the contract still outweighs the rule "
       f"({rows[2][4]:.1f} vs {RULE_MULT}). Order of the gap survives; 188,590 does not.")
 print("Holding $0.0003 fixed and varying ρ would move the *independent* rate instead; "
-      "that inverts the two measured anchors and is not this grid (SPEC sim1 §3.1).")
+      "that inverts the two calibration anchors and is not this grid (SPEC sim1 §3.1).")
 
 L19 = {
     "en": dict(xl="label pass-through ρ", yl="Listeners needed for $100/mo (log)",

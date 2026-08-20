@@ -15,6 +15,7 @@
 * [sim3 — treasury survival](simulations/sim3.md)
 * [sim4 — the play matrix](simulations/sim4.md)
 * [sim5 — glue](simulations/sim5.md)
+* [sim6 — discovery floor](simulations/sim6.md)
 
 ## Policy
 

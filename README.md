@@ -1,6 +1,6 @@
 *🇬🇧 English | [🇷🇺 Русский](README.ru.md)*
 
-# tonify-sims: three simulations of a direct music economy
+# tonify-sims: six simulations of a direct music economy
 
 Payout mechanisms, social-graph spread, and treasury survival for a direct
 listener-to-artist music economy on Telegram/TON rails — deterministic,
@@ -26,7 +26,7 @@ signed pro-rata streaming contract — or, on the direct rail at k=4 donations a
 year, between 3,204 listeners (best corner of the measured ranges: $6.89 mean
 ticket, 1.7% superfans) and 20,161 (worst corner: $3.10 ticket, 0.6%
 superfans — which loses to the independent pool's 12,771; the full ranges are
-the point, not either edge). This repository holds three deterministic
+the point, not either edge). This repository holds six deterministic
 simulations of a direct music economy on Telegram/TON rails (Tonify): sim1
 prices payout mechanisms across a 200,000-artist synthetic market calibrated
 to three independently measured anchors; sim2 models music spreading through a
@@ -349,10 +349,50 @@ At ρ=10.6% signed MVA drops to 120,484 (×9.43); at 20% to 63,857 (×5.00).
 Even Rose's upper bound still outweighs the rule axis ×1.34. The hero cell
 moves; the qualitative claim does not ([sim1/v07_passthrough.py](sim1/v07_passthrough.py)).
 
+## sim6 — Direct + guaranteed discovery floor
+
+Not a fourth pure mechanism and not sold as direct. L4 says the problem for
+small artists is the zero atom, not the mean and not $k$. The operator that
+attacks the atom keeps fan money direct and adds a platform discovery pool $B$
+for artists with verified audience $A_i\ge A_{\min}$, weighted $A_i^\beta$ with
+$\beta<1$.
+
+![fig21_floor_zeros](figures/fig21_floor_zeros.png)
+
+*fig21 — share of artists with $Y=0$ against the eligibility threshold $A_{\min}$
+($B/R=5\%$, $\beta=0.5$, sim1 world N=200,000, seed 42). Eligible artists sit
+at zero; the remaining atom is whoever missed the threshold and lost the $D$
+lottery.*
+
+**Finding 13 — the atom is an eligibility cost; a living wage is a $B$ cost.**
+Any $B>0$ yields $q_{\mathrm{eligible}}=0$. Among artists with $A_i>0$ (everyone
+in this world) pure direct is 77.7% zeros; $A_{\min}=1$ kills that atom entirely,
+$A_{\min}=3$ leaves 37.2% (≤50%), $A_{\min}=2$ leaves 27.9%. $B/R$ does not bind
+the atom. At $A_{\min}=10$, $B=0.05R$ is $1,118,570$ spread over 68,271 eligible
+artists — **$16.38**/year mean floor. Hybrid MVA moves 3,204 → 3,110 against
+independent-pool 12,771 and signed-pool 188,590. The lottery is gone; the wage
+is not. Signed hybrid MVA equals independent: $B$ and $D$ do not pass through
+$\rho$ ([sim6](sim6/SPEC.md)).
+
+![fig22_floor_mva](figures/fig22_floor_mva.png)
+
+*fig22 — hybrid MVA against $B/R$ ($A_{\min}=10$, $\beta=0.5$). Yellow:
+independent pool 12,771; pink: signed 188,590; cyan: pure direct 3,204. The
+floor barely moves MVA because $B$ is smeared across every eligible artist.*
+
+**Finding 14 — the floor changes the bottom, not the top; fake uniques at the
+threshold are the fraud that bites.** At $\beta=0.5$ the top 0.28% take 11.4% of
+the floor against 44.5% of $D$; at $\beta=1$ the floor copies $D$'s tail (44.6%).
+50,000 one-contact fakes steal 2.5% of $B$; the same farm at $A_{\min}=30$
+steals 14.3%. $A_{\min}$ is not an anti-fraud defense by itself: it moves the
+incentive from minting many one-shot identities to producing convincing
+threshold audiences. Each fake is dearer, but the honest eligible set has
+shrunk.
+
 ## Reproducibility
 
 ```
-python3 run_all.py    # sim1–5 + emp2 slot + figures EN/RU -> ./figures + ./figures/ru
+python3 run_all.py    # sim1–6 + emp2 slot + figures EN/RU -> ./figures + ./figures/ru
 ```
 
 - **Deterministic:** seed=42 everywhere; a re-run produces byte-identical
@@ -370,7 +410,8 @@ python3 run_all.py    # sim1–5 + emp2 slot + figures EN/RU -> ./figures + ./fi
   `python3 sim2/tonify_graph_sim.py` (~36 s),
   `python3 sim3/sim3_anti_graveyard.py` (~1 s),
   `python3 emp2/cadence_measure.py`,
-  `python3 sim5/glue.py`.
+  `python3 sim5/glue.py`,
+  `python3 sim6/floor.py`.
 - **Provenance:** every model parameter → value used → source → vault note in
   [SOURCES](SOURCES.md).
 
@@ -378,7 +419,7 @@ python3 run_all.py    # sim1–5 + emp2 slot + figures EN/RU -> ./figures + ./fi
 
 ```
 tonify-sims/
-├── run_all.py        # sim1–5 + emp2 slot, figures
+├── run_all.py        # sim1–6 + emp2 slot, figures
 ├── README.md         # this file (EN, primary) · README.ru.md — Russian, full parity
 ├── SOURCES.md        # every parameter -> value -> source -> vault note (EN · SOURCES.ru.md)
 ├── paper/            # PAPER / RESULTS / CRITIC / THEORY / WHAT_NEXT (policy)
@@ -387,10 +428,11 @@ tonify-sims/
 ├── sim3/             # anti-graveyard treasury law vs emission
 ├── sim4/             # bipartite play matrix
 ├── sim5/             # glue: cascade → σ → k/check → treasury
+├── sim6/             # Direct + guaranteed discovery floor
 ├── emp1/             # Last.fm coupling γ (external ~4 GB data)
 ├── emp2/             # Telegram payment cadence (fail-closed; UNMEASURED)
 ├── docs/             # GitBook site (generated)
-├── figures/          # fig1–fig20 (EN) · figures/ru/ — Russian
+├── figures/          # fig1–fig22 (EN) · figures/ru/ — Russian
 └── LICENSE           # MIT
 ```
 

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-"""TONIFY-SIMS · run_all.py — sim1–sim5 + emp2-слот одной командой.
+"""TONIFY-SIMS · run_all.py — sim1–sim6 + emp2-слот одной командой.
 sim1 касса (включая v07 сетку прохода) → sim2 граф → sim3 казна → emp2 кеф
-→ sim5 склейка → sim4 двудольная матрица. Фигуры fig1–fig20. seed=42, MIT.
+→ sim5 склейка → sim4 двудольная матрица → sim6 discovery floor.
+Фигуры fig1–fig22. seed=42, MIT.
 """
 import subprocess, sys, os
 HERE=os.path.dirname(os.path.abspath(__file__))
@@ -19,7 +20,8 @@ steps=[(os.path.join("sim1","tonify_cash_sim.py"),"sim1: мир, валидац�
        (os.path.join("sim4","bipartite_gen.py"),"sim4: двудольная матрица user×artist, ворота G1-G3, выгрузка data/, fig15-fig16 (~6 мин)"),
        (os.path.join("sim4","group_gamma.py"),"sim4-G: гетерогенный γ по группам слушателей, ворота H1-H4, fig18 (~8 мин)"),
        (os.path.join("sim4","downside.py"),"sim4-D: метрики нижнего края — экстенсивная маржа, пороги, ES, ворота G1-G5 (~1 мин)"),
-       (os.path.join("sim4","saturated.py"),"sim4-S: насыщенный user-centric F^(λ,h), пределы как ворота B1-B6 (~2 мин)")]
+       (os.path.join("sim4","saturated.py"),"sim4-S: насыщенный user-centric F^(λ,h), пределы как ворота B1-B6 (~2 мин)"),
+       (os.path.join("sim6","floor.py"),"sim6: Direct + guaranteed discovery floor, ворота G0-G5, fig21-fig22")]
 # emp1 требует внешних данных (emp1/raw/, ~4 ГБ, в гит не входят) — гоняется
 # отдельно: python3 emp1/gamma_measure.py и python3 emp1/moreau_check.py.
 # Источники и контрольные суммы — emp1/README.md §Датасеты.
@@ -28,5 +30,5 @@ for f,desc in steps:
     r=subprocess.run([sys.executable,f],capture_output=True,text=True)
     print(r.stdout if len(r.stdout)<20000 else r.stdout[-20000:])
     if r.returncode!=0: print(r.stderr[-2000:]); sys.exit(1)
-print("\nDONE. Фигуры fig1-fig20 в ./figures (EN) и ./figures/ru (RU), числа выше.")
-print("Документы: README.md, paper/, sim5/SPEC.md, emp2/README.md")
+print("\nDONE. Фигуры fig1-fig22 в ./figures (EN) и ./figures/ru (RU), числа выше.")
+print("Документы: README.md, paper/, sim6/SPEC.md, emp2/README.md")

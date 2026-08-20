@@ -144,8 +144,8 @@ $\theta$ & real $> 0$ & payout threshold (\$13 Stars) & \$ & P \\
 $A_0$ & integer $> 0$ & boost threshold in the artist-centric counterexample (15\,000) & listeners & P \\
 $V$ & real $> 0$ & target yearly income defining MVA (\$1\,200/yr) & year; \$ & P \\
 $\mathrm{MVA}_s$, $\mathrm{MVA}_\iota$ & integers $> 0$ & minimum viable audience (signed / independent) & listeners & D \\
-$c$, $\mathrm{rate}$ & reals $> 0$ & pool rate per listener $c=\mathrm{PL}\cdot\mathrm{rate}$; external per-stream anchor & \$/listener/yr; \$/play & D / M \\
-$\mathrm{PL}$ & real $> 0$ & plays per active pair (21.21, LFM-1b, caveat CRITIC \S2) & year; plays/pair & M \\
+$c$, $\mathrm{rate}$ & reals $> 0$ & pool rate per listener $c=\mathrm{PL}\cdot\mathrm{rate}$; external per-stream anchor (Duetti $4.43/1000$, D3, not in vault) & \$/listener/yr; \$/play & D / A (calibration) \\
+$\mathrm{PL}$ & real $> 0$ & LFM-1b lifetime mean 21.21; year transfer is calibration (CRITIC \S2) & year (calib.); plays/pair & M / A \\
 $X_A$ & real $> 0$ & pool income at audience $A$: $cA$ (deterministic) & year; \$ & D \\
 $d^\ast$ & real $> 0$ & direct-vs-pool breakeven: $\mathrm{PL}\cdot\mathrm{rate}/(\sigma\bar g\tau)$ payments/superfan/yr & payments/yr & D \\
 $\varphi(t)$ & function, $t>0$ & gift Laplace transform $\E e^{-t\tau G}<1$ & --- & D \\
@@ -357,14 +357,17 @@ $\mathbb{P}(D_i=0\,|\,A_i)\ge(1-\sigma)^{A_i}\ge e^{-1}(1-\sigma)$ for
 $A_i\le 1/\sigma$: an \emph{atom at zero} on small audiences. With zero
 mass $q$, $G_{\mathrm{direct}}=q+(1-q)G^{+}$: the mechanism relocates
 inequality from the intensive to the extensive margin; no mechanism
-softens the upper tail.
+softens the upper tail. Under A5 and a light-tailed check, direct
+preserves the regular-variation \emph{index} of income. That by itself
+does not imply equality of top shares, tail constants, or Gini.
 
 \whatitsays{Under the stated assumptions no mechanism makes the income tail
 lighter --- the tail index is unchanged; what changes is the
 \emph{shape of the bottom}. Pool rules pay many tiny positive amounts;
 the direct economy converts most of those into exact zeros --- at the
 calibrated superfan share, at least a third of small-audience artists earn
-literally nothing. Inequality is relocated, not reduced.}
+literally nothing. Inequality is relocated, not reduced. Preservation of
+the index is not equality of top shares, of tail constants, or of Gini.}
 
 \paragraph{L4: dominance blockade.} \emph{Uses assumptions A2, A4, A5; the
 anchor $c=\mathrm{PL}\cdot\mathrm{rate}$ (independent-artist

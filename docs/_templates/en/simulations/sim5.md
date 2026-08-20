@@ -14,4 +14,4 @@ description: One cascade, then money — sim2 reach times conversion times caden
 
 ***
 
-{{INCLUDE:README.md|## sim5 — glue: one cascade, then money|## Reproducibility}}
+{{INCLUDE:README.md|## sim5 — glue: one cascade, then money|## sim6 — Direct + guaranteed discovery floor}}

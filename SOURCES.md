@@ -52,9 +52,11 @@ than silently harmonized — the same policy as *Retracted & bounded*.
   should read "Last.fm (Celma 2008); cf. CMA".
 - **D3 — the two per-stream anchors are not in the vault.** Neither Duetti
   $4.43/1,000 (independent) nor $0.0003/stream (signed pocket) has a vault
-  note. They are the model's declared external anchors (PAPER §3, CHANGELOG
-  v0.5.1 precision caveat); nearest independent vault points: AEPO-ARTIS
-  ≈£0.00065/stream, CMA ≈£0.001/stream, E&Y/SNEP 2015 waterfall.
+  note. They are calibration anchors / assumed external rates, not measured
+  quantities (PAPER §3, CHANGELOG v0.5.1 precision caveat); nearest
+  independent vault points: AEPO-ARTIS ≈£0.00065/stream, CMA ≈£0.001/stream,
+  E&Y/SNEP 2015 waterfall. L1–L4 do not depend on the dollar level; every
+  monetary figure, $d^*$ and MVA does.
 - **D4 — "CNM ~6.8%".** No CNM note in the vault carries 6.8%. The vault's
   pass-through estimates span 8–20% (Rose 2024) and ~10.6% (CMU/AEPO-ARTIS).
   In the code the pass-through is *derived* from the two anchors (6.772%),

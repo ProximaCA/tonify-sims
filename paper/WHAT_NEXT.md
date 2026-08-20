@@ -33,8 +33,9 @@ A streaming royalty is a residual on a play in a shared (or per-wallet) pool. Th
 
 - 87% of tracks never cross 1,000 streams/year (Luminate; anchor T1).
 - 89.9% of signed artists wait more than ten years for a first payout at a $13 threshold.
-- 75% of artists with an audience earn exactly zero from direct payments at the calibrated superfan share (L3, sim4-D) — and that is *after* the switch. The direct economy does not save the tail. It relocates inequality: the tail index is unchanged, a zero atom appears at the bottom.
+- 75% of artists earn exactly zero from direct payments at the calibrated superfan share (L3, sim4-D); among artists with $A_i>0$, 73.3% receive zero from direct — and that is *after* the switch. The direct economy does not save the tail. It relocates inequality: the tail index is unchanged, a zero atom appears at the bottom.
 - L4: the zero atom blocks stochastic dominance in both directions. Direct is not unconditionally “better than the pool” at any k. Raising payment frequency does not kill the lottery. Conversion σ does; cadence does not.
+- The operator that attacks the atom is not a fourth pure mechanism. **Direct + guaranteed discovery floor** keeps fan money direct and adds a platform reserve $B$ for artists with verified audience $A_i\ge A_{\min}$, weighted $A_i^\beta$ with $\beta<1$. Any $B>0$ yields $q_{\mathrm{eligible}}=0$. On the sim1 world the atom is an eligibility cost ($A_{\min}=1$ kills it among $A_i>0$; $A_{\min}\le 3$ leaves at most half); a living wage is a $B$ cost (5% of the independent pool is $16.38/year mean floor at $A_{\min}=10$, and hybrid MVA barely moves). This is a hybrid: $B$ has to come from somewhere. That is a feature. sim6.
 
 The unit of value is not the play. The unit of value is the fan.
 
@@ -95,4 +96,4 @@ The falsifier of this whole page, in one sentence: if a Telegram fan does not pa
 
 Until then the decision is this. Fix the formula — yes, in the four steps above, if you are a platform inside the pool. Build the cash register on the fan, not on the play. Take royalties-for-plays off the register and leave the play as discovery. Turn what used to be a royalty into the price of a thing: a drop, a ticket, patronage. Tonify proves that in the one window where the behaviour already exists. Unify carries it to where music plays and a cash register does not yet.
 
-*MIT. This page is not executed by code — it is read against L1–L4, sim1–sim5 and emp2. If it diverges from them, it is wrong, not they.*
+*MIT. This page is not executed by code — it is read against L1–L4, sim1–sim6 and emp2. If it diverges from them, it is wrong, not they.*

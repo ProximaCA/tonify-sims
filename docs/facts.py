@@ -20,7 +20,7 @@ FACTS_SPEC = {
     "sim4.streams":      ("sim4/README.md", r"стримов ([\d.]+M)\)"),
     "sim4.g1":           ("sim4/README.md", r"max\\\|UC/PR − 1\\\| \| ([\d.e+-]+) \|"),
     # sim4-D: нижний край (downside.py → sim4/README.md)
-    "dw.zero_dir":       ("sim4/README.md", r"нулей среди артистов с аудиторией \| 0\.0% \| 0\.0% \| \*\*([\d.]+)%"),
+    "dw.zero_dir":       ("sim4/README.md", r"нулей среди артистов с A_i>0 \| 0\.0% \| 0\.0% \| \*\*([\d.]+)%"),
     "dw.med_pool":       ("sim4/README.md", r"медиана среди получающих \(× средний\) \| ([\d.]+) \|"),
     "dw.med_dir":        ("sim4/README.md", r"медиана среди получающих \(× средний\) \| [\d.]+ \| [\d.]+ \| \*\*([\d.]+)\*\*"),
     "dw.es_pool":        ("sim4/README.md", r"expected shortfall, худшие 50% \| ([\d.]+) \|"),
@@ -100,6 +100,15 @@ FACTS_SPEC = {
     # --- sim1: контракт против правила ---
     "sim1.contract":     ("README.md", r"The contract moves viability ×([\d.]+)"),
     "sim1.rule":         ("README.md", r"only the rule axis \(×([\d.]+) at the baseline"),
+    # --- sim6: discovery floor ---
+    "s6.q_dir":          ("sim6/README.md", r"чистый direct даёт \*\*([\d.]+)%\*\* нулей"),
+    "s6.q_elig":         ("sim6/README.md", r"q_eligible при B>0 \| ([\d.e+-]+) \|"),
+    "s6.mva_hyb05":      ("sim6/README.md", r"\| 5% \| 62\.7% \| \*\*0\.0%\*\* \| \*\*([\d\s]+)\*\*"),
+    "s6.mva_dir":        ("sim6/README.md", r"MVA сдвигается с ([\d\s]+) до"),
+    "s6.mean_floor":     ("sim6/README.md", r"средний пол среди eligible = \*\*\$([\d.]+)\*\*"),
+    "s6.top_fl":         ("sim6/README.md", r"забирают \*\*([\d.]+)%\*\* пола"),
+    "s6.top_d":          ("sim6/README.md", r"пола против \*\*([\d.]+)%\*\*"),
+    "s6.amin50":         ("sim6/README.md", r"достаточно \$A_\{\\min\}\\le (\d+)"),
 }
 
 def load(path):

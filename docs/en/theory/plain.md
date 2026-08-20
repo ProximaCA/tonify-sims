@@ -49,7 +49,8 @@ distribution separately — and the answer disappoints every mechanism.
 bottom*. Pool rules pay many tiny positive amounts; the direct economy
 converts most of those into exact zeros — at the calibrated superfan
 share, at least a third of small-audience artists earn literally
-nothing. Inequality is relocated, not reduced.
+nothing. Inequality is relocated, not reduced. Preservation of the index
+is not equality of top shares, of tail constants, or of Gini.
 
 
 ## L4: dominance blockade

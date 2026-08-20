@@ -31,9 +31,9 @@ MVP их меряет (CRITIC §7, README Limitations).
 | X_HI (порог $1000/год) | 225 734 стрима | derived | = 1000/0.00443; следует из инди-ставки |
 | Тело <1000: LN(ln 80, 1.4) | — | assumed | форма тела; валидируется только доля T1 |
 | Хвост: Pareto α | 1.4 | assumed → калибрует T3 | подобран до фиксации ворот; T3-ворота §5 |
-| PLAYS_PER_LISTENER (PL) | 21.21 | measured-с-оговоркой | LFM-1b Table 6 — время жизни панели, не год; red team: диапазон 8–21 (CRITIC §2) |
-| rate_ind (pro-rata independent) | $0.00443/стрим | measured (внешний якорь) | Duetti US Jan-2026; в vault отсутствует (D3) |
-| rate_signed (карман подписанного) | $0.0003/стрим | measured (внешний якорь) | заявленный якорь v0.2; в vault отсутствует (D3); одна значащая цифра — оговорка точности в PAPER CHANGELOG v0.5.1 |
+| PLAYS_PER_LISTENER (PL) | 21.21 | measured (lifetime) / calibration (year) | LFM-1b Table 6 — время жизни панели, не год; red team: диапазон 8–21 (CRITIC §2). Перенос в «плэи в год на активную пару» — калибровочное допущение, не измерение. Денежные уровни, d*, MVA наследуют его. |
+| rate_ind (pro-rata independent) | $0.00443/стрим | assumed (calibration anchor) | Duetti US Jan-2026; в vault отсутствует (D3). Не measured: внешняя ставка. Все денежные уровни, d* и MVA на ней висят; L1–L4 от её значения не зависят. |
+| rate_signed (карман подписанного) | $0.0003/стрим | assumed (calibration anchor) | заявленный якорь v0.2; в vault отсутствует (D3); одна значащая цифра — оговорка точности в PAPER CHANGELOG v0.5.1 |
 | LABEL_PASS | 6.772% | **derived** | = 0.0003/0.00443, вычисляется в коде (v0.5.1); НЕ третий якорь; корроборация «~CNM 6.8%» не подтверждена vault (D4) |
 | SUPERFAN_SHARE (SF) | 0.017; диапазон 0.006–0.017 | assumed-с-диапазоном | SoundCloud×MIDiA 1–2%, ниж. граница из 97-2-1 (CRITIC §7, D5) |
 | DONATE_MEDIAN / σ | $5 / 0.8 | assumed | форма lognormal не измерена для музыки (RESULTS, честные ограничения); чек-диапазон $3.10–6.9 из PWYW (CRITIC §6) |

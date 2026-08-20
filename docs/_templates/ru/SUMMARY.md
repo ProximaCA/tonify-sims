@@ -15,6 +15,7 @@
 * [sim3 — выживание казны](simulations/sim3.md)
 * [sim4 — матрица прослушиваний](simulations/sim4.md)
 * [sim5 — склейка](simulations/sim5.md)
+* [sim6 — discovery floor](simulations/sim6.md)
 
 ## Решение
 

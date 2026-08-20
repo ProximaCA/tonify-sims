@@ -14,7 +14,7 @@ Everything here is reproducible from one public repository. No number on this si
 
 **2. A payout reform cannot touch the label gap.** The income ratio between a signed and an independent artist equals the contract pass-through, whatever the pool rule is. In the simulated world the rule axis moves artist viability ×{{sim1.rule}}; the contract moves it ×{{sim1.contract}}. Six named channels can break this invariance — none of them is the choice of formula.
 
-**3. The direct economy relocates inequality rather than reducing it.** Under its assumptions it does not make the income tail any lighter — the tail index is unchanged — and it adds a mass of artists earning literally zero: at the calibrated superfan share, {{atom.direct}}% of artists get nothing from direct payments. Whether the summary Gini rises or falls turns out to be a property of the world rather than of the mechanism — at zero coupling it barely moves, at the measured coupling direct *lowers* it ({{dw.gini_pool12}} → {{dw.gini_dir12}}). What does not move is the composition: {{dw.zero_dir}}% of artists with an audience earn exactly nothing, while the median among those who do earn is {{dw.med_dir}} of the average income against {{dw.med_pool}} under the pool.
+**3. The direct economy relocates inequality rather than reducing it.** Under its assumptions it does not make the income tail any lighter — the tail index is unchanged — and it adds a mass of artists earning literally zero: at the calibrated superfan share, {{atom.direct}}% of artists get nothing from direct payments. Whether the summary Gini rises or falls turns out to be a property of the world rather than of the mechanism — at zero coupling it barely moves, at the measured coupling direct *lowers* it ({{dw.gini_pool12}} → {{dw.gini_dir12}}). What does not move is the composition: among artists with $A_i>0$, {{dw.zero_dir}}% receive zero from direct, while the median among those who do earn is {{dw.med_dir}} of the average income against {{dw.med_pool}} under the pool.
 
 ## One measured number
 
@@ -39,7 +39,7 @@ git clone {{REPO}} && cd tonify-sims
 python3 paper/theory_check.py
 ```
 
-Every proved claim is re-derived numerically; gates print before conclusions and a failure exits non-zero. The full chain (five simulations, twenty figures) is `python3 run_all.py`.
+Every proved claim is re-derived numerically; gates print before conclusions and a failure exits non-zero. The full chain (six simulations, twenty-two figures) is `python3 run_all.py`.
 
 ***
 

@@ -404,18 +404,19 @@ class="math inline">rate</span></td>
 class="math inline"> &gt; 0</span></td>
 <td style="text-align: left;">pool rate per listener <span
 class="math inline"><em>c</em> = PL ⋅ rate</span>; external per-stream
-anchor</td>
+anchor (Duetti <span class="math inline">4.43/1000</span>, D3, not in
+vault)</td>
 <td style="text-align: left;">$/listener/yr; $/play</td>
-<td style="text-align: left;">D / M</td>
+<td style="text-align: left;">D / A (calibration)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><span class="math inline">PL</span></td>
 <td style="text-align: left;">real <span
 class="math inline"> &gt; 0</span></td>
-<td style="text-align: left;">plays per active pair (21.21, LFM-1b,
-caveat CRITIC §2)</td>
-<td style="text-align: left;">year; plays/pair</td>
-<td style="text-align: left;">M</td>
+<td style="text-align: left;">LFM-1b lifetime mean 21.21; year transfer
+is calibration (CRITIC §2)</td>
+<td style="text-align: left;">year (calib.); plays/pair</td>
+<td style="text-align: left;">M / A</td>
 </tr>
 <tr>
 <td style="text-align: left;"><span
@@ -834,7 +835,9 @@ $$\mathbb{P}(D_i=0\,|\,A_i)\ge(1-\sigma)^{A_i}\ge e^{-1}(1-\sigma)$$ for
 $$A_i\le 1/\sigma$$: an *atom at zero* on small audiences. With zero
 mass $$q$$, $$G_{\mathrm{direct}}=q+(1-q)G^{+}$$: the mechanism
 relocates inequality from the intensive to the extensive margin; no
-mechanism softens the upper tail.
+mechanism softens the upper tail. Under A5 and a light-tailed check,
+direct preserves the regular-variation *index* of income. That by itself
+does not imply equality of top shares, tail constants, or Gini.
 
 ##### L4: dominance blockade.
 

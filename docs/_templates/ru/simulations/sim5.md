@@ -14,4 +14,4 @@ description: Один каскад, потом деньги — охват sim2 
 
 ***
 
-{{INCLUDE:README.ru.md|## sim5 — склейка: один каскад, потом деньги|## Воспроизводимость}}
+{{INCLUDE:README.ru.md|## sim5 — склейка: один каскад, потом деньги|## sim6 — Direct + guaranteed discovery floor}}

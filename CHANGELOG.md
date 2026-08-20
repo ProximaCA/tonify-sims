@@ -1,5 +1,29 @@
 # Changelog
 
+## unreleased — L3 public claim, rate status, zero-mass base, discovery floor (2026-08-19)
+
+- **L3 public claim** — conservative: under A5 and a light check, direct
+  preserves the regular-variation *index* of income. That by itself does not
+  mean equality of top shares, tail constants, or Gini. The draft sentence
+  that closed top-x-share equality via matching the tail constant to mean
+  scaling is withdrawn; a separate corollary would need extra conditions,
+  which are not proved here. THEORY.md §5.3(iii) + ledger; THEORY.tex
+  aligned with Retracted & bounded.
+- **rate / PL status** — `$4.43/1000` is a calibration anchor / assumed
+  external rate (D3, not in vault), not `measured`. PL=21.21 is measured on
+  the LFM-1b lifetime panel; using it as plays/year/active pair is a
+  calibration transfer (CRITIC §2). Notation table, sim1/sim4 SPEC, D3.
+  L1–L4 do not depend on the dollar level; every monetary figure, $d^*$ and
+  MVA does.
+- **Zero-mass base** — among artists with $A_i>0$, 73.3% receive zero from
+  direct. 75% is of all artists (including empty audience); 7% are empty
+  under every mechanism. WHAT_NEXT no longer attaches “with an audience” to
+  75%.
+- **sim6** — Direct + guaranteed discovery floor. Not sold as direct. Gates
+  G0–G5; fig21–fig22. Any $B>0$ yields $q_{\mathrm{eligible}}=0$. The atom is
+  an eligibility cost; a living wage is a $B$ cost (5% of the independent
+  pool → $16.38/year mean floor at $A_{\min}=10$; hybrid MVA 3,204 → 3,110).
+
 ## unreleased — policy reading: What to do (2026-08-19)
 
 - **paper/WHAT_NEXT.md** (+ `.ru.md`) — итог исследования как решение, не
