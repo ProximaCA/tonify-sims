@@ -1,0 +1,20 @@
+{
+  "artists": 12,
+  "listeners": 48,
+  "total_plays": 1200,
+  "period": "Один общий условный период; демонстрация метода, не годовая калибровка рынка",
+  "seed": 42,
+  "iterations": 40000,
+  "max_transfer": 12,
+  "temperature_start": 0.04,
+  "temperature_end": 0.0002,
+  "targets": [
+    {"id": "listener_activity", "metric": "listener_totals", "distribution": {"family": "lognormal", "mu": 3.05, "sigma": 0.6, "ceil": true}, "grid": [5, 10, 15, 20, 30, 45, 70, 100], "tolerance": 0.12, "weight": 1, "status": "assumed", "source": "Демонстрационный сценарий; параметры не измерены"},
+    {"id": "artist_activity", "metric": "artist_totals", "distribution": {"family": "lognormal", "mu": 4.15, "sigma": 0.95, "ceil": true}, "grid": [10, 25, 50, 80, 120, 200, 400], "tolerance": 0.18, "weight": 1, "status": "assumed", "source": "Демонстрационное неоднородное распределение"},
+    {"id": "listener_diversity", "metric": "listener_degrees", "distribution": {"family": "normal", "mu": 3.8, "sigma": 1.5, "lower": 0, "upper": 12, "ceil": true}, "grid": [1, 2, 3, 4, 5, 6, 8, 12], "tolerance": 0.17, "weight": 1, "status": "assumed", "source": "Усечённый нормальный закон; демонстрационные параметры"},
+    {"id": "artist_audiences", "metric": "artist_audiences", "distribution": {"family": "normal", "mu": 15.5, "sigma": 6, "lower": 0, "upper": 48, "ceil": true}, "grid": [4, 8, 12, 16, 24, 36, 48], "tolerance": 0.2, "weight": 1, "status": "assumed", "source": "Усечённый нормальный закон; демонстрационные параметры"},
+    {"id": "pair_activity", "metric": "positive_plays", "distribution": {"family": "lognormal", "mu": 1.35, "sigma": 1, "ceil": true}, "grid": [1, 2, 3, 5, 8, 12, 20, 40], "tolerance": 0.14, "weight": 1, "status": "assumed", "source": "Логнормальный кандидат, без переноса LFM-1b на год"},
+    {"id": "sparsity", "metric": "zero_fraction", "value": 0.65, "tolerance": 0.035, "weight": 1, "status": "assumed", "source": "Демонстрационная доля неактивных пар"},
+    {"id": "head_concentration", "metric": "artist_top_share", "fraction": 0.25, "value": 0.55, "tolerance": 0.08, "weight": 1, "status": "assumed", "source": "Демонстрационная доля прослушиваний трёх наиболее слушаемых артистов"}
+  ]
+}

@@ -1,6 +1,6 @@
 # Results in plain language
 
-Four lemmas, stated without formulas. Each block below is extracted automatically from the italicised route inside [the paper]({{REPO}}/blob/main/paper/THEORY.tex) — it cannot drift from the mathematics it summarises, because it *is* the paper's own prose.
+The primary PR/UC comparison, stated without formulas. Each block below is extracted automatically from the italicised route inside [the paper]({{REPO}}/blob/main/paper/THEORY.tex) — it cannot drift from the mathematics it summarises, because it *is* the paper's own prose.
 
 {{PLAINROUTE:paper/THEORY.tex}}
 

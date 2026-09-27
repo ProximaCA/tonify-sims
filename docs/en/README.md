@@ -10,7 +10,7 @@ Everything here is reproducible from one public repository. No number on this si
 
 ## Three findings
 
-**1. Who wins from user-centric is computable in advance.** An artist's user-centric income divided by their pro-rata income equals the mean of `P̄/Pᵤ` over that artist's own audience — an exact identity, verified to 8.9e-16 on random matrices and to 5.8e-15 on real Last.fm logs (31 040 artists). What decides the winner is not niche-ness but how *lightly* and how *unevenly* an artist's listeners listen.
+**1. Who wins from user-centric is computable in advance.** An artist's user-centric income divided by their pro-rata income equals the mean of `P̄/Pᵤ` over that artist's own audience — an exact identity, verified to 8.9e-16 on random matrices and to 5.8e-15 on real Last.fm logs (31 040 artists). The mean is weighted by each listener's share of the artist's plays. A gain is determined by H_i < P̄, where H_i is the artist audience's weighted harmonic activity and P̄ is the mean activity of all listeners; niche status or heterogeneity alone does not guarantee it.
 
 **2. A payout reform cannot touch the label gap.** The income ratio between a signed and an independent artist equals the contract pass-through, whatever the pool rule is. In the simulated world the rule axis moves artist viability ×1.34; the contract moves it ×14.8. Six named channels can break this invariance — none of them is the choice of formula.
 

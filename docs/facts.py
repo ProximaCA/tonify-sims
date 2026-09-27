@@ -91,12 +91,12 @@ FACTS_SPEC = {
     "phase0.total":      ("emp1/PRIOR_ART.md", r"\*\*Итог: закрыты все (\d+)\nисточников\*\*"),
     "phase0.primary":    ("emp1/PRIOR_ART.md", r"источников\*\* — (\d+) первично"),
     # --- теория: машинные проверки ---
-    "theory.ident_syn":  ("paper/THEORY.md", r"max \|UC/PR − E_w\[P̄/P_u\]\| = ([\d.]+e-\d+) \(машинный ноль\)"),
-    "theory.matrices":   ("paper/THEORY.md", r"([\d]+) случайных матриц \(N ≤ 30"),
-    "theory.atom":       ("paper/THEORY.md", r"атом\s+P\(Y=0\) = ([\d.]+) \(теория"),
-    "theory.gini_pool":  ("paper/THEORY.md", r"\*\*G_pool = ([\d.]+) против"),
-    "theory.gini_dir":   ("paper/THEORY.md", r"против G_direct = ([\d.]+)\*\*"),
-    "theory.q":          ("paper/THEORY.md", r"q = E\[\(1−σ\)\^A\] = ([\d.]+) \(измеренная"),
+    "theory.ident_syn":  ("paper/THEORY.v0.5.md", r"max \|UC/PR − E_w\[P̄/P_u\]\| = ([\d.]+e-\d+) \(машинный ноль\)"),
+    "theory.matrices":   ("paper/THEORY.v0.5.md", r"([\d]+) случайных матриц \(N ≤ 30"),
+    "theory.atom":       ("paper/THEORY.v0.5.md", r"атом\s+P\(Y=0\) = ([\d.]+) \(теория"),
+    "theory.gini_pool":  ("paper/THEORY.v0.5.md", r"\*\*G_pool = ([\d.]+) против"),
+    "theory.gini_dir":   ("paper/THEORY.v0.5.md", r"против G_direct = ([\d.]+)\*\*"),
+    "theory.q":          ("paper/THEORY.v0.5.md", r"q = E\[\(1−σ\)\^A\] = ([\d.]+) \(измеренная"),
     # --- sim1: контракт против правила ---
     "sim1.contract":     ("README.md", r"The contract moves viability ×([\d.]+)"),
     "sim1.rule":         ("README.md", r"only the rule axis \(×([\d.]+) at the baseline"),

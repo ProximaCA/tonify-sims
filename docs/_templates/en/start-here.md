@@ -4,13 +4,13 @@
 
 The study has three layers, and you can stop at any of them.
 
-**Plain language.** [Results in plain language](theory/plain.md) states what each of the four lemmas means for an artist, with no formulas. That page is generated from the italicised route inside the paper itself, so it cannot drift from the mathematics it summarises.
+**Plain language.** [Results in plain language](theory/plain.md) states what the primary PR/UC comparison means for an artist, with no formulas. That page is generated from the italicised route inside the paper itself, so it cannot drift from the mathematics it summarises.
 
 **The paper.** [Full text](theory/full.md) carries the statements, proofs, assumptions, and the correction ledger. The canonical version is English; the Russian variant of this site carries the longer source text.
 
 **The code.** Every claim has an executable check. [Simulations](simulations/sim1.md) documents what each simulation asks, what gates it must pass, and how to run it.
 
-**What to do.** [The policy reading](policy/what-next.md) is the decision that sits on top of the four lemmas: an acceptable formula reform, and why the cash register should still move off the play onto the fan. It is not a theorem.
+**What to do.** [The policy reading](policy/what-next.md) is an interpretation of the four lemmas from [the previous stage]({{REPO}}/blob/main/paper/THEORY.v0.5.md): an acceptable formula reform, and why the cash register should still move off the play onto the fan. It is not a theorem.
 
 ## Proved, measured, open
 

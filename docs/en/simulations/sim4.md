@@ -42,7 +42,7 @@ Pool rules pay every stream something; the direct mechanism pays 75% of artists 
 
 ## Listener composition beats artist size
 
-A companion run gives every listener their own coupling — measured separately for mainstream and beyond-mainstream listeners — and asks who gains. Controlling for artist size, moving an audience from all-mainstream to all-beyond multiplies the user-centric gain by roughly three (coefficient +1.123 ± 0.048, against a size coefficient of −0.018). And the share of artists better off peaks at the *most mixed* population — 62.4% at a 50/50 split against 49.5% and 39.3% at the extremes. That peak is the dispersion premium of corollary (d) showing up in a cut the model was never built to test.
+A companion run gives every listener their own coupling — measured separately for mainstream and beyond-mainstream listeners — and asks who gains. Controlling for artist size, moving an audience from all-mainstream to all-beyond multiplies the user-centric gain by roughly three (coefficient +1.123 ± 0.048, against a size coefficient of −0.018). And the share of artists better off peaks at the *most mixed* population — 62.4% at a 50/50 split against 49.5% and 39.3% at the extremes. That peak is a result of this scenario; corollary (d) does not establish a monotonic gain from heterogeneity when audience weights change.
 
 ![Group-level coupling](https://raw.githubusercontent.com/ProximaCA/tonify-sims/main/figures/fig18_group_gamma.png)
 

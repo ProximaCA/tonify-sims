@@ -6,7 +6,7 @@ description: Работа целиком — формулировки, дока�
 
 Русская версия — источник истины; канон формулировок — [английский PDF]({{REPO}}/blob/main/paper/THEORY.pdf), собираемый из [paper/THEORY.tex]({{REPO}}/blob/main/paper/THEORY.tex).
 
-Машинная проверка каждого доказанного утверждения — [paper/theory_check.py]({{REPO}}/blob/main/paper/theory_check.py): {{theory.matrices}} случайных матриц для тождества, Monte Carlo для блокировки доминирования, калиброванный мир для разложения Джини.
+Проверки первичного сравнения PR/UC и генератора — [sim4/test_constrained_gen.py]({{REPO}}/blob/main/sim4/test_constrained_gen.py). Прежний расширенный материал сохранён в [версии v0.5]({{REPO}}/blob/main/paper/THEORY.v0.5.md).
 
 ***
 

@@ -42,7 +42,7 @@ Pool rules pay every stream something; the direct mechanism pays {{atom.direct}}
 
 ## Listener composition beats artist size
 
-A companion run gives every listener their own coupling — measured separately for mainstream and beyond-mainstream listeners — and asks who gains. Controlling for artist size, moving an audience from all-mainstream to all-beyond multiplies the user-centric gain by roughly three (coefficient +{{grp.coef}} ± {{grp.se}}, against a size coefficient of −0.018). And the share of artists better off peaks at the *most mixed* population — {{grp.peak}}% at a 50/50 split against {{grp.all_main}}% and {{grp.all_beyond}}% at the extremes. That peak is the dispersion premium of corollary (d) showing up in a cut the model was never built to test.
+A companion run gives every listener their own coupling — measured separately for mainstream and beyond-mainstream listeners — and asks who gains. Controlling for artist size, moving an audience from all-mainstream to all-beyond multiplies the user-centric gain by roughly three (coefficient +{{grp.coef}} ± {{grp.se}}, against a size coefficient of −0.018). And the share of artists better off peaks at the *most mixed* population — {{grp.peak}}% at a 50/50 split against {{grp.all_main}}% and {{grp.all_beyond}}% at the extremes. That peak is a result of this scenario; corollary (d) does not establish a monotonic gain from heterogeneity when audience weights change.
 
 ![Group-level coupling]({{RAW}}/figures/fig18_group_gamma.png)
 
